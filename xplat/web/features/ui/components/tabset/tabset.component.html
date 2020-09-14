@@ -1,0 +1,39 @@
+<ul
+  class="nav tabsCustom"
+  [class.disable-style]="disableStyle"
+  [ngClass]="customNavClass"
+  style="cursor: pointer !important;"
+>
+  <li
+    *ngFor="let tab of tabs; let index = index"
+    (click)="selectTab(tab); changeData(tab.tabValue)"
+    class="nav-item"
+    [class.active]="tab.active"
+    [class.disabled]="tab.disabled"
+  >
+    <a
+      class="nav-link"
+      name="{{ 'tab' + (tabs.length == 1 ? 1 : index) }}"
+      id="{{ 'tab' + (tabs.length == 1 ? 1 : index) }}"
+      [class.active]="tab.active"
+      data-toggle="tab"
+      role="tab"
+      aria-controls="profile-classic"
+      aria-selected="false"
+    >
+      <div *ngIf="tab.urlImage !== ''">
+        <img
+          width="50"
+          height="50"
+          src="{{ '/assets/icons/TYPE_' + tab.tabValue + '.svg' }}"
+        />
+      </div>
+      <div>
+        {{ tab.tabTitle }}
+      </div>
+    </a>
+  </li>
+</ul>
+<div class="tabs-container bg-white" [ngClass]="customTabsClass">
+  <ng-content></ng-content>
+</div>

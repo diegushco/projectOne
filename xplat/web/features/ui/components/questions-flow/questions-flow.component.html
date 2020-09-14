@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="questions col-lg-10 offset-lg-1">
+    <ul class="timeline list-group">
+      <li
+        *ngFor="let item of routes"
+        [ngClass]="{
+          active: item.path == routeActive,
+          visited: !(item.value === null) && !(item.value.length < 1)
+        }"
+        class="list-group-item"
+      >
+        <div class="row header">
+          <div class="col-lg-12 line">
+            <div class="float-right edit">
+              <sxf-icon
+                type="edit"
+                *ngIf="item.show"
+                [routerLink]="item.path"
+                (click)="setCurrentRoute(item.path)"
+                [disabled]="item.disabled"
+              ></sxf-icon>
+            </div>
+            <label class="mb-2">
+              <!-- {{
+                item.value === null || item.value.length < 1
+                  ? item.question
+                  : item.shortName + ': ' + item.value
+              }} -->
+              <span
+                *ngIf="!(item.value === null) && !(item.value.length < 1)"
+                class="item-value"
+              >
+                {{ item.value }}
+              </span>
+            </label>
+          </div>
+        </div>
+        <div id="collapseExample" [ngbCollapse]="!item.show">
+          <div *ngIf="item.path === routeActive" class=" ">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

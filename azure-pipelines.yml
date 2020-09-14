@@ -1,0 +1,103 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  - development
+  - release
+  - hotfix
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
+
+  - task: DeleteFiles@1
+    displayName: 'Delete JUnit files'
+    inputs:
+      SourceFolder: /junit
+      Contents: 'TEST*.xml'
+
+  - task: Npm@1
+    displayName: 'npm install @angular/cli'
+    inputs:
+      command: custom
+      customCommand: install -g @angular/cli@9.0.2
+      workingDir: $(System.DefaultWorkingDirectory)
+
+  - task: Npm@1
+    displayName: 'npm install workbox-cli'
+    inputs:
+      command: custom
+      customCommand: install -g workbox-cli
+      workingDir: $(System.DefaultWorkingDirectory)
+
+  - task: Npm@1
+    displayName: 'npm install'
+    inputs:
+      command: install
+      workingDir: $(System.DefaultWorkingDirectory)
+
+  - task: Npm@1
+    displayName: 'Build Angular'
+    inputs:
+      command: custom
+      customCommand: run build.web.producer --prod
+      workingDir: $(System.DefaultWorkingDirectory)
+
+  - task: PublishPipelineArtifact@0
+    displayName: 'Publish Angular Artifact'
+    inputs:
+      artifactName: '$(Build.SourceBranchName)_producer'
+      targetPath: 'dist'
+
+  - task: Npm@1
+    displayName: 'Test Angular'
+    inputs:
+      command: custom
+      customCommand: run codecoverage.web.producer
+      workingDir: $(System.DefaultWorkingDirectory)
+
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish code coverage Angular results'
+    condition: succeededOrFailed()
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: $(System.DefaultWorkingDirectory)/coverage/apps/web-producer/cobertura-coverage.xml
+      reportDirectory: $(System.DefaultWorkingDirectory)/coverage/apps/web-producer
+      failIfCoverageEmpty: true
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Angular test results'
+    condition: succeededOrFailed()
+    inputs:
+      searchFolder: $(System.DefaultWorkingDirectory)/junit
+      testRunTitle: Angular
+      testResultsFormat: JUnit
+      testResultsFiles: '**/TESTS*.xml'
+
+  - task: Npm@1
+    displayName: 'Lint Angular'
+    inputs:
+      command: custom
+      customCommand: run lint --  --format=stylish
+      workingDir: $(System.DefaultWorkingDirectory)
+  # - task: Npm@1
+  #   displayName: 'E2E Test Angular'
+  #   inputs:
+  #     command: custom
+  #     customCommand: run e2e
+  #     workingDir: $(System.DefaultWorkingDirectory)
+  # - task: PublishTestResults@2
+  #   displayName: 'Publish Angular E2E test results'
+  #   condition: succeededOrFailed()
+  #   inputs:
+  #     searchFolder: $(System.DefaultWorkingDirectory)/e2e/junit
+  #     testRunTitle: Angular_E2E
+  #     testResultsFormat: JUnit
+  #     testResultsFiles: '**/junit*.xml'

@@ -1,0 +1,29 @@
+<router-outlet></router-outlet>
+
+<sxf-modal #errorQuote>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Error al Cotizar
+    </h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
+  </div>
+  <div class="modal-body">
+    <p>
+      La cotización solicitada no está disponible en este momento. Por favor,
+      volvé a intentarlo a través de la web de Productores. Muchas gracias.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <div class="offset-8 col-4">
+      <button
+        type="button"
+        class="btn btn-primary btn-lg btn-block"
+        (click)="closeModal()"
+      >
+        Aceptar
+      </button>
+    </div>
+  </div>
+</sxf-modal>

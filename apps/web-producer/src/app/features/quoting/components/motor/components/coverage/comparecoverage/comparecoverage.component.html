@@ -1,0 +1,38 @@
+<div class="col-12">
+  <ul class="list-group list-group-horizontal-md">
+    <li
+      class="list-group-item"
+      style="margin-right: 10px;width: 18%;"
+      *ngFor="let cover of compareCoveragePane"
+    >
+      <div style="width: 90%;float:left;">
+        <div>
+          {{ cover.description }}
+        </div>
+        <div>
+          {{ cover.title }}
+        </div>
+      </div>
+      <div
+        (click)="removeCompareCoverage({ coverage: cover, remove: true })"
+        style="width: 10%; float:left; background-color: gray;cursor: pointer;"
+      >
+        x
+      </div>
+    </li>
+    <li
+      (click)="showBlockCompare()"
+      class="list-group-item btn-outline-primary"
+      style="cursor: pointer;margin-right: 10px;width: 18%;"
+    >
+      Comparar
+    </li>
+    <li
+      (click)="removeCompare()"
+      class="list-group-item btn-outline-primary"
+      style="cursor: pointer;width: 5%;"
+    >
+      X
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,169 @@
+@import '~@sura-platform/scss/variables';
+// Inputbox
+.form-input-label {
+  label {
+    display: block;
+    position: absolute;
+    color: $black;
+    bottom: 90%;
+    font-size: 0.75rem;
+    color: $gray_dark;
+
+    &.invalid {
+      color: color('red');
+    }
+  }
+  span {
+    display: none;
+  }
+  .form-text.text-muted {
+    /*color: $black !important;*/
+    font-size: 0.75rem;
+    color: $cyanblue_shadow !important;
+  }
+  input[type]:not([type='button']):not([type='checkbox']):not([type='range']):not([type='submit']).form-control {
+    border-radius: 5px;
+    text-align: left;
+    padding: 0.375rem 1rem;
+    border: 0.0625rem solid $grey_light;
+    color: $gray_dark;
+    height: 32px;
+    &:focus {
+      border: 0.0625rem solid $primary;
+    }
+    &:invalid,
+    &.invalid {
+      border-color: color('red');
+    }
+    &:valid + label + .valid-feedback {
+      display: inline;
+      color: $gray_dark !important;
+    }
+    /// Se agrega estilos para casilla del icono
+    &:focus + span + div > span {
+      border-top: 0.0625rem solid $primary;
+      border-right: 0.0625rem solid $primary;
+      border-bottom: 0.0625rem solid $primary;
+      border-left: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    &:invalid,
+    &.invalid + span + div > span {
+      border-top: 0.0625rem solid #dc3545;
+      border-right: 0.0625rem solid #dc3545;
+      border-bottom: 0.0625rem solid #dc3545;
+    }
+    &.input_icon_append {
+      border-right: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+  .form-control::-webkit-input-placeholder {
+    opacity: 1;
+    color: $placeholder-color;
+  }
+  .form-control::-moz-placeholder {
+    opacity: 1;
+    color: $placeholder-color;
+  }
+  .form-control::placeholder {
+    opacity: 1;
+    color: $placeholder-color;
+  }
+  .form-control::-ms-input-placeholder {
+    opacity: 1;
+    color: $placeholder-color;
+  }
+  /// Se agrega estilos para casilla del icono
+  .span-icon {
+    display: inline;
+    position: absolute;
+    background: $white;
+    border-top: 0.0625rem solid $grey_light;
+    border-right: 0.0625rem solid $grey_light;
+    border-bottom: 0.0625rem solid $grey_light;
+    border-left: 0;
+    padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+    max-height: 32px;
+    height: 32px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+  }
+}
+
+.invalid-feedback {
+  display: inline;
+}
+
+// </ Inputbox>
+.input-number-class {
+  label {
+    display: none;
+  }
+  .input-group-text {
+    background-color: transparent;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    padding: 0;
+    border-bottom: 0.0625rem solid $black;
+  }
+  input[type]:not([type='button']):not([type='checkbox']):not([type='range']):not([type='submit']).form-control {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    border-bottom: 0.0625rem solid $black;
+    font-weight: $font-weight-bold;
+    background-color: transparent;
+    padding: 0;
+    height: 32px;
+    box-shadow: none;
+    &:focus {
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0.0625rem solid $primary;
+    }
+    &:focus + span {
+      display: block;
+      font-weight: $font-weight-bold;
+      color: $gray_dark;
+      position: absolute;
+      right: 27.8rem;
+      &.input-group-text {
+        border-bottom: 0.0625rem solid $primary;
+      }
+    }
+  }
+  .form-control::-webkit-input-placeholder {
+    font-weight: $font-weight-bold;
+  }
+  .form-control::-moz-placeholder {
+    font-weight: $font-weight-bold;
+  }
+  .form-control::placeholder {
+    font-weight: $font-weight-bold;
+  }
+  .form-control::-ms-input-placeholder {
+    font-weight: $font-weight-bold;
+  }
+  .form-control:placeholder-shown {
+    &:focus::-webkit-input-placeholder {
+      opacity: 0;
+    }
+    &:focus::-moz-placeholder {
+      opacity: 0;
+    }
+    &:focus::-ms-input-placeholder {
+      opacity: 0;
+    }
+    &:focus::placeholder {
+      opacity: 0;
+    }
+  }
+}

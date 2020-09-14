@@ -1,0 +1,60 @@
+@import '~@sura-platform/scss/variables';
+
+::ng-deep .bg-color {
+  background: #fafafa;
+}
+
+button {
+  font-family: $font-family-medium;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  margin-right: 1rem;
+
+  &.btn-save {
+    width: 11rem;
+  }
+
+  &.btn-download {
+    width: 7rem;
+  }
+
+  &.small-button:hover {
+    background-color: $blue-text;
+    color: #ffffff;
+  }
+
+  &.small-button {
+    background-color: #ffffff;
+  }
+}
+
+.summary-card {
+  background: #ffffff;
+  border: 1px solid #e7e7e7;
+  box-sizing: border-box;
+  border-radius: 5px;
+
+  & > sxf-housedata {
+    width: 100%;
+  }
+}
+
+.title {
+  font-family: $font-family-medium;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 30px;
+  display: flex;
+  color: #0033a0;
+}
+
+.btn-emission {
+  font-family: $font-family-medium;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+}

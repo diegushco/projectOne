@@ -1,0 +1,304 @@
+<div id="tabs" #tabs>
+  <div class="row">
+    <div class="col-lg-12 px-0">
+      <ul
+        class="nav nav-pills nav-fill"
+        *ngIf="paymentMethods$ | async as paymentMethods"
+      >
+        <li
+          *ngFor="let methods of paymentMethods"
+          class="nav-item tab-unselected"
+        >
+          <label
+            class="nav-link active"
+            [ngClass]="{ active: activeTab === methods.code }"
+            (click)="changeTab(methods)"
+            data-toggle="tab"
+          >
+            <div class="cardpayment input-group">
+              <div class="form-radio-label">
+                <input
+                  type="radio"
+                  name="options"
+                  autocomplete="off"
+                  [checked]="methods.code === activeTab"
+                  name="paymentMethod{{ methods.code }}"
+                />
+                <label for="radio" class="radio-label">
+                  {{ methods.description }}
+                </label>
+              </div>
+              <div></div>
+            </div>
+            <div class="text-dark text-left ml-2">{{ methods.legend }}</div>
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content mt-3" *ngIf="paymentInstruments$ | async as payments">
+    <!--this is credit card-->
+    <div *ngIf="activeTab === 'CreditCard' && payments.length > 0">
+      <div>
+        <div class="row">
+          <div class="col-lg-12 pl-2">
+            <label>Tarjetas guardadas para este cliente</label>
+            <br />
+          </div>
+        </div>
+
+        <!-- <ul class="nav nav-pills justify-fill"> -->
+        <div class="row pl-2">
+          <div class="mr-3">
+            <button
+              class="btn btn-primary btn-icon"
+              (click)="previousPaginate()"
+              name="previousPaginateBtn"
+            >
+              <sxf-icon class="icon-blue" type="arrow-left"></sxf-icon>
+            </button>
+          </div>
+          <div class="col-7">
+            <div class="row p-0">
+              <div
+                class="col mr-3 px-0 nav-item tab-unselected"
+                *ngFor="
+                  let item of paginateCreditCards(payments, 2, 0);
+                  let i = index
+                "
+              >
+                <label
+                  *ngIf="item.method === 'CreditCard'"
+                  (click)="setPaymentMethod(item)"
+                  class="nav-link active"
+                  data-toggle="tab"
+                >
+                  <div class="payment-card">
+                    <div class="input-group" style="cursor: pointer;">
+                      <div class="form-radio-label">
+                        <input
+                          type="radio"
+                          autocomplete="off"
+                          [checked]="currentPolicy.payment.id === item.id"
+                          name="optionPayment{{ item.id }}"
+                          [disabled]="disabledByRetrieve"
+                        />
+                        <label for="radio" class="radio-label">
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <img
+                            width="40"
+                            src="../../../../../../../assets/cards/{{
+                              getCardImg(item.displayname) | uppercase
+                            }}.svg"
+                          />
+                          &nbsp;&nbsp;
+                          {{ item.displayname | cardnumber }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </label>
+                <!-- <li class="nav-item tab-unselected" *ngFor="let item of payments"> -->
+              </div>
+            </div>
+          </div>
+          <div class="px-0">
+            <button
+              class="btn btn-primary btn-icon"
+              name="nextPaginateBtn"
+              (click)="nextPaginate(payments.length)"
+            >
+              <sxf-icon class="icon-blue" type="arrow-right"></sxf-icon>
+            </button>
+          </div>
+          <div class="col-lg-3 px-0">
+            <button
+              class="btn btn-primary btn-icon"
+              (click)="addNewPaymentWay()"
+              [disabled]="disabledByRetrieve"
+              name="addNewPaymentWayBtn"
+              style="color: #00aec7; border: none; box-shadow: none;"
+            >
+              <sxf-icon class="icon-green" type="plus"></sxf-icon>
+              Agregar tarjeta
+            </button>
+          </div>
+        </div>
+        <!-- </ul> -->
+      </div>
+    </div>
+    <!--this is debit card-->
+    <div *ngIf="activeTab === 'BankingDebt' && payments.length > 0">
+      <div>
+        <div class="row">
+          <div class="col-lg-12 pl-2">
+            <label>Cuentas guardadas para este cliente</label>
+            <br />
+          </div>
+        </div>
+        <!-- <ul class="nav nav-pills justify-fill"> -->
+        <div class="row pl-2">
+          <div class="mr-3">
+            <button
+              class="btn btn-primary btn-icon"
+              (click)="previousPaginate()"
+              name="previousPaginateBtn"
+            >
+              <sxf-icon class="icon-blue" type="arrow-left"></sxf-icon>
+            </button>
+          </div>
+          <div class="col-7">
+            <div class="row p-0">
+              <div
+                class="col mr-3 px-0 nav-item tab-unselected"
+                *ngFor="let item of paginateCbus(payments, 2, 0); let i = index"
+              >
+                <label
+                  *ngIf="item.method === 'BankingDebt'"
+                  (click)="setPaymentMethod(item)"
+                  class="nav-link active"
+                  data-toggle="tab"
+                >
+                  <div class="payment-card">
+                    <div class="input-group pt-1">
+                      <div class="form-radio-label">
+                        <input
+                          type="radio"
+                          autocomplete="off"
+                          [checked]="activePaymentMethodId === item.id"
+                          name="radioPaymentOption{{ item.id }}"
+                        />
+                        <label for="radio" class="radio-label">
+                          &nbsp;&nbsp;
+                          {{ item.displayname | slice: 5:27 }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </label>
+                <!-- <li class="nav-item tab-unselected" *ngFor="let item of payments"> -->
+              </div>
+            </div>
+          </div>
+          <div class="px-0">
+            <button
+              class="btn btn-primary btn-icon"
+              name="nextPaginatePaymentBtn"
+              (click)="nextPaginate(payments.length)"
+            >
+              <sxf-icon class="icon-blue" type="arrow-right"></sxf-icon>
+            </button>
+          </div>
+          <div class="col-lg-3 px-0">
+            <button
+              class="btn btn-primary btn-icon"
+              (click)="addNewPaymentWay()"
+              name="addNewPaymentWayPaymentBtn"
+              style="color: #00aec7; border: none; box-shadow: none;"
+            >
+              <sxf-icon class="icon-green" type="plus"></sxf-icon>
+              Agregar CBU
+            </button>
+          </div>
+        </div>
+        <!-- </ul> -->
+      </div>
+    </div>
+    <!--this is coupon-->
+  </div>
+  <div class="tab-content mt-3">
+    <div
+      [formGroup]="formCredit"
+      *ngIf="newPaymentWay && activeTab === 'CreditCard'"
+    >
+      <div class="row mt-2 pl-2">
+        <div class="col-lg-4 px-0">
+          <label>
+            Número de tarjeta
+            <sup>*</sup>
+          </label>
+        </div>
+        <div class="col-lg-4">
+          <label>
+            Vencimiento
+            <sup>*</sup>
+          </label>
+        </div>
+      </div>
+      <div class="row pl-2">
+        <div class="col-4 pl-0">
+          <sxf-textbox
+            type="text"
+            formControlName="number"
+            [mask]="numberMask"
+            label=""
+            placeholder=""
+            [helpFeedback]="''"
+            name="numberCard"
+          ></sxf-textbox>
+        </div>
+        <!-- <input type="text" class="form-control" mask="M0/0000"> -->
+        <div class="col-4">
+          <sxf-textbox
+            type="text"
+            formControlName="expirationdate"
+            placeholder="MM/YYYY"
+            [mask]="expirationDateMask"
+            [helpFeedback]="''"
+            name="expirationdateCard"
+          ></sxf-textbox>
+        </div>
+      </div>
+    </div>
+    <div
+      [formGroup]="formDebit"
+      *ngIf="newPaymentWay && activeTab === 'BankingDebt'"
+    >
+      <div class="row pl-2">
+        <div class="col-lg-4 px-0">
+          <label>
+            CBU
+            <sup>*</sup>
+          </label>
+        </div>
+      </div>
+      <div class="row pl-2">
+        <div class="col-lg-4 px-0">
+          <sxf-textbox
+            type="text"
+            formControlName="number"
+            label=""
+            placeholder=""
+            [maxLength]="22"
+            [minLength]="22"
+            [helpFeedback]="''"
+            placement="bottom"
+            messageTooltips=""
+            name="numberCBU"
+          ></sxf-textbox>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 pl-0 mt-2">
+      <!-- TODO: DG, checkbox de poliza digital, descomentar si deciden volver a ponerlo
+            <div class="form-checkbox">
+            <input
+              type="checkbox"
+              [checked]="digitalPolicy"
+              (click)="sendDigitalPolicy()"
+              class="form-checkbox-input"
+              id="digitalPolicy"
+            />
+            <label class="form-checkbox-label" for="digitalPolicy"></label>
+            <label class="label-checkbox">
+              Póliza digital
+            </label>
+          </div>-->
+      <span class="info pl-2">
+        Vamos a enviar la póliza digital por mail
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<div
+  class="row ps"
+  style="position: relative; max-height: 80vh !important;"
+  [perfectScrollbar]="{ suppressScrollY: false }"
+>
+  <div class="questions col-lg-12">
+    <ul class="timeline list-group">
+      <ng-container *ngFor="let item of routes | sortBy: 'asc'">
+        <ng-container *ngIf="item.line === line">
+          <li
+            class="list-group-item"
+            [ngClass]="{
+              active: item.path == routeActive,
+              questionactive: item.path == routeActive,
+              visited: !(item.value === null) && !(item.value.length < 1)
+            }"
+            *ngIf="item.visible"
+          >
+            <div class="row header">
+              <div class="col-lg-8 offset-lg-2 line">
+                <div class="float-right edit">
+                  <sxf-icon
+                    type="edit"
+                    *ngIf="item.show && !item.disabled"
+                    [routerLink]="item.path"
+                    (click)="currentRoute(item.path)"
+                    [disabled]="item.disabled"
+                  ></sxf-icon>
+                </div>
+                <label class="mb-2">
+                  {{
+                    item.value === null || item.value.length < 1
+                      ? item.question
+                      : item.shortName + ': '
+                  }}
+                  <span
+                    *ngIf="!(item.value === null) && !(item.value.length < 1)"
+                    class="item-value"
+                  >
+                    {{ item.value }}
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div [ngbCollapse]="!(item.path == routeActive)">
+              <div *ngIf="item.path == routeActive">
+                <router-outlet></router-outlet>
+              </div>
+            </div>
+          </li>
+        </ng-container>
+      </ng-container>
+    </ul>
+  </div>
+</div>

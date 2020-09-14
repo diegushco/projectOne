@@ -1,0 +1,37 @@
+<div
+  [hidden]="((subject | async) === false || disabled) && !loading"
+  class="select"
+>
+  <ng-lottie width="32px" height="32px" [options]="lottieConfig"></ng-lottie>
+  <span class="ng-arrow-wrapper float-right">
+    <span class="ng-arrow"></span>
+  </span>
+</div>
+<ng-select
+  *ngIf="((subject | async) === false || disabled) && !loading"
+  [(ngModel)]="selected"
+  [items]="elementsInSelect"
+  [disabled]="
+    disabled || (!disabled && disabledOnEmpty && (!items || items.length === 0))
+  "
+  [bindLabel]="bindLabel"
+  [bindValue]="bindValue"
+  [multiple]="multiple"
+  [clearable]="clearable"
+  [markFirst]="markFirst"
+  class="custom"
+  notFoundText="No se encontraron resultados"
+  [placeholder]="placeholder"
+  [searchable]="searchable"
+  dropdownPosition="dropdownPosition"
+  (change)="onChangeValue($event)"
+  (blur)="onTouched()"
+  [loading]="loading"
+>
+  <ng-template ng-option-tmp let-item="item">
+    <div title="{{ item[bindLabel] }}">{{ item[bindLabel] }}</div>
+  </ng-template>
+</ng-select>
+<small class="form-text text-muted">
+  {{ helpFeedback }}
+</small>

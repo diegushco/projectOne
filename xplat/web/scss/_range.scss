@@ -1,0 +1,21 @@
+.slider {
+  -webkit-appearance: none;
+  border-radius: 8px;
+  width: 100%;
+  height: 5px;
+  background: $grey_light;
+  outline: none;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  /*&:hover {
+    opacity: 0.5;
+  }*/
+  &::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    @include slider-thumb;
+  }
+  &::-moz-range-thumb {
+    @include slider-thumb;
+  }
+}

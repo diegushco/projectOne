@@ -1,0 +1,313 @@
+<div class="col-12">
+  <div class="row">
+    <div class="col-lg-12 pl-0">
+      <ng-template #stillLoading>
+        <div class="grid-container">
+          <div class="grid-item">
+            <button class="btn btn-primary btn-block">
+              Cargando...
+            </button>
+          </div>
+        </div>
+      </ng-template>
+      <div class="grid-container" *ngIf="residences$ | async as addresses">
+        <span class="data-not-found" *ngIf="addresses.length == 0">
+          No se encontraron resultados
+        </span>
+        <div class="grid-item" *ngFor="let address of addresses">
+          <button
+            [ngClass]="{
+              active: address.id === addressIdSelected
+            }"
+            (click)="selectAddress(address)"
+            class="btn btn-primary btn-block"
+            (keydown.enter)="onEnter()"
+            name="selectAddressClientEmissionBtn"
+            [disabled]="disabledByRetrieve"
+          >
+            {{ address.street | uppercase }}
+            {{ address.streetnumber | uppercase }},
+            {{ address.city | uppercase }}
+          </button>
+        </div>
+        <div class="grid-item">
+          <button
+            [ngClass]="{
+              active: addressIdSelected === null
+            }"
+            (click)="addAddress([])"
+            class="btn btn-primary btn-block"
+            name="addAddressClientEmissionBtn"
+            [disabled]="disabledByRetrieve"
+          >
+            + Agregar nuevo domicilio
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="addressType$ | async as addressType">
+  <div [formGroup]="formClientResidence" class="col-12">
+    <div class="row">
+      <div class="col-lg-4 pl-0">
+        <label>
+          Cód. postal
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-4">
+        <label>
+          Provincia
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-4">
+        <label>
+          Localidad
+          <sup>*</sup>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 pl-0">
+        <sxf-textbox
+          type="text"
+          formControlName="postalcode"
+          (keyup.enter)="validatePostalCode()"
+          [disabled]="!clientIsEditable"
+          label=""
+          placeholder="Codigo Postal"
+          [maxLength]="4"
+          name="postalcodeAddressEmission"
+        ></sxf-textbox>
+      </div>
+      <div class="col-lg-4">
+        <sxf-select
+          #province
+          formControlName="state"
+          (keydown.enter)="onEnter()"
+          [disabled]="!clientIsEditable"
+          [items]="provinces$ | async"
+          bindLabel="description"
+          bindValue="code"
+          [multiple]="false"
+          class="custom"
+          [searchable]="true"
+          placeholder="Provincia"
+          [dropdownPosition]="'bottom'"
+          name="stateAddressEmission"
+          [loading]="loadingPostalCode"
+        ></sxf-select>
+      </div>
+      <div class="col-lg-4">
+        <sxf-select
+          #location
+          formControlName="city"
+          (keydown.enter)="onEnter()"
+          [disabled]="!clientIsEditable || loadingPostalCode"
+          [items]="locations$"
+          bindLabel="city"
+          bindValue="city"
+          [multiple]="false"
+          class="custom"
+          [searchable]="true"
+          placeholder="Localidad"
+          [dropdownPosition]="'bottom'"
+          name="cityAddressEmission"
+        ></sxf-select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-5 pl-0">
+        <label>
+          Calle
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-3">
+        <label>
+          Altura
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-2">
+        <label>
+          Piso
+        </label>
+      </div>
+      <div class="col-lg-2">
+        <label>
+          Depto
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-5 pl-0">
+        <sxf-textbox
+          type="text"
+          formControlName="street"
+          (keydown.enter)="onEnter()"
+          [disabled]="!clientIsEditable"
+          label=""
+          placeholder="Calle"
+          [maxLength]="200"
+          name="streetAddressEmission"
+        ></sxf-textbox>
+      </div>
+      <div class="col-lg-3">
+        <sxf-textbox
+          type="text"
+          formControlName="streetnumber"
+          (keydown.enter)="onEnter()"
+          [disabled]="!clientIsEditable"
+          label=""
+          placeholder="Altura"
+          [maxLength]="10"
+          name="streetNumberAddressEmission"
+        ></sxf-textbox>
+      </div>
+      <div class="col-lg-2">
+        <sxf-textbox
+          type="text"
+          formControlName="floor"
+          (keydown.enter)="onEnter()"
+          [disabled]="!clientIsEditable"
+          label=""
+          placeholder="Piso"
+          [maxLength]="10"
+          name="floorAddressEmission"
+        ></sxf-textbox>
+      </div>
+      <div class="col-lg-2">
+        <sxf-textbox
+          type="text"
+          formControlName="apartment"
+          (keydown.enter)="onEnter()"
+          [disabled]="!clientIsEditable"
+          label=""
+          placeholder="Depto"
+          [maxLength]="10"
+          name="apartmentAddressEmission"
+        ></sxf-textbox>
+      </div>
+      <!-- <div class="col-lg-4">
+      <sxf-select #typehab formControlName="typehab" [items]="[]" bindLabel="typehab" bindValue="code"
+        [multiple]="false" class="custom" [searchable]="true" placeholder="" [dropdownPosition]="'bottom'"></sxf-select>
+    </div> -->
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 pl-0">
+        <label>
+          Tipo
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-8 pl-0">
+        <label>
+          Aclaraciones
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 pl-0">
+        <sxf-select
+          #typeHome
+          formControlName="type"
+          (keydown.enter)="onEnter()"
+          [disabled]="!clientIsEditable"
+          [items]="addressType"
+          bindLabel="description"
+          bindValue="code"
+          [multiple]="false"
+          class="custom"
+          [searchable]="true"
+          placeholder="Tipo de vivienda"
+          [dropdownPosition]="'bottom'"
+          name="typeAddressEmission"
+        ></sxf-select>
+      </div>
+      <div class="col-lg-8 pl-0">
+        <sxf-textbox
+          type="text"
+          formControlName="clarification"
+          (keydown.enter)="onEnter()"
+          [disabled]="!clientIsEditable"
+          label=""
+          placeholder="Notas"
+          name="clarificationAddressEmission"
+        ></sxf-textbox>
+      </div>
+    </div>
+
+    <div class="row pt-4">
+      <div class="col-lg-8 pl-0">
+        <span>
+          <button
+            [disabled]="!formClientResidence.valid"
+            (click)="continue()"
+            class="btn btn-primary btn-heft"
+            name="continueAddressEmissionBtn"
+          >
+            Continuar
+          </button>
+        </span>
+        <span class="press-enter ml-3 mr-4">
+          o presiona ENTER
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<sxf-modal #newCosts [options]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Recotizando
+    </h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="closeModalNewCosts()"
+      name="closeModalFiscalConditionNewCostsBtn">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+  <div class="modal-body modal-body-items">
+    <p *ngIf="!loadingCosts; else stillLoadingCost">
+      Recotizamos en base a la dirección del cliente, el nuevo valor de la cuota
+      es de
+      <b>$ {{ newQuote | number: '1.0-0' }}</b>
+      <br />
+      Para mas detalle revisar el detalle del menú lateral.
+    </p>
+    <ng-template #stillLoadingCost>
+      <div class="row">
+        <div class="col-12 text-center">
+          <ng-lottie
+            [options]="lottieConfig"
+            width="8.75rem"
+            height="6.25rem"
+          ></ng-lottie>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-8 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="closeModalNewCosts()"
+          [disabled]="loadingCosts"
+          name="closeModalFiscalConditionNewCostsBtn"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>

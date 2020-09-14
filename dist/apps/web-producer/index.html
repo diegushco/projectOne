@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="es">
+<!--<![endif]-->
+
+<head>
+  <base href="/" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Seguros SURA Argentina</title>
+  <meta name="viewport" content="width=1280, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description"
+    content="En Seguros Sura Contamos con un equipo especializado para ayudar a las personas a tomar las mejores decisiones. ¡Con nosotros tienes protección para todo!" />
+  <meta name="keywords"
+    content="seguro vida, seguro auto, seguro moto, SOAT, seguro vivienda, seguros empresas, seguro bicicletas, seguro medico, seguro financiero, seguro industrial, seguros sura" />
+  <meta name="author" content="Sura" />
+  <meta name="theme-color" content="#0033A0" />
+  <meta property="og:title" content="" />
+  <meta property="og:image" content="" />
+  <meta property="og:url" content="" />
+  <meta property="og:site_name" content="" />
+  <meta property="og:description" content="" />
+  <meta name="twitter:title" content="" />
+  <meta name="twitter:image" content="" />
+  <meta name="twitter:url" content="" />
+  <meta name="twitter:card" content="" />
+  <!-- Google Tag Manager -->
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', '#{gaTagManager}#');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon/apple-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon/apple-icon-60x60.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon/apple-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon/apple-icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon/apple-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon/apple-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon/apple-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon/apple-icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-icon-180x180.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/android-icon-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon/favicon-96x96.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="dns-prefetch" href="//www.google-analytics.com" />
+  <link rel="dns-prefetch" href="//portal.segurossura.com.ar" />
+  <link rel="preconnect" href="https://portal.segurossura.com.ar" />
+  <link rel="preconnect" href="https://www.google-analytics.com" />
+  <meta name="msapplication-TileColor" content="#ffffff" />
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+  <meta name="theme-color" content="#ffffff" />
+<link rel="stylesheet" href="styles.f9a717623d9eb808fb25.css"></head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=#{gaTagManager}#" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <noscript>
+    Es necesario JavaScript para poder utilizar la pagina
+  </noscript>
+  <div class="container-fluid">
+    <sxf-root></sxf-root>
+  </div>
+  <script type="module">
+    import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-window.prod.mjs';
+
+    if ('serviceWorker' in navigator) {
+      const wb = new Workbox('/service-worker.js');
+
+      wb.register();
+    }
+
+    window.addEventListener('load', () => {
+      const updatesChannel = new BroadcastChannel('api-updates');
+      updatesChannel.addEventListener('message', async (event) => {
+        const { cacheName, updatedURL } = event.data.payload;
+        console.log('Se actualizo la cache: ' + cacheName);
+      });
+    });
+  </script>
+<script src="runtime-es2015.b3c3564ea83272a097ff.js" type="module"></script><script src="runtime-es5.b3c3564ea83272a097ff.js" nomodule defer></script><script src="polyfills-es5.c86ce6aad56e7f5aa8b8.js" nomodule defer></script><script src="polyfills-es2015.3058fb9598268a87b0eb.js" type="module"></script><script src="main-es2015.98b7e117458f8d99523c.js" type="module"></script><script src="main-es5.98b7e117458f8d99523c.js" nomodule defer></script></body>
+
+</html>

@@ -1,0 +1,100 @@
+<div class="home-block-coverage">
+  <div
+    class="card"
+    [ngClass]="{ 'card-hover': hoverPackage === packageIndex + 1 }"
+  >
+    <!-- <div class="card-body">
+      <div class="card-title">{{ package.description }}</div>
+      <div class="card-cuota">12 cuotas de</div>
+      <div class="card-amount">$3.300</div>
+      <div class="card-btn-select">
+        <button type="button" class="btn btn-primary">
+          Seleccionar
+        </button>
+      </div>
+    </div> -->
+    <!-- <h1 *ngFor="let check of checkUncheckCoverage">
+      {{ check.code }} {{ check.checked }}
+    </h1> -->
+    <ul class="list-group">
+      <ng-container *ngFor="let coverage of availableCoveragesBenefits">
+        <li
+          class="list-group-item item-benefits"
+          *ngIf="coverage.visible"
+          [ngClass]="{
+            'item-resize-benefits': !isCheckUncheckCoverage(coverage)
+          }"
+        >
+          <ng-container *ngIf="coverage.available">
+            <img
+              src="assets/icons/active.svg"
+              class="rounded mx-auto d-block"
+            />
+          </ng-container>
+          <ng-container *ngIf="!coverage.available">
+            <img
+              src="assets/icons/inactive.svg"
+              class="rounded mx-auto d-block"
+            />
+          </ng-container>
+        </li>
+      </ng-container>
+    </ul>
+
+    <ul
+      class="list-group others"
+      [ngClass]="{ 'd-none': !showOthersCoverages }"
+    >
+      <ng-container *ngFor="let coverage of availableCoveragesOthers">
+        <li
+          class="list-group-item"
+          *ngIf="coverage.visible"
+          [ngClass]="{
+            'item-resize-others': !isCheckUncheckCoverage(coverage, false)
+          }"
+        >
+          <ng-container *ngIf="coverage.available">
+            <img
+              src="assets/icons/active.svg"
+              class="rounded mx-auto d-block"
+            />
+          </ng-container>
+          <ng-container *ngIf="!coverage.available">
+            <img
+              src="assets/icons/inactive.svg"
+              class="rounded mx-auto d-block"
+            />
+          </ng-container>
+        </li>
+      </ng-container>
+    </ul>
+
+    <ul
+      class="list-group premiums"
+      [ngClass]="{
+        'd-none': !showPremiumsCoverages,
+        'premiums-without-others': !showOthersCoverages
+      }"
+    >
+      <ng-container *ngFor="let coverage of availableCoveragesPremium">
+        <li
+          class="list-group-item item-resize-premiums"
+          *ngIf="coverage.visible"
+        >
+          <ng-container *ngIf="coverage.available">
+            <img
+              src="assets/icons/active.svg"
+              class="rounded mx-auto d-block"
+            />
+          </ng-container>
+          <ng-container *ngIf="!coverage.available">
+            <img
+              src="assets/icons/inactive.svg"
+              class="rounded mx-auto d-block"
+            />
+          </ng-container>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+</div>

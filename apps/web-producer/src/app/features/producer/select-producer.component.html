@@ -1,0 +1,14 @@
+<sxf-select
+  [items]="producers$ | async"
+  disabled
+  [formControl]="producer"
+  bindLabel="description"
+  bindValue="code"
+  [multiple]="false"
+  [class]="'custom'"
+  [searchable]="true"
+  [placeholder]="'Seleccione el productor'"
+  [dropdownPosition]="'bottom'"
+  [disabled]="commissionProducer !== null"
+  name="selectProducer"
+></sxf-select>

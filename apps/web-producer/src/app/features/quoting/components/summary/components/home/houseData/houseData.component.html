@@ -1,0 +1,212 @@
+<ngb-accordion #houseData="ngbAccordion">
+  <ngb-panel id="housePanel">
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between text-right">
+        <div class="col-11 text-left">
+          <h5 class="m-0 title">Datos de la vivienda</h5>
+        </div>
+        <sxf-icon
+          (click)="houseData.toggle('housePanel')"
+          ngbPanelToggle
+          [ngClass]="opened ? 'arrowUp' : ''"
+          class="icon-down arrowHome"
+        ></sxf-icon>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <ul class="listHouse">
+        <li>
+          <label>Provincia:</label>
+          <ng-container *ngIf="provinces$ | async">
+            {{ currentRisk.province }}
+          </ng-container>
+        </li>
+        <li>
+          <label>Localidad:</label>
+          {{ currentRisk.location }}
+        </li>
+        <li>
+          <label>Tipo:</label>
+          {{ currentRisk.type }}
+        </li>
+        <li>
+          <label>Uso:</label>
+          {{ currentRisk.use }}
+        </li>
+        <li>
+          <label>Construcción:</label>
+          {{ currentRisk.construction }}
+        </li>
+        <li>
+          <label>Medidas de protección adicionales:</label>
+          {{ currentRisk.protection }}
+        </li>
+        <li>
+          <button (click)="openEdit()" class="btn-edit">
+            Editar
+          </button>
+        </li>
+      </ul>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+
+<sxf-modal #modalEditData [options]="{ size: 'xs' }">
+  <div class="modal-header">
+    <h4 class="title-modal" id="modal-basic-title">
+      Editar datos de vivienda
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modalEditData.closeModal('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-body-items">
+    <div [formGroup]="form">
+      <div class="row mb-1">
+        <div class="col-lg-12">
+          <label class="label-regular">
+            Provincia
+          </label>
+          <sxf-select
+            #province
+            formControlName="province"
+            [items]="provinces"
+            bindLabel="description"
+            bindValue="code"
+            [multiple]="false"
+            class="custom"
+            [searchable]="false"
+            placeholder="Provincia"
+            [dropdownPosition]="'bottom'"
+            name="home_type"
+            ngDefaultControl
+          ></sxf-select>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-lg-12">
+          <label class="label-regular">
+            Localidad
+          </label>
+          <sxf-select
+            #location
+            formControlName="location"
+            [items]="locations$ | async"
+            bindLabel="city"
+            bindValue="city"
+            [multiple]="false"
+            class="custom"
+            [searchable]="false"
+            placeholder="Localidad"
+            [dropdownPosition]="'bottom'"
+            name="home_type"
+            ngDefaultControl
+          ></sxf-select>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-lg-12">
+          <label class="label-regular">
+            Tipo de vivienda
+          </label>
+          <sxf-select
+            #types
+            formControlName="homeType"
+            [items]="homeTypes$ | async"
+            bindLabel="description"
+            bindValue="code"
+            [multiple]="false"
+            class="custom"
+            [searchable]="false"
+            placeholder="Tipo de vivienda"
+            [dropdownPosition]="'bottom'"
+            name="home_type"
+            ngDefaultControl
+          ></sxf-select>
+        </div>
+      </div>
+
+      <div class="row mb-1">
+        <div class="col-lg-12">
+          <label class="label-regular">
+            Uso de la vivienda
+          </label>
+          <sxf-select
+            #uses
+            formControlName="homeUse"
+            [items]="homeUse$ | async"
+            bindLabel="description"
+            bindValue="code"
+            [multiple]="false"
+            class="custom"
+            [searchable]="false"
+            placeholder="Uso de vivienda"
+            [dropdownPosition]="'bottom'"
+            name="home_use"
+            ngDefaultControl
+          ></sxf-select>
+        </div>
+      </div>
+
+      <div class="row mb-1">
+        <div class="col-lg-12">
+          <label class="label-regular">
+            Construcción de la vivienda
+          </label>
+          <sxf-select
+            #construction
+            formControlName="construction"
+            [items]="constructions$ | async"
+            bindLabel="description"
+            bindValue="code"
+            [multiple]="false"
+            class="custom"
+            [searchable]="false"
+            placeholder="Seleccione el tipo de Construcción"
+            [dropdownPosition]="'bottom'"
+            name="construction"
+            ngDefaultControl
+          ></sxf-select>
+        </div>
+      </div>
+
+      <div class="form-checkbox mb-0">
+        <input
+          type="checkbox"
+          formControlName="protectionMeasure"
+          id="protectedAdditional"
+          class="form-checkbox-input"
+          (change)="changeProtectedAdditional($event)"
+        />
+        <label
+          class="form-checkbox-label chk-protected"
+          for="protectedAdditional"
+        >
+          Cuenta con medidas de protección adicionales
+        </label>
+      </div>
+    </div>
+    <div *ngIf="protectionMeasure">
+      <sxf-protectionmeasure [policy]="policy"></sxf-protectionmeasure>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="d-flex col-lg-12 justify-content-center">
+        <button
+          type="button"
+          class="btn btn-primary btn-block btn-heft"
+          name="applyChanges"
+        >
+          Aplicar cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>

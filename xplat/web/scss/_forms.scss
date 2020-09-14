@@ -1,0 +1,194 @@
+select.form-control {
+  // padding-left: 0.1rem;
+  option {
+    &:focus {
+      font-weight: $font-weight-bold;
+      background-color: color("light-blue");
+    }
+  }
+}
+
+.form-control {
+  // Disabled and read-only inputs
+  //
+  // HTML5 says that controls under a fieldset > legend:first-child won't be
+  // disabled if the fieldset is disabled. Due to implementation difficulty, we
+  // don't honor that edge case; we style them as disabled anyway.
+  &:disabled,
+  &[readonly] {
+    color: $black;
+    border-color: color("gray");
+  }
+}
+
+.form-checkbox {
+  position: relative;
+  margin: $checkbox-margin;
+  text-align: left;
+
+  &.form-checkbox-inline {
+    display: inline-block;
+  }
+}
+
+.form-checkbox-label {
+  cursor: pointer;
+  display: inline;
+  line-height: $checkbox-size;
+  vertical-align: top;
+  clear: both;
+  padding-left: 1px;
+  &:not(:empty) {
+    padding-left: $checkbox-label-padding;
+  }
+  color: $blue;
+  font-weight: $font-weight-bold;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  &:before {
+    // box
+    width: $checkbox-size;
+    height: $checkbox-size;
+    background: $white;
+    border: $checkbox-border-width solid $lightslate_gray;
+    border-radius: $checkbox-border-radius;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+}
+
+.form-checkbox-input {
+  outline: 0;
+  visibility: hidden;
+  width: $checkbox-size;
+  margin: 0;
+  display: block;
+  float: left;
+  font-size: inherit;
+
+  &:checked {
+    + label:before {
+      background: $primary;
+      border: none;
+    }
+    + label:after {
+      $checkmark-size: $checkbox-size - 2 * $checkbox-padding;
+
+      transform: translate(0.15rem, ($checkbox-size / 1.9) - ($checkmark-size / 2.6)) rotate(-45deg);
+      width: 0.6rem;
+      height: $checkmark-size / 2;
+
+      border: $checkmark-width solid $white;
+      border-top-style: none;
+      border-right-style: none;
+    }
+  }
+
+  &:disabled {
+    + label {
+      color: $blue_50;
+    }
+    + label:before {
+      border-color: $blue_50;
+    }
+    &:checked {
+      + label:before {
+        background: $checkbox-checked-color-disabled;
+      }
+    }
+  }
+}
+
+.form-checkbox-as-radio {
+  input[type="checkbox"] {
+    visibility: hidden;
+
+    &:checked + label {
+      background: $primary;
+    }
+  }
+
+  width: 20px;
+  height: 20px;
+  background: $white;
+  border: 1.5px solid $primary;
+  border-radius: 100%;
+  position: relative;
+
+  label {
+    margin: 0;
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    position: absolute;
+    top: 2.4px;
+    left: 2.5px;
+
+    z-index: 1;
+
+    background: transparent;
+  }
+}
+
+.form-radio-label {
+  margin: 0.5rem;
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    + .radio-label {
+      &:before {
+        content: "";
+        background: white;
+        border-radius: 100%;
+        border: $checkbox-border-width solid $primary;
+        display: inline-block;
+        width: 1.25rem;
+        height: 1.25rem;
+        position: relative;
+        top: -0.2rem;
+        // margin-right: 1rem;
+        vertical-align: top;
+        cursor: pointer;
+        text-align: center;
+      }
+    }
+    &:checked {
+      + .radio-label {
+        &:before {
+          background-color: $primary;
+          box-shadow: inset 0 0 0 3px $white;
+        }
+      }
+    }
+    + .radio-label {
+      &:empty {
+        &:before {
+          margin-right: 0;
+        }
+      }
+    }
+    &:disabled {
+      + label {
+        color: $grey_light;
+      }
+      + label:before {
+        border-color: $grey_light;
+      }
+      &:checked {
+        + label:before {
+          background: $grey_light;
+        }
+      }
+    }
+  }
+}

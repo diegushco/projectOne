@@ -1,0 +1,26 @@
+<div class="input-search-class">
+  <div class="input-group">
+    <input
+      class="form-control"
+      type="text"
+      [value]="value"
+      [placeholder]="placeholder"
+      [disabled]="isDisabled"
+      [maxLength]="maxLength"
+      [disabled]="disabled"
+      (input)="onInput($event.target.value)"
+    />
+    <div class="input-group-prepend">
+      <span class="input-group-text">
+        <sxf-icon class="icon-blue" type="find"></sxf-icon>
+      </span>
+    </div>
+  </div>
+  <label>
+    {{ label }}
+  </label>
+
+  <small class="form-text text-muted">
+    {{ helpFeedback }}
+  </small>
+</div>

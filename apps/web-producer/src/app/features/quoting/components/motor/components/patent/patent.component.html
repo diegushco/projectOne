@@ -1,0 +1,146 @@
+<div class="row mb-3">
+  <div class="col-lg-3 offset-lg-2 pl-0">
+    <div class="form-group">
+      <sxf-textbox
+        type="text"
+        name="patente"
+        specialChar="false"
+        invalidFeedback="La patente ingresada no es válida"
+        [formControl]="patent"
+        label="Patente"
+        placeholder="Ingresá la patente"
+        [maxLength]="7"
+        (keyup.enter)="validatePatent()"
+        (keyup)="keyUp($event)"
+        [helpFeedback]="'No es obligatorio'"
+        iconAppend="true"
+        placement="bottom"
+        [iconConfig]="{ append: iconConfig }"
+      ></sxf-textbox>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6 offset-lg-2 pl-0">
+    <div class="row">
+      <div class="col-lg-5">
+        <button
+          name="validatePatent"
+          class="btn btn-primary btn-block btn-heft"
+          [disabled]="!this.patent.valid"
+          (click)="validatePatent()"
+        >
+          <ng-lottie
+            [hidden]="!loadingPatent"
+            [options]="lottieConfig"
+            (animationCreated)="animationCreated($event)"
+            height="24px"
+            width="24px"
+          ></ng-lottie>
+          {{ buttonLabel }}
+        </button>
+      </div>
+      <div class="col-lg-2 press-enter">
+        o presiona ENTER
+      </div>
+      <div class="col">
+        <button
+          name="dontKnowPatentBtn"
+          class="btn  no-patent"
+          (click)="dontKnowPatent()"
+        >
+          No se la patente
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<sxf-modal #modalPatentInUse (closed)="closeModalPatentInUse()">
+  <div class="modal-header modal-header-items">
+    <h4 class="modal-title" id="modal-basic-title">
+      Patente asociada a otra póliza
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModalPatentInUse()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-body-items">
+    <p>
+      La patente está asociada a una póliza o solicitud activa y actualmente no
+      podrá ser asegurada. Podés continuar el proceso de cotización o
+      comunicarte con tu Ejecutivo de Cuenta para más información.
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-4 pl-0">
+        <button
+          type="button"
+          name="continueQuotingBtn"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="continuePatentValidate()"
+        >
+          Continuar cotización
+        </button>
+      </div>
+      <div class="col-lg-4 pl-0">
+        <button
+          type="button"
+          name="cancelQuotingBtn"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="closeModalPatentInUse()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+
+<sxf-modal #modalUW (closed)="closeUWModal()">
+  <div class="modal-header" style="padding: 1rem 2rem;">
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeUWModal('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h4>
+      La presente emisión va a requerir autorización de la compañía.
+    </h4>
+    <h4>¿Desea solicitar autorización?</h4>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-3 pl-0">
+        <button
+          type="button"
+          class="btn btn-modal btn-lg btn-block"
+          (click)="closeUWModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-lg-5 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="closeUWModal('continue')"
+        >
+          Continuar
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>

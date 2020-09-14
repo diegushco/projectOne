@@ -1,0 +1,1063 @@
+{
+  "AUTO": {
+    "package": [
+      {
+        "code": "RC",
+        "name": "Responsabilidad Civil",
+        "packages": [
+          {
+            "externalid": null,
+            "code": "A",
+            "description": "RC",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "selected": false,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "RC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          }
+        ],
+        "coverages": [
+          {
+            "code": "SURA_CA7_RespCivilCov",
+            "name": "Responsabilidad Civil"
+          },
+          {
+            "code": "SURA_CA7_ExtensionAPaisesLimCov",
+            "name": "Extensión RC a Países Limítrofes"
+          },
+          {
+            "code": "SURA_CA7_AsistenciaMecanicaCov",
+            "name": "Asistencia Mecánica"
+          }
+        ]
+      },
+      {
+        "code": "BASIC",
+        "name": "Totales",
+        "packages": [
+          {
+            "externalid": null,
+            "code": "B",
+            "description": "B",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "selected": false,
+            "group": "BASIC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "B1",
+            "description": "B1",
+            "selected": false,
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "BASIC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          }
+        ],
+        "coverages": [
+          {
+            "code": "SURA_CA7_DanoTotalCov",
+            "name": "Daño total"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaDanoPaisesLimitrofesCov",
+            "name": "Extensión Daños a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_RespCivilCov",
+            "name": "Responsabilidad Civil"
+          },
+          {
+            "code": "SURA_CA7_RoboTotalCov",
+            "name": "Robo Total"
+          },
+          {
+            "code": "SURA_CA7_IncendioTotalCov",
+            "name": "Incendio Total"
+          },
+          {
+            "code": "SURA_CA7_CristalesLateralesCov",
+            "name": "Daños a Cristales Laterales"
+          },
+          {
+            "code": "SURA_CA7_ClausulaDeAjusteCov",
+            "name": "Cláusula de Ajuste"
+          },
+          {
+            "code": "SURA_CA7_ExtensionAPaisesLimCov",
+            "name": "Extensión RC a Países Limítrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaRoboPaisesLimitrofesCov",
+            "name": "Extensión Robo a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaIncendioPaisesLimitrofesCov",
+            "name": "Extensión Incendio a Países limítrofes"
+          },
+          {
+            "code": "SURA_CA7_AsistenciaMecanicaCov",
+            "name": "Asistencia Mecánica"
+          }
+        ]
+      },
+      {
+        "code": "TC",
+        "name": "Terceros Completos",
+        "packages": [
+          {
+            "externalid": null,
+            "code": "C",
+            "selected": false,
+            "description": "C",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "TC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "C1",
+            "description": "C1",
+            "selected": false,
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "TC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "CPrem",
+            "selected": false,
+            "description": "C Premium",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "TC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "CClima",
+            "description": "C Clima",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "selected": false,
+            "costs": null,
+            "group": "TC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          }
+        ],
+        "coverages": [
+          {
+            "code": "SURA_CA7_DanoTotalCov",
+            "name": "Daño total"
+          },
+          {
+            "code": "SURA_CA7_DPalAmparoDelRTCov",
+            "name": "Daño Parcial  al amparo del Robo Total"
+          },
+          {
+            "code": "SURA_CA7_MuerteAccidenteConductorCov",
+            "name": "Muerte Accidental Conductor"
+          },
+          {
+            "code": "SURA_CA7_CristalesLateralesCov",
+            "name": "Daños a Cristales Laterales"
+          },
+          {
+            "code": "SURA_CA7_CristalesLateralesBenCov",
+            "name": "Daños a Cristales Laterales Full Value"
+          },
+          {
+            "code": "SURA_CA7_ParabrisasyLunetasBenCov",
+            "name": "Daños a Parabrisas y Lunetas Full Value"
+          },
+          {
+            "code": "SURA_CA7_CerradurasBenCov",
+            "name": "Daños a Cerraduras"
+          },
+          {
+            "code": "SURA_CA7_DanoPorGranizoFullValueCov",
+            "name": "Daño por Granizo Full Value"
+          },
+          {
+            "code": "SURA_CA7_DanoPorInundFullValueCov",
+            "name": "Daños por Inundación Full Value"
+          },
+          {
+            "code": "SURA_CA7_RespCivilCov",
+            "name": "Responsabilidad Civil"
+          },
+          {
+            "code": "SURA_CA7_RoboTotalCov",
+            "name": "Robo Total"
+          },
+          {
+            "code": "SURA_CA7_IncendioTotalCov",
+            "name": "Incendio Total"
+          },
+          {
+            "code": "SURA_CA7_RoboParcialCov",
+            "name": "Robo Parcial"
+          },
+          {
+            "code": "SURA_CA7_IncendioParcialCov",
+            "name": "Incendio Parcial"
+          },
+          {
+            "code": "SURA_CA7_ClausulaDeAjusteCov",
+            "name": "Cláusula de Ajuste"
+          },
+          {
+            "code": "SURA_CA7_ExtensionAPaisesLimCov",
+            "name": "Extensión RC a Países Limítrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaRoboPaisesLimitrofesCov",
+            "name": "Extensión Robo a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaIncendioPaisesLimitrofesCov",
+            "name": "Extensión Incendio a Países limítrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaDanoPaisesLimitrofesCov",
+            "name": "Extensión Daños a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_AsistenciaMecanicaCov",
+            "name": "Asistencia Mecánica"
+          }
+        ]
+      },
+      {
+        "code": "TR",
+        "name": "Todo Riesgo",
+        "packages": [
+          {
+            "externalid": null,
+            "code": "TR||SURA_CA7_DanoParcialFFCov||SURA_CA7_DanoParcialFFDed||SURA_CA7_DanoParcialFFOpt2",
+            "description": "Fcia. Fija $10.000",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "selected": false,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "TR||SURA_CA7_DanoParcialFFCov||SURA_CA7_DanoParcialFFDed||SURA_CA7_DanoParcialFFOpt3",
+            "description": "Fcia. Fija $15.000",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "selected": false,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "TR||SURA_CA7_DanoParcialFFCov||SURA_CA7_DanoParcialFFDed||SURA_CA7_DanoParcialFFOpt4",
+            "description": "Fcia. Fija $20.000",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "selected": false,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "TRFV||SURA_CA7_DanoParcialFVCov||SURA_CA7_DanoTotalFVDed||SURA_CA7_DanoParcialFVOpt3",
+            "description": "Fcia. Variable 2%",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "selected": false,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "TRFV||SURA_CA7_DanoParcialFVCov||SURA_CA7_DanoTotalFVDed||SURA_CA7_DanoParcialFVOpt1",
+            "description": "Fcia. Variable 3%",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "selected": false,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "TRFV||SURA_CA7_DanoParcialFVCov||SURA_CA7_DanoTotalFVDed||SURA_CA7_DanoParcialFVOpt2",
+            "description": "Fcia. Variable 6%",
+            "coverages": null,
+            "selected": false,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          }
+        ],
+        "coverages": [
+          {
+            "code": "",
+            "name": "Daño Parcial Franquicia Fija"
+          },
+          {
+            "code": "SURA_CA7_DanoParcialFVCov",
+            "name": "Daño Parcial Franquicia Variable"
+          },
+          {
+            "code": "SURA_CA7_RespCivilCov",
+            "name": "Responsabilidad Civil"
+          },
+          {
+            "code": "SURA_CA7_RoboTotalCov",
+            "name": "Robo Total"
+          },
+          {
+            "code": "SURA_CA7_IncendioTotalCov",
+            "name": "Incendio Total"
+          },
+          {
+            "code": "SURA_CA7_DanoTotalCov",
+            "name": "Daño total"
+          },
+          {
+            "code": "SURA_CA7_RoboParcialCov",
+            "name": "Robo Parcial"
+          },
+          {
+            "code": "SURA_CA7_IncendioParcialCov",
+            "name": "Incendio Parcial"
+          },
+          {
+            "code": "SURA_CA7_DPalAmparoDelRTCov",
+            "name": "Daño Parcial  al amparo del Robo Total"
+          },
+          {
+            "code": "SURA_CA7_MuerteAccidenteConductorCov",
+            "name": "Muerte Accidental Conductor"
+          },
+          {
+            "code": "SURA_CA7_CristalesLateralesBenCov",
+            "name": "Daños a Cristales Laterales Full Value"
+          },
+          {
+            "code": "SURA_CA7_ParabrisasyLunetasBenCov",
+            "name": "Daños a Parabrisas y Lunetas Full Value"
+          },
+          {
+            "code": "SURA_CA7_CerradurasBenCov",
+            "name": "Daños a Cerraduras"
+          },
+          {
+            "code": "SURA_CA7_DanoPorGranizoFullValueCov",
+            "name": "Daño por Granizo Full Value"
+          },
+          {
+            "code": "SURA_CA7_DanoPorInundFullValueCov",
+            "name": "Daños por Inundación Full Value"
+          },
+          {
+            "code": "SURA_CA7_ClausulaDeAjusteCov",
+            "name": "Cláusula de Ajuste"
+          },
+          {
+            "code": "SURA_CA7_ExtensionAPaisesLimCov",
+            "name": "Extensión RC a Países Limítrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaRoboPaisesLimitrofesCov",
+            "name": "Extensión Robo a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaIncendioPaisesLimitrofesCov",
+            "name": "Extensión Incendio a Países limítrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaDanoPaisesLimitrofesCov",
+            "name": "Extensión Daños a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_AsistenciaMecanicaCov",
+            "name": "Asistencia Mecánica"
+          }
+        ]
+      }
+    ]
+  },
+  "PICKUP": {
+    "package": [
+      {
+        "code": "RC",
+        "name": "Responsabilidad Civil",
+        "packages": [
+          {
+            "externalid": null,
+            "code": "A",
+            "description": "RC",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "selected": false,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "RC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          }
+        ],
+        "coverages": [
+          {
+            "code": "SURA_CA7_RespCivilCov",
+            "name": "Responsabilidad Civil"
+          },
+          {
+            "code": "SURA_CA7_ExtensionAPaisesLimCov",
+            "name": "Extensión RC a Países Limítrofes"
+          },
+          {
+            "code": "SURA_CA7_AsistenciaMecanicaCov",
+            "name": "Asistencia Mecánica"
+          }
+        ]
+      },
+      {
+        "code": "BASIC",
+        "name": "Totales",
+        "packages": [
+          {
+            "externalid": null,
+            "code": "B",
+            "description": "B",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "selected": false,
+            "group": "BASIC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "B1",
+            "description": "B1",
+            "selected": false,
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "BASIC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          }
+        ],
+        "coverages": [
+          {
+            "code": "SURA_CA7_DanoTotalCov",
+            "name": "Daño total"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaDanoPaisesLimitrofesCov",
+            "name": "Extensión Daños a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_RespCivilCov",
+            "name": "Responsabilidad Civil"
+          },
+          {
+            "code": "SURA_CA7_RoboTotalCov",
+            "name": "Robo Total"
+          },
+          {
+            "code": "SURA_CA7_IncendioTotalCov",
+            "name": "Incendio Total"
+          },
+          {
+            "code": "SURA_CA7_CristalesLateralesCov",
+            "name": "Daños a Cristales Laterales"
+          },
+          {
+            "code": "SURA_CA7_ClausulaDeAjusteCov",
+            "name": "Cláusula de Ajuste"
+          },
+          {
+            "code": "SURA_CA7_ExtensionAPaisesLimCov",
+            "name": "Extensión RC a Países Limítrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaRoboPaisesLimitrofesCov",
+            "name": "Extensión Robo a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaIncendioPaisesLimitrofesCov",
+            "name": "Extensión Incendio a Países limítrofes"
+          },
+          {
+            "code": "SURA_CA7_AsistenciaMecanicaCov",
+            "name": "Asistencia Mecánica"
+          }
+        ]
+      },
+      {
+        "code": "TC",
+        "name": "Terceros Completos",
+        "packages": [
+          {
+            "externalid": null,
+            "code": "C",
+            "selected": false,
+            "description": "C",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "TC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "C1",
+            "description": "C1",
+            "selected": false,
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "TC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "CPrem",
+            "selected": false,
+            "description": "C Premium",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "TC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "CClima",
+            "description": "C Clima",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "selected": false,
+            "costs": null,
+            "group": "TC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          }
+        ],
+        "coverages": [
+          {
+            "code": "SURA_CA7_DanoTotalCov",
+            "name": "Daño total"
+          },
+          {
+            "code": "SURA_CA7_DPalAmparoDelRTCov",
+            "name": "Daño Parcial  al amparo del Robo Total"
+          },
+          {
+            "code": "SURA_CA7_MuerteAccidenteConductorCov",
+            "name": "Muerte Accidental Conductor"
+          },
+          {
+            "code": "SURA_CA7_CristalesLateralesCov",
+            "name": "Daños a Cristales Laterales"
+          },
+          {
+            "code": "SURA_CA7_CristalesLateralesBenCov",
+            "name": "Daños a Cristales Laterales Full Value"
+          },
+          {
+            "code": "SURA_CA7_ParabrisasyLunetasBenCov",
+            "name": "Daños a Parabrisas y Lunetas Full Value"
+          },
+          {
+            "code": "SURA_CA7_CerradurasBenCov",
+            "name": "Daños a Cerraduras"
+          },
+          {
+            "code": "SURA_CA7_DanoPorGranizoFullValueCov",
+            "name": "Daño por Granizo Full Value"
+          },
+          {
+            "code": "SURA_CA7_DanoPorInundFullValueCov",
+            "name": "Daños por Inundación Full Value"
+          },
+          {
+            "code": "SURA_CA7_RespCivilCov",
+            "name": "Responsabilidad Civil"
+          },
+          {
+            "code": "SURA_CA7_RoboTotalCov",
+            "name": "Robo Total"
+          },
+          {
+            "code": "SURA_CA7_IncendioTotalCov",
+            "name": "Incendio Total"
+          },
+          {
+            "code": "SURA_CA7_RoboParcialCov",
+            "name": "Robo Parcial"
+          },
+          {
+            "code": "SURA_CA7_IncendioParcialCov",
+            "name": "Incendio Parcial"
+          },
+          {
+            "code": "SURA_CA7_ClausulaDeAjusteCov",
+            "name": "Cláusula de Ajuste"
+          },
+          {
+            "code": "SURA_CA7_ExtensionAPaisesLimCov",
+            "name": "Extensión RC a Países Limítrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaRoboPaisesLimitrofesCov",
+            "name": "Extensión Robo a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaIncendioPaisesLimitrofesCov",
+            "name": "Extensión Incendio a Países limítrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaDanoPaisesLimitrofesCov",
+            "name": "Extensión Daños a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_AsistenciaMecanicaCov",
+            "name": "Asistencia Mecánica"
+          }
+        ]
+      },
+      {
+        "code": "TR",
+        "name": "Todo Riesgo",
+        "packages": [
+          {
+            "externalid": null,
+            "code": "TR||SURA_CA7_DanoParcialFFCov||SURA_CA7_DanoParcialFFDed||SURA_CA7_DanoParcialFFOpt2",
+            "description": "Fcia. Fija $10.000",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "selected": false,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "TR||SURA_CA7_DanoParcialFFCov||SURA_CA7_DanoParcialFFDed||SURA_CA7_DanoParcialFFOpt3",
+            "description": "Fcia. Fija $15.000",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "selected": false,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "TR||SURA_CA7_DanoParcialFFCov||SURA_CA7_DanoParcialFFDed||SURA_CA7_DanoParcialFFOpt4",
+            "description": "Fcia. Fija $20.000",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "selected": false,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "TRFV||SURA_CA7_DanoParcialFVCov||SURA_CA7_DanoTotalFVDed||SURA_CA7_DanoParcialFVOpt3",
+            "description": "Fcia. Variable 2%",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "selected": false,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "TRFV||SURA_CA7_DanoParcialFVCov||SURA_CA7_DanoTotalFVDed||SURA_CA7_DanoParcialFVOpt1",
+            "description": "Fcia. Variable 3%",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "selected": false,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "TRFV||SURA_CA7_DanoParcialFVCov||SURA_CA7_DanoTotalFVDed||SURA_CA7_DanoParcialFVOpt2",
+            "description": "Fcia. Variable 6%",
+            "coverages": null,
+            "selected": false,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "TR",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          }
+        ],
+        "coverages": [
+          {
+            "code": "",
+            "name": "Daño Parcial Franquicia Fija"
+          },
+          {
+            "code": "SURA_CA7_DanoParcialFVCov",
+            "name": "Daño Parcial Franquicia Variable"
+          },
+          {
+            "code": "SURA_CA7_RespCivilCov",
+            "name": "Responsabilidad Civil"
+          },
+          {
+            "code": "SURA_CA7_RoboTotalCov",
+            "name": "Robo Total"
+          },
+          {
+            "code": "SURA_CA7_IncendioTotalCov",
+            "name": "Incendio Total"
+          },
+          {
+            "code": "SURA_CA7_DanoTotalCov",
+            "name": "Daño total"
+          },
+          {
+            "code": "SURA_CA7_RoboParcialCov",
+            "name": "Robo Parcial"
+          },
+          {
+            "code": "SURA_CA7_IncendioParcialCov",
+            "name": "Incendio Parcial"
+          },
+          {
+            "code": "SURA_CA7_DPalAmparoDelRTCov",
+            "name": "Daño Parcial  al amparo del Robo Total"
+          },
+          {
+            "code": "SURA_CA7_MuerteAccidenteConductorCov",
+            "name": "Muerte Accidental Conductor"
+          },
+          {
+            "code": "SURA_CA7_CristalesLateralesBenCov",
+            "name": "Daños a Cristales Laterales Full Value"
+          },
+          {
+            "code": "SURA_CA7_ParabrisasyLunetasBenCov",
+            "name": "Daños a Parabrisas y Lunetas Full Value"
+          },
+          {
+            "code": "SURA_CA7_CerradurasBenCov",
+            "name": "Daños a Cerraduras"
+          },
+          {
+            "code": "SURA_CA7_DanoPorGranizoFullValueCov",
+            "name": "Daño por Granizo Full Value"
+          },
+          {
+            "code": "SURA_CA7_DanoPorInundFullValueCov",
+            "name": "Daños por Inundación Full Value"
+          },
+          {
+            "code": "SURA_CA7_ClausulaDeAjusteCov",
+            "name": "Cláusula de Ajuste"
+          },
+          {
+            "code": "SURA_CA7_ExtensionAPaisesLimCov",
+            "name": "Extensión RC a Países Limítrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaRoboPaisesLimitrofesCov",
+            "name": "Extensión Robo a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaIncendioPaisesLimitrofesCov",
+            "name": "Extensión Incendio a Países limítrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaDanoPaisesLimitrofesCov",
+            "name": "Extensión Daños a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_AsistenciaMecanicaCov",
+            "name": "Asistencia Mecánica"
+          }
+        ]
+      }
+    ]
+  },
+  "MOTO": {
+    "package": [
+      {
+        "code": "BASIC",
+        "name": "Responsabilidad civil + básica",
+        "packages": [
+          {
+            "externalid": null,
+            "code": "A",
+            "description": "RC",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "selected": false,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "BASIC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "B",
+            "description": "B",
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "selected": false,
+            "group": "BASIC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          },
+          {
+            "externalid": null,
+            "code": "B1",
+            "description": "B1",
+            "selected": false,
+            "coverages": null,
+            "coveragesQuoted": null,
+            "limitrc": null,
+            "premiums": null,
+            "costs": null,
+            "group": "BASIC",
+            "error": {
+              "code": null,
+              "message": null,
+              "externalid": null
+            }
+          }
+        ],
+        "coverages": [
+          {
+            "code": "SURA_CA7_DanoTotalCov",
+            "name": "Daño total"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaDanoPaisesLimitrofesCov",
+            "name": "Extensión Daños a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_RespCivilCov",
+            "name": "Responsabilidad Civil"
+          },
+          {
+            "code": "SURA_CA7_RoboTotalCov",
+            "name": "Robo Total"
+          },
+          {
+            "code": "SURA_CA7_IncendioTotalCov",
+            "name": "Incendio Total"
+          },
+          {
+            "code": "SURA_CA7_CristalesLateralesCov",
+            "name": "Daños a Cristales Laterales"
+          },
+          {
+            "code": "SURA_CA7_ClausulaDeAjusteCov",
+            "name": "Cláusula de Ajuste"
+          },
+          {
+            "code": "SURA_CA7_ExtensionAPaisesLimCov",
+            "name": "Extensión RC a Países Limítrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaRoboPaisesLimitrofesCov",
+            "name": "Extensión Robo a Paises limitrofes"
+          },
+          {
+            "code": "SURA_CA7_ExtensionaIncendioPaisesLimitrofesCov",
+            "name": "Extensión Incendio a Países limítrofes"
+          },
+          {
+            "code": "SURA_CA7_AsistenciaMecanicaCov",
+            "name": "Asistencia Mecánica"
+          }
+        ]
+      }
+    ]
+  }
+}

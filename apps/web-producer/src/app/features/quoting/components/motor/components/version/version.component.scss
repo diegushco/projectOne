@@ -1,0 +1,33 @@
+@import '~@sura-platform/scss/variables';
+
+$gray: #c4c4c4;
+
+.grid-container {
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: none;
+  padding: 0;
+  .grid-item {
+    margin: 0.3rem;
+    .btn-primary {
+      text-align: left;
+      padding: 0.5rem 1rem;
+      background-color: white;
+      border: 0.5px solid $gray;
+      color: $blue;
+      border-radius: 5px;
+
+      &.select {
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+      }
+
+      &.active,
+      &:active {
+        background-color: $white !important;
+        border: 0.5px solid $primary !important;
+        box-shadow: 0px 0px 10px rgba($primary, 0.4) !important;
+      }
+    }
+  }
+}

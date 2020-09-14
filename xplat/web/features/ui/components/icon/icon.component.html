@@ -1,0 +1,9 @@
+<div
+  [class]="class"
+  [ngClass]="[
+    'icon',
+    'icon-' + type,
+    size ? 'icon-' + size : 'icon-sm',
+    disabled ? 'icon-off' : ''
+  ]"
+></div>

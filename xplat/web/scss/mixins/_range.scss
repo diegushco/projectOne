@@ -1,0 +1,9 @@
+@mixin slider-thumb {
+  border-radius: 16px;
+  width: 23px;
+  height: 23px;
+  opacity: 1;
+  background: $primary;
+  cursor: pointer;
+  border: 1px solid $primary;
+}

@@ -1,0 +1,78 @@
+@import '~@sura-platform/scss/variables';
+
+label {
+  margin-bottom: 0;
+  font-size: 0.75rem;
+  color: $gray_dark;
+}
+
+.brand-span {
+  font-size: 0.875rem;
+  color: $gray_dark;
+}
+.model-span {
+  color: $gray_dark;
+  font-size: 0.875rem;
+}
+
+.year-span {
+  color: $gray_dark;
+  font-size: 0.875rem;
+}
+
+.driver-span {
+  color: $blue;
+  font-size: 0.875rem;
+  font-weight: $font-weight-bold;
+}
+
+.press-enter {
+  color: #a3adb3;
+  font-size: 0.75rem;
+}
+
+.label-checkbox {
+  vertical-align: top;
+  margin-left: 3px;
+}
+.label-btn {
+  color: $white;
+  font-size: 0.9375rem; /*15px en resolución de 1280 de ancho*/
+}
+
+.btn-vehicle {
+  border: 1px solid $grey_light;
+  border-radius: 0.3125rem;
+  padding: 0 1rem 1rem 1rem;
+  .icon {
+    position: relative;
+    padding-left: 1.7rem;
+
+    .icon-vehicle {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+
+  .circle-ok {
+    display: inline-block;
+    background-color: #0033a0;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    zoom: 0.8;
+    margin-right: 0.5rem;
+  }
+
+  .title-primary {
+    font-size: 0.875rem;
+    color: $gray_dark;
+  }
+
+  .title-secondary {
+    font-size: 0.875rem;
+    color: $gray_dark;
+  }
+}

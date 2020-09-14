@@ -1,0 +1,37 @@
+<div class="input-group">
+  <div class="input-group-prepend">
+    <button
+      [disabled]="disabledDecrement || disabled"
+      class="btn btn-default"
+      type="button"
+      (click)="decrement()"
+    >
+      -
+    </button>
+    <!-- <span class="prepend">{{ prepend }}</span> -->
+  </div>
+  <input
+    type="hidden"
+    class="form-control"
+    [value]="value"
+    [maxLength]="maxLength"
+    [disabled]="disabled"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    prepend="prepend"
+    append="append"
+  />
+  <div class="display">{{ prepend }}{{ value }}{{ append }}</div>
+  <div class="input-group-append">
+    <!-- <span class="append">{{ append }}</span> -->
+    <button
+      [disabled]="disabledIncrement || disabled"
+      class="btn btn-default"
+      type="button"
+      (click)="increment()"
+    >
+      +
+    </button>
+  </div>
+</div>

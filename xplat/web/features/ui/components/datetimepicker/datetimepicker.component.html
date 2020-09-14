@@ -1,0 +1,53 @@
+<div class="form-input-label">
+  <div class="input-group">
+    <input
+      class="form-control"
+      type="text"
+      placeholder="dd/mm/yyyy"
+      [(ngModel)]="data"
+      (ngModelChange)="onChangeValue($event)"
+      ngbDatepicker
+      #d="ngbDatepicker"
+      #input
+      maxLength="10"
+      [navigation]="navigation"
+      [disabled]="disabled"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+      [ngClass]="{
+        invalid:
+          !formControl.valid && (formControl.dirty || formControl.touched)
+      }"
+    />
+    <div class=" input-group-append ">
+      <button class="btn calendar " (click)="d.toggle()" type="button ">
+        <sxf-icon type="calendar "></sxf-icon>
+      </button>
+    </div>
+  </div>
+  <label>
+    {{ label }}
+  </label>
+  <label
+    [ngClass]="{
+      invalid: !formControl.valid && (formControl.dirty || formControl.touched)
+    }"
+  >
+    {{ label }}
+  </label>
+  <div
+    class="text-danger"
+    *ngIf="
+      formControl &&
+      formControl.errors &&
+      (formControl.dirty || formControl.touched)
+    "
+  >
+    <small *ngIf="formControl.errors['required']" class="invalid-feedback">
+      El campo es requerido
+    </small>
+  </div>
+  <small class="form-text text-muted">
+    {{ helpFeedback }}
+  </small>
+</div>

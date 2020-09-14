@@ -1,0 +1,101 @@
+@import '~@sura-platform/scss/variables';
+
+$label-title-size: 1.625rem;
+
+label {
+  font-size: $label-title-size;
+  color: $blue;
+  font-weight: $font-weight-bold;
+  margin-bottom: 0;
+}
+
+.panel.noborder {
+  border: none;
+  box-shadow: none;
+}
+.panel.noborder > .panel-heading {
+  border: 1px solid #dddddd;
+  border-radius: 0;
+}
+
+.panel-title {
+  font-size: 1em;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.btn-next-screen {
+  height: 40px;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile + label {
+  font-size: 14px;
+  line-height: 16px;
+  color: $gray_dark;
+  display: inline-block;
+  padding: 10px 7px 10px 10px;
+  font-weight: normal;
+}
+
+.box-file {
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.box-file-over {
+  background-color: #06379d;
+}
+
+.box-file-over > label {
+  color: #fff;
+}
+
+.icon-image-over {
+  transform: rotate(-15.87deg);
+}
+
+.line-box-dashed {
+  border: 1px dashed #b9b9b9;
+}
+
+.line-box-solid {
+  border: 1px solid #b9b9b9;
+}
+
+.pad-front {
+  padding-top: 7px;
+}
+
+.inputfile:focus + label {
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
+}
+
+.justify-content-start {
+  div {
+    margin-right: 10px;
+  }
+}
+
+.icon-gray {
+  filter: sepia(1) saturate(0.25) brightness(235%);
+  -webkit-filter: sepia(1) saturate(0.25) brightness(235%);
+}
+
+.msg-file {
+  padding-top: 0.5em;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 14px;
+  color: #393b3d;
+}

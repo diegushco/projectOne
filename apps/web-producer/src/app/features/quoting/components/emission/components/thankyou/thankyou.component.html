@@ -1,0 +1,419 @@
+<ng-template #stillLoading>
+  <div class="row">
+    <div class="col-lg-4 offset-lg-5 loading">
+      <ng-lottie
+        [options]="lottieConfig"
+        width="8.75rem"
+        height="6.25rem"
+      ></ng-lottie>
+    </div>
+  </div>
+</ng-template>
+
+<!--Ty page pendiente UW -->
+<div
+  *ngIf="policy$ | async as policy"
+  class="ty-result"
+  [perfectScrollbar]="{ suppressScrollY: false }"
+>
+  <div *ngIf="(uwIssue$ | async) && !policy.policynumber">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <img src="/assets/icons/GENERAL_DOCUMENT.svg" alt="ok" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <span class="span_text_sure">Solicitud N°</span>
+        <span class="span_text_sure font-weight-bold">
+          {{ policy.job.number }}
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <span class="span_text_info">Pendiente de aprobación</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <span class="span_text_data">
+          La emisión solicitada requiere autorización por parte de la
+          <br />
+          compañía. Se responderá dentro de las próximas 48hs.
+          <br />
+          Podes ver el estado en solicitudes pendientes
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2 offset-lg-5">
+        <sxf-icon class="icon-green" type="view"></sxf-icon>
+        <a style="cursor: pointer;" (click)="goToPendings()">
+          <span class="span_text_primary">
+            Ver estado de la solicitud
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="row pt-3">
+      <div class="col-lg-2 offset-lg-5">
+        <button
+          (click)="goHome()"
+          class="btn btn-primary btn-lg btn-block button_primary"
+        >
+          Volver a inicio
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Requere Inspeccion (Pending) -->
+<div
+  *ngIf="policy$ | async as policy"
+  class="ty-result"
+  [perfectScrollbar]="{ suppressScrollY: false }"
+>
+  <div *ngIf="policy.inspection.status === PENDING">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <img src="/assets/icons/GENERAL_OK.svg" alt="ok" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <span class="span_text_sure">Solicitud N°</span>
+        <span class="span_text_sure font-weight-bold">
+          {{ policy.job.number }}
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <span class="span_text_info font-weight-bold">
+          ¡Solicitud completa! Realizar inspección
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="col-lg-12 text-center"
+        *ngIf="vehiclePackage$ | async as packageSelected"
+      >
+        <span class="span_text_data">
+          El certificado de cobertura a nombre de
+        </span>
+        <br />
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="col-lg-12 text-center"
+        *ngIf="policyClient$ | async as client"
+      >
+        <span
+          *ngIf="client.type === 'Person'"
+          class="span_text_data font-weight-bold"
+        >
+          {{ client.firstname }} {{ client.lastname }}
+        </span>
+        <span
+          *ngIf="client.type === 'Company'"
+          class="span_text_data font-weight-bold"
+        >
+          {{ client.companyname }}
+        </span>
+        <span class="span_text_data">
+          [{{ client.documentType === 'SSN' ? 'DNI' : client.documentType }}
+          {{ client.documentNumber }}]
+        </span>
+        <span class="span_text_data">
+          será enviada a
+        </span>
+        <br />
+        <span class="span_text_data font-weight-bold">{{ client.email }}</span>
+        <span class="span_text_data">
+          y a tu mail.
+          <!-- <b>{{ client.email }}</b> -->
+        </span>
+      </div>
+    </div>
+    <div
+      class="row pt-3 pl-0"
+      *ngIf="(policyVehicles$ | async).length === 1; else fleet"
+    >
+      <div *ngTemplateOutlet="nonFleet"></div>
+    </div>
+    <div class="row pt-3">
+      <div class="col-lg-3 offset-lg-3">
+        <div class="links float-right">
+          <sxf-icon class="icon-green" type="download"></sxf-icon>
+          <a (click)="getCoverageCertificate()" style="cursor: pointer;">
+            <span class="span_text_primary">
+              Descargar certificado
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-3 pl-0">
+        <button
+          (click)="goHome()"
+          class="btn btn-primary btn-lg btn-block button_primary"
+        >
+          Volver a inicio
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 offset-lg-4 pt-3">
+        <div class="box_border">
+          <div class="row">
+            <div class="col-lg-2 pt-3">
+              <img src="/assets/icons/GENERAL_ALERT.svg" alt="ok" />
+            </div>
+            <div class="col-lg-10">
+              <span class="span_text_brand warning">
+                Para mantener la cobertura debe realizar la inspección dentro de
+                los próximos 15 días. Le hemos enviado el link para la
+                autoinspección por photo up al mail de tu asegurado.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- No Necesita inspeccion -->
+<div
+  *ngIf="policy$ | async as policy"
+  class="ty-result"
+  [perfectScrollbar]="{ suppressScrollY: false }"
+>
+  <div *ngIf="policy.policynumber">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <img src="/assets/icons/GENERAL_OK.svg" alt="ok" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <span class="span_text_sure">Póliza N°</span>
+        <span class="span_text_sure font-weight-bold">
+          {{ policy.policynumber }}
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <span class="span_text_info">¡Genial, tu cliente esta asegurado!</span>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="col-lg-12 text-center"
+        *ngIf="vehiclePackage$ | async as packageSelected"
+      >
+        <span
+          *ngIf="(policyVehicles$ | async)?.length === 1"
+          class="span_text_data"
+        >
+          La póliza con cobertura {{ packageSelected.description }} a nombre de
+        </span>
+        <span
+          *ngIf="(policyVehicles$ | async)?.length > 1"
+          class="span_text_data"
+        >
+          El certificado de cobertura a nombre de
+        </span>
+        <br />
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="col-lg-12 text-center"
+        *ngIf="policyClient$ | async as client"
+      >
+        <span
+          *ngIf="client.type === 'Person'"
+          class="span_text_data font-weight-bold"
+        >
+          {{ client.firstname }} {{ client.lastname }}
+        </span>
+        <span
+          *ngIf="client.type === 'Company'"
+          class="span_text_data font-weight-bold"
+        >
+          {{ client.companyname }}
+        </span>
+        <span class="span_text_data">
+          [{{ client.documentType === 'SSN' ? 'DNI' : client.documentType }}
+          {{ client.documentNumber }}]
+        </span>
+        <span class="span_text_data">
+          fue enviada a
+        </span>
+        <br />
+        <span class="span_text_data font-weight-bold">{{ client.email }}</span>
+        <span class="span_text_data">
+          y a tu mail.
+          <!-- <b>{{ client.email }}</b> -->
+        </span>
+      </div>
+    </div>
+    <div
+      class="row pt-3 pl-0"
+      *ngIf="(policyVehicles$ | async).length === 1; else fleet"
+    >
+      <div *ngTemplateOutlet="nonFleet"></div>
+    </div>
+    <div class="row" *ngIf="policy?.inspection.status === REQUESTNONBLOCKING">
+      <div class="col-lg-4 offset-lg-4 pt-3">
+        <div class="box_border">
+          <div class="row">
+            <div class="col-lg-2 pt-3">
+              <img src="/assets/icons/GENERAL_ALERT.svg" alt="ok" />
+            </div>
+            <div class="col-lg-10">
+              <span class="span_text_brand warning">
+                Realizar la inspección dentro de los próximos 15 dias o la
+                póliza será anulada.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-3">
+      <div class="col-lg-3 offset-lg-3">
+        <div class="links float-right">
+          <sxf-icon class="icon-green" type="download"></sxf-icon>
+          <a (click)="getProducerPolicyCopy()" style="cursor: pointer;">
+            <span class="span_text_primary">
+              Descargar copia productor
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-3 pl-0">
+        <sxf-icon class="icon-green" type="download"></sxf-icon>
+        <a (click)="getClientPolicyCopy()" style="cursor: pointer;">
+          <span class="span_text_primary">
+            Descargar copia asegurado
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="row pt-3">
+      <div class="col-lg-2 offset-lg-5">
+        <button
+          (click)="goHome()"
+          class="btn btn-primary btn-lg btn-block button_primary"
+        >
+          Volver a inicio
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #nonFleet>
+  <div class="col-lg-3 offset-lg-3" *ngIf="policyVehicles$ | async as vehicle">
+    <div class="boxes float-right">
+      <div class="row">
+        <div class="col text-center">
+          <span class="span_text_brand font-weight-bold">
+            {{ vehicle[0].brand.description }} {{ vehicle[0].shortModel }}
+          </span>
+          <br />
+          <span class="span_text">
+            {{ vehicle[0].model.description }}
+          </span>
+          <br />
+          <span class="span_text">
+            {{ vehicle[0].license | uppercase }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 pl-0">
+    <div class="boxes" *ngIf="policyPayment$ | async as payment">
+      <div class="row pb-1">
+        <div class="col text-center">
+          <span class="span_text">
+            {{ payment.method }} /
+            {{ (policy$ | async)?.paymentTerm.maximumnumberofinstallments }}
+            Cuotas
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <div [ngSwitch]="payment.method" class="box_white text-center p-2">
+            <span *ngSwitchCase="'Tarjeta de crédito'" class="span_text">
+              <img
+                width="40"
+                [src]="'assets/cards/' + payment.type?.toUpperCase() + '.svg'"
+              />
+              &nbsp; ***{{ payment.number }}
+            </span>
+            <span *ngSwitchCase="'Debito en banco'" class="span_text">
+              CBU: {{ payment.number }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #fleet>
+  <div class="result-container">
+    <div class="vehicle-info" *ngFor="let vehicle of policyVehicles$ | async">
+      <div class="check">
+        <img src="assets/icons/GENERAL_OK_SM.svg" alt="OK" />
+      </div>
+      <div class="info">
+        <div class="vehicle-data">
+          <img
+            class="card-type"
+            [src]="'assets/icons/TYPE_' + vehicle.group + '.svg'"
+            [alt]="vehicle.group"
+          />
+          <span class="vehicle-model">
+            {{ getVehicleDescription(vehicle) }}
+          </span>
+        </div>
+        <div class="coverage-info">{{ vehicle.packages[0].description }}</div>
+      </div>
+    </div>
+    <div class="payment-info" *ngIf="policyPayment$ | async as payment">
+      <div class="detail" [ngClass]="{ 'no-number': !payment.number }">
+        <div class="method">{{ payment.method }}</div>
+        <div class="separator" *ngIf="!payment.number">/</div>
+        <div class="plan">
+          {{
+            getPlan((policy$ | async)?.paymentTerm.maximumnumberofinstallments)
+          }}
+        </div>
+      </div>
+      <div class="card-info" *ngIf="payment.number">
+        <img
+          class="card-image"
+          *ngIf="payment.type"
+          [src]="'assets/cards/' + payment.type?.toUpperCase() + '.svg'"
+          alt="AMRICANEXPRESS"
+        />
+        <ng-container *ngIf="payment.type">
+          <div class="ellipse"></div>
+          <div class="ellipse"></div>
+          <div class="ellipse"></div>
+        </ng-container>
+        <span class="card-number">{{ payment.number }}</span>
+      </div>
+    </div>
+  </div>
+</ng-template>

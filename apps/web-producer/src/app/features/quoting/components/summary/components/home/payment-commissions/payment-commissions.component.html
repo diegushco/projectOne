@@ -1,0 +1,141 @@
+<div class="payment-commissions">
+  <ngb-accordion #pcAccordion="ngbAccordion">
+    <ngb-panel id="pcPanel">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between text-right">
+          <div class="col-11 text-left">
+            <span class="c1 font-regular text-sura-blue-color title">Pago y comisiones</span>
+          </div>
+          <sxf-icon (click)="pcAccordion.toggle('pcPanel')" ngbPanelToggle [type]="opened ? 'up' : 'down'"
+            class="icon-green"></sxf-icon>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <ul class="listHouse c2 text-sura-dark-gray-color font-regular">
+          <li>
+            <label>Condición fiscal: </label>
+            <span>&nbsp;{{ fiscalConditionPolicy?.description }}</span>
+          </li>
+          <li *ngIf="fiscalConditionPolicy && fiscalConditionPolicy?.code != 'consumidorFinal'">
+            <label>Ingresos brutos: </label>
+            <span>&nbsp;{{ iibbPolicy?.description }}</span>
+          </li>
+          <li>
+            <label>Forma de pago: </label>
+            <span>&nbsp;{{ paymentMethodPolicy?.description }}</span>
+          </li>
+          <li>
+            <label>Cuotas: </label>
+            <span>&nbsp;{{ paymentPlanPolicy?.maximumnumberofinstallments }}</span>
+          </li>
+          <li>
+            <label>Campaña: </label>
+            <span>&nbsp;{{ policy.campaign ? policy.campaign : 'Ninguna' }}</span>
+          </li>
+          <li>
+            <label>Dcto. comercial: </label>
+            <span>&nbsp;{{ this.policy.home.discounts[0].value }}%</span>
+          </li>
+          <li>
+            <label>Comisión: </label>
+            <span>&nbsp;{{ commissionPolicy?.default }}%</span>
+          </li>
+          <li><button (click)="openModalEdit()" class="btn-edit">Editar</button></li>
+        </ul>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+
+  <sxf-modal #modalEdit [options]="{ size: 'xs' }">
+    <div class="modal-header">
+      <button type="button" class="close" aria-label="Close" (click)="modalEdit.closeModal('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body modal-body-items">
+      <h3 class="font-regular text-sura-blue-color" id="modal-basic-title">
+        Pago y comisiones
+      </h3>
+      <div [formGroup]="form" class="mt-4">
+        <div class="row mb-2">
+          <div class="col-lg-12">
+            <label class="label-regular">
+              Condición fiscal
+            </label>
+            <sxf-select #fiscalCondition formControlName="fiscalCondition" [items]="fiscalConditionItems$ | async"
+              bindLabel="description" bindValue="code" [multiple]="false" class="custom" [searchable]="false"
+              placeholder="Condición Fiscal" [dropdownPosition]="'bottom'" name="fiscal-condition"></sxf-select>
+          </div>
+        </div>
+        <div class="row mb-2" *ngIf="form?.get('fiscalCondition')?.value != 'consumidorFinal'">
+          <div class="col-lg-12">
+            <label class="label-regular">
+              Ingresos brutos
+            </label>
+            <sxf-select #iibb formControlName="iibb" [items]="iibbItems$ | async" bindLabel="description"
+              bindValue="code" [multiple]="false" class="custom" [searchable]="false" placeholder="Ingresos brutos"
+              [dropdownPosition]="'bottom'" name="iibb"></sxf-select>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-8">
+            <label class="label-regular">
+              Forma de pago
+            </label>
+            <sxf-select #paymentMethod formControlName="paymentMethod" [items]="paymentMethodItems$ | async"
+              bindLabel="description" bindValue="code" [multiple]="false" class="custom" [searchable]="false"
+              placeholder="Forma de pago" [dropdownPosition]="'bottom'" name="payment-method"></sxf-select>
+          </div>
+          <div class="col-lg-4">
+            <label class="label-regular">
+              Cuotas
+            </label>
+            <sxf-select #paymentPlan formControlName="paymentPlan" [items]="paymentPlanItems$ | async"
+              bindLabel="maximumnumberofinstallments" bindValue="code" [multiple]="false" class="custom"
+              [searchable]="false" placeholder="Cuotas" [dropdownPosition]="'bottom'" name="payment-plan"></sxf-select>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-12">
+            <label class="label-regular">
+              Campaña
+            </label>
+            <sxf-select #campaign formControlName="campaign" [items]="[{code:'ninguna', description:'Ninguna'}]"
+              bindLabel="description" bindValue="code" [multiple]="false" class="custom" [searchable]="false"
+              placeholder="Campaña" [dropdownPosition]="'bottom'" name="campaign"></sxf-select>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-5">
+            <label class="label-regular">
+              Dcto. comercial
+            </label>
+            <sxf-textbox type="text" formControlName="discount" style="display: inherit;" name="discount"
+              helpFeedback="Min {{ discountPolicy?.minimum }}% - Max {{ discountPolicy?.maximum }}%"
+              [mask]="percentageMask" #discount [iconConfig]="{ append: iconConfig }">
+            </sxf-textbox>
+          </div>
+          <div class="col-lg-6 offset-lg-1">
+            <label class="label-regular">
+              Comisión
+            </label>
+            <sxf-textbox type="text" formControlName="commission" style="display: inherit;" name="commission"
+              helpFeedback="Min {{ commissionPolicy?.minimum }}% - Max {{ commissionPolicy?.maximum }}%"
+              [mask]="percentageMask" #commission>
+            </sxf-textbox>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class=" modal-footer">
+      <div class="row">
+        <div class="d-flex col-lg-12 justify-content-center">
+          <button type="button" class="btn btn-primary btn-block btn-heft" name="applyChanges">
+            Aplicar cambios
+          </button>
+        </div>
+      </div>
+    </div>
+  </sxf-modal>
+</div>

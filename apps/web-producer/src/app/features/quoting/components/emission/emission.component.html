@@ -1,0 +1,45 @@
+<router-outlet></router-outlet>
+
+<sxf-modal #modalCupos>
+  <div class="modal-header modal-header-items">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ loadingCosts ? 'Recotizando' : 'Descuento comercial no disponible' }}
+    </h4>
+  </div>
+  <div class="modal-body modal-body-items">
+    <h3
+      *ngIf="!loadingCosts; else stillLoadingCost"
+      style="padding-top: 1.5rem;"
+    >
+      El cupón de descuento aplicado en la cotización no se encuentra disponible
+      actualmente.
+    </h3>
+  </div>
+
+  <div *ngIf="!loadingCosts" class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-8 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="callCostWithoutDiscounts()"
+          [disabled]="loadingCosts"
+        >
+          Recotizar
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+
+<ng-template #stillLoadingCost>
+  <div class="row" style="padding: 1rem 0;">
+    <div class="col-12 text-center">
+      <ng-lottie
+        [options]="lottieConfig"
+        width="8.75rem"
+        height="6.25rem"
+      ></ng-lottie>
+    </div>
+  </div>
+</ng-template>

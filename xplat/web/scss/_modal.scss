@@ -1,0 +1,56 @@
+.modal-header {
+  span {
+    color: $gray-900;
+  }
+  .close {
+    opacity: 1;
+    font-size: ($close-font-size);
+    font-weight: $font-weight-normal;
+    &:not(:disabled):not(.disabled) {
+      @include hover-focus {
+        opacity: 1;
+        outline: 0px;
+      }
+    }
+  }
+}
+
+.modal-title {
+  font-weight: $font-weight-bold;
+  font-size: 1.125rem;
+  color: $blue-text;
+}
+
+.modal-body {
+  h3 {
+    // font-weight: $font-weight-bold !important;
+    color: $blue-text !important;
+  }
+}
+
+.modal-footer {
+  display: block;
+  padding: 1rem 2rem 2rem 2rem;
+}
+
+.modal-body-items {
+  padding: 0 2rem 1rem 2rem;
+  margin-right: 0;
+  .list-group-item {
+    padding-bottom: 0;
+  }
+  .list-group-item:first-child {
+    border-top: 0;
+  }
+}
+
+.modal-header-items {
+  padding: 2rem 2rem 0 1rem;
+}
+
+.btn-modal {
+  &.btn {
+    color: $primary;
+    font-size: 1rem;
+  }
+}

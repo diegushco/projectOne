@@ -1,0 +1,518 @@
+<nav
+  *ngIf="line === lineGroupEnum.MOTOR"
+  class="navbar sticky-top header-shadow navbar-expand-lg navbar-light fixed-top bg-white"
+>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <sxf-icon type="back" (click)="goBack()" class="ml-2"></sxf-icon>
+    <ul class="navbar-nav">
+      <li
+        class="nav-item ml-5"
+        [ngClass]="{
+          active:
+            currentStep === 'motor' &&
+            (jobFromQuotesTable === null || fromRetrieve === true)
+        }"
+      >
+        <span class="bullet-nav">1</span>
+        <a
+          style="cursor: pointer;"
+          (click)="goToQuote()"
+          class="nav-link waves-effect waves-light"
+          [ngClass]="{
+            disabled:
+              (!jobFromQuotesTable === null && !fromRetrieve) ||
+              (!existCoverageResponse && fromRetrieve)
+          }"
+        >
+          Vehículo
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        [ngClass]="{
+          active:
+            currentStep === 'coverage' &&
+            (jobFromQuotesTable === null || fromRetrieve === true)
+        }"
+      >
+        <span class="bullet-nav">2</span>
+        <a
+          style="cursor: pointer;"
+          class="nav-link waves-effect waves-light"
+          (click)="goToCoverage()"
+          [ngClass]="{ disabled: !existCoverageResponse }"
+        >
+          Cobertura
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        [ngClass]="{
+          active:
+            currentStep === 'mobility' ||
+            (currentStep === 'mobility' && fromRetrieve === true)
+        }"
+      >
+        <span class="bullet-nav">3</span>
+        <a
+          style="cursor: pointer;"
+          (click)="goToMobility()"
+          class="nav-link waves-effect waves-light"
+          [ngClass]="{
+            disabled:
+              !allVehiclesHasPackageSelected ||
+              !existCoverageResponse ||
+              !mobilityHasVisited
+          }"
+        >
+          Movilidad
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        [ngClass]="{
+          active:
+            currentStep === 'emission' ||
+            (jobFromQuotesTable !== null && fromRetrieve === false) ||
+            (currentStep !== 'mobility' &&
+              currentStep !== 'coverage' &&
+              currentStep !== 'motor' &&
+              fromRetrieve === true)
+        }"
+      >
+        <span class="bullet-nav">4</span>
+        <a
+          [ngClass]="{
+            disabled:
+              !allVehiclesHasPackageSelected ||
+              !existCoverageResponse ||
+              !mobilityHasVisited ||
+              !formMobility
+          }"
+          style="cursor: pointer;"
+          (click)="goToEmission()"
+          class="nav-link waves-effect waves-light"
+        >
+          Emisión
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="navbar-collapse collapse size-Comparative">
+    <div
+      class="links float-right noprint"
+      [style.visibility]="
+        (currentStep === 'coverage' &&
+          jobFromQuotesTable === null &&
+          currentMotors.length <= 1) ||
+        (currentStep === 'coverage' &&
+          fromRetrieve &&
+          currentMotors.length <= 1)
+          ? 'visible'
+          : 'hidden'
+      "
+    >
+      <sxf-icon class="icon-green" type="download"></sxf-icon>
+      <a (click)="printPage()" style="cursor: pointer;">
+        <span class="span_text_primary">Comparativa {{ tabCoverage }}</span>
+      </a>
+    </div>
+    <ul class="navbar-nav ml-auto">
+      <sxf-select-producer
+        (producersLoaded)="producersLoaded($event)"
+        (currentProducer)="setCurrentProducer($event)"
+        (currentProducerProfile)="setCurrentProducerProfile($event)"
+      ></sxf-select-producer>
+    </ul>
+    <sxf-icon
+      *ngIf="currentPolicy.policynumber == null"
+      (click)="leaveToHome()"
+      class="blue"
+      type="close"
+    ></sxf-icon>
+  </div>
+</nav>
+<router-outlet></router-outlet>
+<ng-template #modalProducerError let-modal>
+  <div class="modal-header">
+    <div>
+      <h4 class="modal-title" id="modal-basic-title">
+        Error
+      </h4>
+    </div>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-4">
+        <img
+          class="mx-auto d-block"
+          height="80"
+          width="80"
+          src="../assets/icons/GENERAL_COG.svg"
+        />
+      </div>
+      <div class="col-8">
+        <label>Hubo un error en el proceso,por favor volve a intentarlo</label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark float-right"
+      (click)="modal.close('Save click')"
+    >
+      Aceptar
+    </button>
+  </div>
+</ng-template>
+
+<!-- in case it is neeeded here is the old code to the all "i" button 
+   Andres Lira 07/24/2020
+  -->
+<!-- <div id="container-floating" class="d-none d-sm-block">
+  <div
+    [ngClass]="hiddenHome ? 'nd1' : 'nd2'"
+    class="nds"
+    (click)="onContactUsClick()"
+    data-toggle="tooltip"
+    data-placement="left"
+    data-original-title="correo@correo.com"
+  >
+    <img
+      class="mx-auto d-block mt-1"
+      src="/assets/icons/GENERAL_QUESTION.svg"
+      width="25"
+      height="25"
+      alt="general_question"
+    />
+  </div>
+------- COMMENTED -------------
+   <div
+    class="nd2 nds"
+    data-toggle="tooltip"
+    data-placement="left"
+    data-original-title="Tour"
+  >
+    <a
+      href="https://api.whatsapp.com/send?phone=+5491167101026&text=Hola tuve un problema con la aplicacion"
+      target="_blank"
+    >
+      <img
+        src="/assets/icons/GENERAL_WHATSAPP.svg"
+        class="mx-auto d-block mt-1"
+        width="25"
+        height="25"
+        alt="general_whatsapp"
+      />
+    </a>
+  </div> 
+  ----------------------------------
+  <div
+    [hidden]="hiddenHome"
+    class="nd1 nds"
+    data-toggle="tooltip"
+    data-placement="left"
+    data-original-title="correo@correo.com"
+    (click)="openModal()"
+  >
+    <img
+      class="mx-auto d-block mt-1"
+      src="/assets/icons/GENERAL_HOME.svg"
+      width="25"
+      height="25"
+      alt="general_home"
+    />
+  </div>
+  <div
+    class="floating-button"
+    data-toggle="tooltip"
+    data-placement="left"
+    data-original-title="question"
+  >
+    <p class="plus">
+      <img
+        style="
+          filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(305deg)
+            brightness(103%) contrast(103%);
+        "
+        class="mx-auto d-block mt-3"
+        src="/assets/icons/GENERAL_INFO.svg"
+        width="25"
+        height="25"
+        alt="general_info"
+      />
+    </p>
+    <p class="edit">
+      <sxf-icon class="icon-white" type="arrow-left"></sxf-icon>
+    </p>
+  </div>
+</div> -->
+
+<div
+  id="bottom-footer"
+  *ngIf="showFooterAuto() && line === lineGroupEnum.MOTOR"
+>
+  <div class="row no-gutters">
+    <ng-container *ngFor="let auto of currentMotors">
+      <div
+        class="col-2 btn-car"
+        [ngClass]="{
+          active: auto.id.toString() === currentVehicleId
+        }"
+        *ngIf="showCardAuto(auto); else cardNewVehicle"
+      >
+        <span
+          (click)="selectAutoGoCoverage(auto)"
+          class="card-inner first-block"
+        >
+          <div class="btn-car-top">
+            <label *ngIf="pckSelected(auto)" class="circle-ok car-spacing">
+              <sxf-icon
+                class="icon-white"
+                type="ok"
+                style="cursor: none !important;"
+              ></sxf-icon>
+            </label>
+            <span class="car-spacing">
+              <img
+                *ngIf="auto.group"
+                class="car-img"
+                src="/assets/icons/TYPE_{{ auto.group | uppercase }}.svg"
+                alt=""
+              />
+            </span>
+            <span class="car-spacing">
+              {{ auto.year }}
+            </span>
+          </div>
+          <div class="btn-car-bottom">
+            <span>
+              <label class="brand">{{ auto.brand.description }}</label>
+              <label>{{ auto.shortModel }}</label>
+            </span>
+          </div>
+        </span>
+        <span class="card-inner second-block">
+          <span
+            (click)="removeAuto(auto.number)"
+            aria-hidden="true"
+            class="btn-remove"
+          >
+            &times;
+          </span>
+        </span>
+      </div>
+      <ng-template #cardNewVehicle>
+        <div
+          class="col-2 btn-car newCar"
+          [ngClass]="{
+            active: auto.id.toString() === currentVehicleId
+          }"
+        >
+          <span class="">
+            Nuevo vehículo
+          </span>
+        </div>
+      </ng-template>
+
+      <!-- <button >Auto - {{ auto.number }}</button>
+      <button (click)="removeAuto(auto.number)">X</button> -->
+    </ng-container>
+    <button
+      *ngIf="!pckSelectedAll(currentMotors) && currentMotors.length <= 3"
+      type="button"
+      class="btn btn-primary btn-lg btn-auto disabled"
+    >
+      <sxf-icon class="icon-white" type="plus-circle"></sxf-icon>
+      Agregar vehículo
+    </button>
+    <button
+      *ngIf="pckSelectedAll(currentMotors) && currentMotors.length <= 3"
+      type="button"
+      class="btn btn-primary btn-lg btn-auto"
+      (click)="newAuto()"
+    >
+      <sxf-icon class="icon-white" type="plus-circle"></sxf-icon>
+      Agregar vehículo
+    </button>
+  </div>
+</div>
+<sxf-modal #modalCoHome [options]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      ¿Estás seguro que querés abandonar la cotización?
+    </h4>
+  </div>
+  <div class="modal-body modal-body-items">
+    <p>
+      Si abandonás el proceso perderás la información cargada para la cotización
+      y volverás al inicio
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-3 pl-0">
+        <button
+          type="button"
+          class="btn btn-modal btn-lg btn-block"
+          (click)="modalCoHome.closeModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-lg-5 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="openModal()"
+        >
+          <span>Abandonar Cotización</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+<sxf-modal #modalEmHome [options]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      ¿Estás seguro que querés abandonar el proceso de emisión?
+    </h4>
+  </div>
+  <div class="modal-body modal-body-items">
+    <p>
+      Si abandonás el proceso perderás la información cargada para la emisión y
+      volverás al inicio
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-3 pl-0">
+        <button
+          type="button"
+          class="btn btn-modal btn-lg btn-block"
+          (click)="modalEmHome.closeModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-lg-5 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="openModal()"
+        >
+          <span>Abandonar Emisión</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+<sxf-modal #modalRemove [options]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      ¿Esta seguro de eliminar el vehículo?
+    </h4>
+  </div>
+  <div class="modal-body modal-body-items">
+    <p *ngIf="currentMotors.length === 1">
+      Si eliminas el vehículo toda la información cargada se perderá y volveras
+      a la pantalla de inicio.
+    </p>
+    <p *ngIf="currentMotors.length > 1">
+      Si eliminas el vehículo toda la información cargada se perderá.
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-3 pl-0">
+        <button
+          type="button"
+          class="btn btn-modal btn-lg btn-block"
+          (click)="modalRemove.closeModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-lg-5 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="removeVehicle()"
+        >
+          <ng-lottie
+            [hidden]="!loadingRemove"
+            [options]="lottieConfig"
+            (animationCreated)="animationCreated($event)"
+            height="32px"
+            width="32px"
+            class="mr-2"
+          ></ng-lottie>
+          <span *ngIf="loadingRemove">Procesando</span>
+          <span *ngIf="!loadingRemove">Continuar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+
+<sxf-modal
+  #modalDiscardAuto
+  [options]="{ backdrop: 'static', keyboard: false }"
+>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      ¿Estás seguro que querés abandonar la cotización de este vehículo?
+    </h4>
+  </div>
+  <div class="modal-body modal-body-items">
+    <p>
+      Si abandonás el proceso de carga de datos toda la información de este
+      vehículo se perderá y volverás a la pantalla de selección de cobertura del
+      vehículo anterior.
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-3 pl-0">
+        <button
+          type="button"
+          class="btn btn-modal btn-lg btn-block"
+          (click)="modalDiscardAuto.closeModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-lg-5 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="continueDiscardAuto()"
+        >
+          <ng-lottie
+            [hidden]="!loadingRemove"
+            [options]="lottieConfig"
+            (animationCreated)="animationCreated($event)"
+            height="32px"
+            width="32px"
+            class="mr-2"
+          ></ng-lottie>
+          <span *ngIf="loadingRemove">Procesando</span>
+          <span *ngIf="!loadingRemove">Continuar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>

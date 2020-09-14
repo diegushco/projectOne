@@ -1,0 +1,646 @@
+<div class="details sticky-top p-3">
+  <div class="row">
+    <div class="row ml-0">
+      <div class="col-lg-12 pt-3">
+        <span class="title" *ngIf="(vehicles$ | async)?.length === 1">
+          {{ (packageSelectedWithAssistance$ | async)?.package?.description }}
+        </span>
+        <span class="title" *ngIf="(vehicles$ | async)?.length > 1">
+          Resumen
+        </span>
+      </div>
+    </div>
+    <div
+      class="col-lg-12"
+      style="position: relative; height: calc(90vh - 80px);"
+      [perfectScrollbar]="{ suppressScrollY: false }"
+    >
+      <div class="row mt-2" *ngIf="(vehicles$ | async)?.length === 1">
+        <!-- <div class="col-lg-4">
+          <a class="show-detail">Ver detalle</a>
+        </div> -->
+        <div *ngIf="!disabledByRetrieve" class="col-lg-6">
+          <a
+            style="cursor: pointer;"
+            (click)="goCoverage()"
+            class="change-coverage"
+          >
+            Cambio de cobertura
+          </a>
+        </div>
+        <div
+          *ngIf="
+            disabledByRetrieve &&
+            (vehicles$ | async)?.length < 2 &&
+            !getQuoteApproved
+          "
+          class="col-lg-6"
+        >
+          <a
+            style="cursor: pointer;"
+            (click)="openModal()"
+            class="change-coverage"
+          >
+            Editar cotización
+          </a>
+        </div>
+      </div>
+      <div class="row mt-2" *ngIf="(vehicles$ | async)?.length > 1">
+        <div class="col-lg-12">
+          <div class="quantityVehicles">
+            <span>
+              {{ (vehicles$ | async)?.length }}
+              Vehículos
+            </span>
+            <a
+              style="cursor: pointer;"
+              (click)="openVehicleDetails()"
+              class="show-detail"
+            >
+              Ver todos
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Asistencia mecánica -->
+      <div
+        class="row item-title mt-4"
+        *ngIf="(vehicles$ | async)?.length === 1"
+      >
+        <div class="col-lg-6">
+          <span>{{ (brandModelPrizeCar$ | async).type | titlecase }}</span>
+        </div>
+        <div class="col-lg-6">
+          <span>Asistencia mecánica</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="(vehicles$ | async)?.length === 1">
+        <div class="col-lg-6">
+          <span>
+            {{ (brandModelPrizeCar$ | async)?.brand }}
+            {{ (brandModelPrizeCar$ | async)?.model }}
+          </span>
+        </div>
+        <div class="col-lg-6">
+          <span>
+            {{
+              getAssistanceDescription(
+                (packageSelectedWithAssistance$ | async)?.assistance
+              ) | async
+            }}
+          </span>
+        </div>
+      </div>
+      <!-- Fin Asistencia mecánica-->
+
+      <!-- Suma asegurada 1 vehículo -->
+      <div
+        class="row item-title mt-4"
+        *ngIf="(vehicles$ | async)?.length === 1"
+      >
+        <div class="col-lg-6">
+          <span>Suma asegurada</span>
+        </div>
+        <div class="col-lg-6">
+          <span>Refacturación</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="(vehicles$ | async)?.length === 1">
+        <div class="col-lg-6">
+          <span>
+            $ {{ (brandModelPrizeCar$ | async)?.prize | number: '1.0-0' }}
+          </span>
+        </div>
+        <div class="col-lg-6">
+          <span>
+            {{ rebillingPeriod$ | async }}
+          </span>
+        </div>
+      </div>
+      <!-- Fin suma asegurada 1 vehículo-->
+
+      <!-- condición fiscal 1 vehículo -->
+      <div
+        class="row item-title mt-4"
+        *ngIf="(vehicles$ | async)?.length === 1"
+      >
+        <div class="col-lg-6">
+          <span>Condición fiscal</span>
+        </div>
+        <div class="col-lg-6"></div>
+      </div>
+      <div class="row" *ngIf="(vehicles$ | async)?.length === 1">
+        <div class="col-lg-6">
+          <span>
+            {{ fiscalCondition$ | async }}
+          </span>
+        </div>
+        <div class="col-lg-6">
+          <ng-template #tipContent>
+            <table class="table-sm">
+              <tbody>
+                <tr *ngFor="let item of (additionals$ | async)?.additionals">
+                  <td style="border-bottom: solid 1px;">
+                    {{ item.pattern.description }}
+                  </td>
+                  <td style="border-bottom: solid 1px;">
+                    <b>
+                      $
+                      {{
+                        item.terms[0].value?.current || item.terms[0].value
+                          | number: '1.0-0'
+                      }}
+                    </b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-template>
+          <div
+            class="input-group"
+            [ngbTooltip]="
+              (additionals$ | async)?.additionalsLenght > 0 ? tipContent : ''
+            "
+            style="margin-top: -15px;"
+          >
+            <input
+              readonly
+              style="cursor: pointer;"
+              type="text"
+              class="form-control"
+              value="{{
+                (additionals$ | async)?.additionalsLenght
+              }} adicionales"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <sxf-icon class="icon-blue" type="view"></sxf-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fin condición fiscal 1 vehículo -->
+
+      <!-- Condición Fiscal 2 a 4 vehículos -->
+      <div class="row item-title mt-4" *ngIf="(vehicles$ | async)?.length > 1">
+        <div class="col-lg-6">
+          <span>Condición fiscal</span>
+        </div>
+        <div class="col-lg-6">
+          <span>Refacturación</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="(vehicles$ | async)?.length > 1">
+        <div class="col-lg-6">
+          <span>
+            {{ fiscalCondition$ | async }}
+          </span>
+        </div>
+        <div class="col-lg-6">
+          <span>
+            {{ rebillingPeriod$ | async }}
+          </span>
+        </div>
+      </div>
+      <!-- Fin Condición Fiscal 2 a 4 vehículos-->
+
+      <!-- Medio de pago 2 a 4 vehículos -->
+      <div class="row item-title mt-4" *ngIf="(vehicles$ | async)?.length > 1">
+        <div class="col-lg-6">
+          <span>Medio de pago</span>
+        </div>
+        <div class="col-lg-6"><span>Cuotas</span></div>
+      </div>
+      <div class="row" *ngIf="(vehicles$ | async)?.length > 1">
+        <div class="col-lg-6">
+          <span>
+            {{ (paymentMethod$ | async)?.description }}
+          </span>
+        </div>
+        <div class="col-lg-6">
+          <span>
+            {{ (paymentPlan$ | async)?.description }}
+          </span>
+        </div>
+      </div>
+      <!-- Fin Medio de pago 2 a 4 vehículos-->
+
+      <div class="row item-title mt-4">
+        <div class="col-lg-6">
+          <span>Dto</span>
+        </div>
+        <div class="col-lg-6">
+          <span>Comisión</span>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-lg-6">
+          <span>{{ (discountAndCommission$ | async)?.discount || 0 }}%</span>
+        </div>
+        <div class="col-lg-6">
+          <span>{{ (discountAndCommission$ | async)?.commission || 0 }}%</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="campaign$ | async as c">
+        <div class="col-lg-12">
+          <label for="campaign">Campaña</label>
+          <sxf-select
+            #campaign
+            disabledOnEmpty="true"
+            [formControl]="formCampaign"
+            [items]="c"
+            bindLabel="description"
+            bindValue="id"
+            [multiple]="false"
+            [class]="'custom'"
+            [searchable]="false"
+            [placeholder]="'Seleccione campaña'"
+            [dropdownPosition]="'bottom'"
+            name="campaign"
+          ></sxf-select>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-lg-12">
+          <div class="tsummary mb-3">
+            <table
+              *ngIf="packageSelectedWithAssistance$ | async as packageSelected"
+              class="table table-sm table-borderless"
+            >
+              <tbody>
+                <tr>
+                  <td>Dcto. promocional</td>
+                  <th class="text-right">
+                    ${{ packageSelected?.cost?.discount | number: '1.0-0' }}
+                  </th>
+                </tr>
+                <tr>
+                  <td>Prima Comisionable</td>
+                  <th class="text-right">
+                    $
+                    {{
+                      packageSelected?.package?.premiums?.total
+                        | number: '1.0-0'
+                    }}
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="2" class="costs-details">
+                    <div class="main">
+                      <div>Premio total</div>
+                      <sxf-icon
+                        [class]="
+                          expandedDetail ? 'icon-down' : 'icon-arrow-left'
+                        "
+                        (click)="expandedDetail = !expandedDetail"
+                      ></sxf-icon>
+                      <div>
+                        $ {{ packageSelected?.cost?.total | number: '1.0-0' }}
+                      </div>
+                    </div>
+                    <div class="childrens" *ngIf="expandedDetail">
+                      <div class="child">
+                        <div>Gastos de adquisición</div>
+                        <div>
+                          $
+                          {{
+                            packageSelected?.cost?.administrativecharge
+                              | number: '1.0-0'
+                          }}
+                        </div>
+                      </div>
+                      <div class="child">
+                        <div>Gastos de explotación</div>
+                        <div>
+                          $
+                          {{
+                            packageSelected?.cost?.submissionfee +
+                              packageSelected?.package?.premiums?.assistance
+                              | number: '1.0-0'
+                          }}
+                        </div>
+                      </div>
+                      <div class="child">
+                        <div>Prima total (GWP)</div>
+                        <div>
+                          $
+                          {{
+                            packageSelected?.package?.premiums?.total +
+                              packageSelected?.cost?.submissionfee +
+                              packageSelected?.package?.premiums?.assistance +
+                              packageSelected?.cost?.administrativecharge
+                              | number: '1.0-0'
+                          }}
+                        </div>
+                      </div>
+                      <div class="child">
+                        <div>Regargo financiero</div>
+                        <div>
+                          $
+                          {{
+                            packageSelected?.cost?.financial | number: '1.0-0'
+                          }}
+                        </div>
+                      </div>
+                      <div class="child">
+                        <div>Impuestos internos</div>
+                        <div>
+                          $
+                          {{
+                            packageSelected?.cost?.internaltax | number: '1.0-0'
+                          }}
+                        </div>
+                      </div>
+                      <div class="child">
+                        <div>Tasa SSN</div>
+                        <div>
+                          $
+                          {{ packageSelected?.cost?.ssnrate | number: '1.0-0' }}
+                        </div>
+                      </div>
+                      <div class="child">
+                        <div>Servicios sociales</div>
+                        <div>
+                          $
+                          {{
+                            packageSelected?.cost?.socialservice
+                              | number: '1.0-0'
+                          }}
+                        </div>
+                      </div>
+                      <div class="child">
+                        <div>Seguridad vial</div>
+                        <div>
+                          $
+                          {{
+                            packageSelected?.cost?.vialrate | number: '1.0-0'
+                          }}
+                        </div>
+                      </div>
+                      <div class="child">
+                        <div>Sellados</div>
+                        <div>
+                          $
+                          {{
+                            packageSelected?.cost?.sellado?.total
+                              | number: '1.0-0'
+                          }}
+                        </div>
+                      </div>
+                      <div class="child">
+                        <div>IVA</div>
+                        <div>
+                          $
+                          {{
+                            packageSelected?.cost?.iva?.total | number: '1.0-0'
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Cuota</td>
+                  <th class="text-right">
+                    $ {{ packageSelected?.cost?.invoice | number: '1.0-0' }}
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="row py-3"
+    style="
+      box-shadow: 0px -1px 4px rgba(0, 0, 0, 0.18);
+      position: fixed;
+      bottom: 0;
+      width: 25%;
+      height: auto;
+      background: #ffffff;
+      z-index: 2000;
+    "
+  >
+    <div class="col-lg-12">
+      <button
+        [disabled]="
+          (formsValid$ | async) || (payment$ | async) || (loadingIssue$ | async)
+        "
+        (click)="checkUW()"
+        class="continue btn btn-primary btn-lg btn-block btn-next-screen"
+      >
+        <span *ngIf="(loadingIssue$ | async) !== true">Contratar</span>
+        <span *ngIf="loadingIssue$ | async">
+          Contratando
+          <ng-lottie
+            [options]="lottieConfig"
+            width="4.75rem"
+            height="2.25rem"
+          ></ng-lottie>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<sxf-modal #childComp>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Error
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModal()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>{{ (issueError$ | async)?.description }}</p>
+  </div>
+  <div class="modal-footer" *ngIf="issueError$ | async as issue">
+    <div class="offset-8 col-4">
+      <button
+        type="button"
+        class="btn btn-primary btn-lg btn-block"
+        (click)="issue.code === 105 ? goThankYouPage() : closeModal()"
+      >
+        Aceptar
+      </button>
+    </div>
+  </div>
+</sxf-modal>
+
+<sxf-modal #vehicleDetails [options]="{ size: 'xl' }">
+  <div class="modal-header modal-header-items">
+    <div class="modal-vehicle-title" id="modal-basic-title">
+      Autos a asegurar
+    </div>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeVehicleDetails()"
+      name="closeModalBtn"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <br />
+  <div class="modal-body modal-body-items">
+    <table
+      class="details-table"
+      id="details-table"
+      style="max-width: 100%; min-width: 100%; width: 100%;"
+    >
+      <tr *ngFor="let vehicles of vehicles$ | async">
+        <td width="17%">
+          <b>{{ vehicles.brand.description }} {{ vehicles.year }}</b>
+          <br />
+          {{ vehicles.model.description }}
+        </td>
+        <td width="17%">
+          Suma asegurada
+          <br />
+          <b>
+            $
+            {{
+              vehicles.statedamount || vehicles.model.statementamount
+                | number: '1.0-0'
+            }}
+          </b>
+        </td>
+        <td width="17%">
+          Cobertura
+          <br />
+          <b>{{ getSelectedPackage(vehicles) }}</b>
+        </td>
+        <td width="17%">
+          Asistencia mecánica
+          <br />
+          <b>{{ getSelectedMechanicalAssistance(vehicles) }}</b>
+        </td>
+        <td width="15%">
+          <ng-template #tooltipContent>
+            <table class="additional-table">
+              <tbody>
+                <tr *ngFor="let item of getSelectedAdditionals(vehicles)">
+                  <td>
+                    {{ item.pattern.description }}
+                  </td>
+                  <td>
+                    <b>
+                      $
+                      {{
+                        item.terms[0].value?.current || item.terms[0].value
+                          | number: '1.0-0'
+                      }}
+                    </b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-template>
+          <div class="input-group">
+            <input
+              readonly
+              style="cursor: pointer;"
+              type="text"
+              class="form-control"
+              value="{{ getSelectedAdditionals(vehicles).length }} adicionales"
+            />
+            <div class="input-group-append" id="detail-tooltip">
+              <span
+                class="input-group-text"
+                [ngbTooltip]="
+                  getSelectedAdditionals(vehicles).length > 0
+                    ? tooltipContent
+                    : ''
+                "
+                placement="bottom"
+              >
+                <sxf-icon class="icon-green" type="view"></sxf-icon>
+              </span>
+            </div>
+          </div>
+        </td>
+        <td width="17%" class="text-center" *ngIf="!disabledByRetrieve">
+          <a
+            class="edit-vehicle-coverage"
+            (click)="goCoverageVehicles(vehicles.id)"
+          >
+            Editar
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</sxf-modal>
+<sxf-modal
+  #modalEditCoverage
+  [options]="{ backdrop: 'static', keyboard: false }"
+>
+  <div class="modal-header" style="padding-bottom: 25px !important;">
+    <h4
+      style="
+        padding-left: 15px;
+        font-size: 18px !important;
+        font-weight: 700;
+        color: #0033a0;
+      "
+      id="modal-basic-title"
+    >
+      Editar cotización
+    </h4>
+    <button
+      type="button"
+      class="close closeButtom"
+      aria-label="Close"
+      (click)="closeModal()"
+      name="closeModalBtn"
+      style="padding-top: 15px; padding-right: 63px; padding-bottom: 0px;"
+    >
+      <span style="font-size: 3rem; color: #06369e;" aria-hidden="true">
+        &times;
+      </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="col-lg-10">
+      <h4 class="modal-title" style="font-size: 2rem !important;">
+        Al editar cualquier dato de la cotización, se recotizará con las tarifas
+        actuales. ¿Querés editarla de todos modos?
+      </h4>
+    </div>
+  </div>
+
+  <div class="modal-footer" style="padding-top: 54px !important;">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-3 pl-0">
+        <button
+          type="button"
+          class="btn btn-modal btn-lg btn-block"
+          (click)="modalEditCoverage.closeModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-lg-5 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="goQuote()"
+        >
+          <span>Editar Cotización</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>

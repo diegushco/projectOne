@@ -1,0 +1,1087 @@
+<div class="summary-coverage sticky-top">
+  <div id="title" class="title-coverage">Resumen de cotización</div>
+  <div class="wrap">
+    <div [formGroup]="form">
+      <div
+        class="col-lg-12"
+        [perfectScrollbar]="{ suppressScrollY: false, maxScrollbarLength: 200 }"
+        style="position: relative; height: calc(85vh - 180px);"
+        (psYReachEnd)="onReachEnd()"
+        (psYReachStart)="onReachStart()"
+        #perfectscroll
+      >
+        <div class="row">
+          <div class="col-12 pl-0">
+            <label for="condition">Condicion fiscal</label>
+            <sxf-select
+              disabledOnEmpty="true"
+              formControlName="fiscalcondition"
+              [items]="fiscalCondition$"
+              bindLabel="description"
+              (click)="centercondition()"
+              bindValue="code"
+              [multiple]="false"
+              [class]="'custom'"
+              class="condition"
+              [searchable]="false"
+              [placeholder]="'Seleccione condicion fiscal'"
+              [dropdownPosition]="'bottom'"
+              #fiscalConditionElement
+              name="fiscalCondition"
+            ></sxf-select>
+          </div>
+          <div class="col-12 pl-0">
+            <label for="crudeincome">Ingresos brutos</label>
+            <sxf-select
+              disabledOnEmpty="true"
+              formControlName="crudeincome"
+              [items]="crudIncome$"
+              (click)="centerCrudI()"
+              bindLabel="description"
+              bindValue="code"
+              [multiple]="false"
+              [class]="'custom'"
+              class="crud"
+              [searchable]="false"
+              [placeholder]="'Seleccione ingresos brutos'"
+              [dropdownPosition]="'bottom'"
+              name="crudeincome"
+            ></sxf-select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8 pl-0">
+            <label for="methodpay">Forma de pago</label>
+            <sxf-select
+              disabledOnEmpty="true"
+              formControlName="methodpay"
+              [items]="paymentMethods$"
+              (click)="centerPayment()"
+              bindLabel="description"
+              bindValue="code"
+              [multiple]="false"
+              [class]="'custom'"
+              class="payment"
+              [searchable]="false"
+              [placeholder]="'Seleccione forma de pago'"
+              [dropdownPosition]="'bottom'"
+              name="methodpay"
+            ></sxf-select>
+            <div
+              class="text-left nodisplay"
+              style="margin-left: inherit; margin-top: -8px !important;"
+              *ngIf="periodMethod$ | async as refac"
+            >
+              <label class="extra-small" style="color: #768692 !important;">
+                Refacturacion&nbsp;{{ refac[0].description }}
+              </label>
+            </div>
+          </div>
+          <div class="col-4 pl-0">
+            <label for="term">Cuotas</label>
+            <sxf-select
+              #term
+              disabledOnEmpty="true"
+              formControlName="term"
+              [items]="paymentPlan$"
+              (click)="centerDues()"
+              bindLabel="description"
+              bindValue="code"
+              [multiple]="false"
+              [class]="'custom'"
+              class="dues"
+              [searchable]="false"
+              [placeholder]="'Seleccione plazo'"
+              [dropdownPosition]="'bottom'"
+              name="term"
+            ></sxf-select>
+          </div>
+        </div>
+        <div class="row pl-0 discount-and-commission nodisplay">
+          <div class="col-lg-6 pl-0 text-left">
+            <label for="discount">Descuento comercial</label>
+          </div>
+          <div class="col-lg-6 text-left">
+            <label>Comisión</label>
+          </div>
+        </div>
+        <div class="row mb-1 pl-0 discount-and-commission nodisplay">
+          <div class="col-lg-6 pl-0 text-left">
+            <sxf-rangebox
+              *ngIf="discount$ | async as d"
+              formControlName="discountnumber"
+              [value]="defaultDiscountNumber"
+              [min]="d.discounts[0].minimum"
+              [max]="d.discounts[0].maximum"
+              append="%"
+              name="discountnumber"
+              [disabledIncrement]="
+                form.get('commission').value > defaultCommission
+              "
+            ></sxf-rangebox>
+            <!-- [disabled]="d.availableDiscounts.available === 0 ? true : false" -->
+            <!-- (focusout)="autoDiscountTooltip()" -->
+          </div>
+          <div class="col-lg-6 text-left">
+            <sxf-rangebox
+              *ngIf="commissionProducer$ | async as comission"
+              formControlName="commission"
+              [min]="comission.minimum"
+              [max]="comission.maximum"
+              name="commission"
+              append="%"
+              [disabledIncrement]="
+                form.get('discountnumber').value > 0 &&
+                form.get('commission').value >= defaultCommission
+              "
+            ></sxf-rangebox>
+            <div class="row mb-1 pl-0 discount-and-commission nodisplay">
+              <!-- <div class="col-6 pl-0 text-left" *ngIf="discount$ | async as d">
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    [style.width.%]="
+                      (d.availableDiscounts.applied / d.availableDiscounts.total) *
+                      100
+                    "
+                  ></div>
+                </div>
+                <label class="extra-small">
+                  Cupos restantes: {{ d.availableDiscounts.available }} de
+                  {{ d.availableDiscounts.total }}
+                  <span>
+                    <sxf-icon
+                      #discountTooltip="ngbTooltip"
+                      class="icon-info"
+                      type="blue"
+                      size="xs"
+                      ngbTooltip="Los cupos disponibles podrían estar en uso en cotizaciones guardadas. Cada cupo se descuenta al momento de la emisión."
+                      placement="bottom"
+                      tooltipClass="discount-tooltip"
+                    ></sxf-icon>
+                  </span>
+                </label>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="campaigns$ | async as c">
+          <div class="row mb-3" *ngIf="c?.length > 1">
+            <div class="col-lg-12 pl-0">
+              <label for="campaign">Campaña</label>
+              <sxf-select
+                #campaign
+                disabledOnEmpty="true"
+                formControlName="campaign"
+                [items]="c"
+                bindLabel="description"
+                bindValue="id"
+                [multiple]="false"
+                [class]="'custom'"
+                [searchable]="true"
+                click
+                (click)="onOpen()"
+                [placeholder]="'Seleccione campaña'"
+                [dropdownPosition]="'bottom'"
+                class="campaign"
+                name="campaign"
+              ></sxf-select>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="row noprint">
+          <div class="col-12 pl-0">
+            <ng-template *ngIf="!loadingCost">
+              <div class="col-lg-4 offset-lg-4 d-flex flex-wrap mt-4">
+                <ng-lottie
+                  [options]="lottieConfig"
+                  width="2rem"
+                  height="2rem"
+                ></ng-lottie>
+              </div>
+            </ng-template>
+
+            <ng-template #stillLoading>
+              <div class="tsummary mb-3">
+                <table
+                  disabled="disabled"
+                  style="color: #c4c4c4;"
+                  class="table table-sm table-borderless"
+                >
+                  <tbody>
+                    <tr>
+                      <td>Cobertura</td>
+                      <th class="text-right">
+                        -
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>Dcto. promocional</td>
+                      <th class="text-right">
+                        $ 0,00
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>Prima comisionable</td>
+                      <th class="text-right">
+                        $ 0,00
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>Premio total</td>
+                      <th class="text-right">
+                        $ 0,00
+                      </th>
+                    </tr>
+                    <tr class="cuotas">
+                      <td>Cuota</td>
+                      <th class="text-right">
+                        $ 0,00
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>Comisión total</td>
+                      <th class="text-right">
+                        $ 0,00
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-template>
+            <div
+              class="tsummary mb-3"
+              *ngIf="
+                summaryValuesPkgSelected$ | async as packageSelected;
+                else stillLoading
+              "
+            >
+              <table
+                class="table table-sm table-borderless"
+                *ngIf="!loadingCost; else elseBlock"
+              >
+                <tbody>
+                  <tr>
+                    <td>Cobertura</td>
+                    <th class="text-right">
+                      {{ packageSelected.description }}
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>Dcto. promocional</td>
+                    <th class="text-right">
+                      $
+                      {{
+                        !isUW
+                          ? currentCost?.discount < 0
+                            ? (currentCost?.discount * -1 | number: '1.0-0')
+                            : (currentCost?.discount | number: '1.0-0')
+                          : '0'
+                      }}
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>Prima comisionable</td>
+                    <th class="text-right">
+                      $
+                      {{
+                        !isUW
+                          ? (packageSelected.premiums?.total | number: '1.0-0')
+                          : '0'
+                      }}
+                    </th>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="costs-details">
+                      <div class="main">
+                        <div>Premio total</div>
+                        <sxf-icon
+                          *ngIf="!isUW"
+                          [ngClass]="expandedDetail ? 'arrowUp' : ''"
+                          class="totalPrize icon-down"
+                          (click)="centerTotalPrize()"
+                        ></sxf-icon>
+                        <div>
+                          $
+                          {{
+                            !isUW ? (currentCost?.total | number: '1.0-0') : '0'
+                          }}
+                        </div>
+                      </div>
+                      <div class="childrens" *ngIf="expandedDetail">
+                        <div class="child">
+                          <div>Gastos de adquisición</div>
+                          <div>
+                            $
+                            {{
+                              currentCost?.administrativecharge
+                                | number: '1.0-0'
+                            }}
+                          </div>
+                        </div>
+                        <div class="child">
+                          <div>Gastos de explotación</div>
+                          <div>
+                            $
+                            {{
+                              currentCost.submissionfee +
+                                packageSelected.premiums.assistance
+                                | number: '1.0-0'
+                            }}
+                          </div>
+                        </div>
+                        <div class="child">
+                          <div>Prima total (GWP)</div>
+                          <div>
+                            $
+                            {{
+                              packageSelected.premiums.total +
+                                currentCost?.submissionfee +
+                                packageSelected.premiums.assistance +
+                                currentCost.administrativecharge
+                                | number: '1.0-0'
+                            }}
+                          </div>
+                        </div>
+                        <div class="child">
+                          <div>Regargo financiero</div>
+                          <div>
+                            $
+                            {{ currentCost?.financial | number: '1.0-0' }}
+                          </div>
+                        </div>
+                        <div class="child">
+                          <div>Impuestos internos</div>
+                          <div>
+                            $
+                            {{ currentCost?.internaltax | number: '1.0-0' }}
+                          </div>
+                        </div>
+                        <div class="child">
+                          <div>Tasa SSN</div>
+                          <div>
+                            $
+                            {{ currentCost?.ssnrate | number: '1.0-0' }}
+                          </div>
+                        </div>
+                        <div class="child">
+                          <div>Servicios sociales</div>
+                          <div>
+                            $
+                            {{ currentCost?.socialservice | number: '1.0-0' }}
+                          </div>
+                        </div>
+                        <div class="child">
+                          <div>Seguridad vial</div>
+                          <div>
+                            $
+                            {{ currentCost?.vialrate | number: '1.0-0' }}
+                          </div>
+                        </div>
+                        <div class="child">
+                          <div>Sellados</div>
+                          <div>
+                            $
+                            {{ currentCost?.sellado?.total | number: '1.0-0' }}
+                          </div>
+                        </div>
+                        <div class="child">
+                          <div>IVA</div>
+                          <div>
+                            $
+                            {{ currentCost?.iva?.total | number: '1.0-0' }}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Cuota</td>
+                    <th class="text-right">
+                      $
+                      {{
+                        !isUW ? (currentCost?.invoice | number: '1.0-0') : '0'
+                      }}
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>Comisión total</td>
+                    <th class="text-right">
+                      $
+                      {{
+                        !isUW
+                          ? (currentCost?.commission | number: '1.0-0')
+                          : '0'
+                      }}
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+              <ng-template #elseBlock>
+                <div class="row">
+                  <div class="col-lg-12 text-center">
+                    <ng-lottie
+                      [options]="lottieConfig"
+                      width="8.75rem"
+                      height="6.25rem"
+                    ></ng-lottie>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+      <sxf-modal
+        #childComp
+        [options]="{ backdrop: 'static', keyboard: false }"
+        class="noprint"
+      >
+        <div class="modal-header">
+          <h4 *ngIf="!isUW" class="modal-title" id="modal-basic-title">
+            Guardado de cotización
+          </h4>
+          <h4 *ngIf="isUW" class="modal-title" id="modal-basic-title">
+            Cobertura no disponible
+          </h4>
+          <button
+            *ngIf="currentStepOfSave !== 'lastStep'"
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="closeModal()"
+            name="closeModalBtn"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" [ngSwitch]="currentStepOfSave">
+          <div *ngIf="currentStepOfSave === 'screenOne'">
+            <h3 *ngIf="isUW">
+              La cobertura no está disponible para este vehículo. Para solicitar
+              autorización seguí los siguientes pasos:
+            </h3>
+            <h3 *ngIf="!isUW">
+              Ingresá el documento del contacto para asignarle la cotización.
+            </h3>
+            <div class="input-search">
+              <!--<sxf-select [formControl]="searchContact" [items]="filteredContacts" bindLabel="code" bindValue="code" [multiple]="false" class="custom" [searchable]="true" placeholder="Buscá por DNI" dropdownPosition="bottom" (getTextsearch)="onSearch($event)"></sxf-select>-->
+              <div class="row" [formGroup]="assignQuoteForm">
+                <div class="col-3">
+                  <sxf-select
+                    formControlName="document"
+                    [items]="documents$"
+                    bindLabel="description"
+                    bindValue="code"
+                    [multiple]="false"
+                    class="custom"
+                    [searchable]="false"
+                    placeholder="Documento..."
+                    [dropdownPosition]="'bottom'"
+                    name="documentModal"
+                  ></sxf-select>
+                </div>
+                <div class="col-5">
+                  <sxf-textbox-search
+                    formControlName="documentNumber"
+                    [maxLength]="11"
+                    label=""
+                    placeholder="Ingresá el DNI del cliente para buscarlo en nuestra base"
+                    name="documentNumberModal"
+                  ></sxf-textbox-search>
+                </div>
+                <div class="col-4">
+                  <button
+                    *ngIf="!searchingClient"
+                    [disabled]="!assignQuoteForm.valid || foundClient"
+                    class="btn btn-primary pt-1 pb-1"
+                    (click)="onSearch()"
+                    name="searchClientModalBtn"
+                  >
+                    Buscar
+                  </button>
+                  <button
+                    *ngIf="searchingClient"
+                    disabled
+                    class="btn btn-primary pt-1 pb-1"
+                    name="searchingClientModalBtn"
+                  >
+                    Buscando...
+                  </button>
+                </div>
+              </div>
+              <div class="results-search">
+                <!-- <div *ngIf="contacts$ | async as existContact">
+                <h4 *ngIf="existContact.code">{{ existContact.error }}</h4>
+              </div> -->
+
+                <div *ngIf="contacts$ | async as contacts">
+                  <span
+                    *ngIf="typeClient === 'Company' && hasMobility"
+                    style="color: red;"
+                  >
+                    La cobertura de Movilidad no está disponible para cliente
+                    jurídico. Por favor ingresá otro cliente o eliminá dicha
+                    cobertura.
+                  </span>
+                  <p *ngIf="!foundClient && !hasMobility">
+                    El documento ingresado no corresponde a un cliente
+                    existente.
+                  </p>
+                  <div *ngIf="contacts.code" class="mt-2">
+                    <h6>{{ contacts.description }}</h6>
+                  </div>
+                  <table
+                    id="list-contact"
+                    class="table table-sm list-contact mt-2"
+                    *ngIf="contacts.length > 0"
+                  >
+                    <thead>
+                      <tr>
+                        <th scope="col"><small>Nombre</small></th>
+                        <th scope="col"><small>N° Documento</small></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        style="cursor: pointer;"
+                        *ngFor="let item of contacts"
+                        (click)="contactSelected(item)"
+                        [ngClass]="{
+                          active:
+                            currentContactSelected &&
+                            currentContactSelected.id === item.id
+                        }"
+                      >
+                        <td>
+                          {{ item.firstname | uppercase }}
+                          {{ item.lastname | uppercase }}
+                          {{ item.companyname | uppercase }}
+                        </td>
+                        <td>
+                          {{
+                            item.officialids
+                              ? filterOfficialId(item.officialids)
+                              : item.officialid
+                          }}
+                        </td>
+                        <td>
+                          <sxf-icon
+                            *ngIf="
+                              currentContactSelected &&
+                              currentContactSelected.id === item.id
+                            "
+                            class="icon-white"
+                            type="ok"
+                          ></sxf-icon>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngSwitchCase="'newClient'">
+            <div
+              [formGroup]="formClient"
+              *ngIf="currentStepOfSave !== 'screenOne'"
+              class="pl-4 pr-4"
+            >
+              <div class="row">
+                <div class="col-lg-6">
+                  <label>
+                    Documento
+                    <sup>*</sup>
+                  </label>
+                </div>
+                <div class="col-lg-6" *ngIf="typeClient === 'Person'">
+                  <label>
+                    Nombre
+                    <sup>*</sup>
+                  </label>
+                </div>
+                <div class="col-lg-6" *ngIf="typeClient === 'Company'">
+                  <label>
+                    Razón Social
+                    <sup>*</sup>
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6 input-group">
+                  <sxf-select
+                    formControlName="document"
+                    disabled="true"
+                    [items]="documents$"
+                    bindLabel="description"
+                    bindValue="code"
+                    [multiple]="false"
+                    class="custom"
+                    [searchable]="false"
+                    placeholder="Documento.."
+                    dropdownPosition="bottom"
+                    name="documentClientModal"
+                  ></sxf-select>
+
+                  <sxf-textbox
+                    type="text"
+                    formControlName="documentNumber"
+                    label=""
+                    placeholder="Doc.."
+                    [helpFeedback]="''"
+                    [disabled]="true"
+                    placement="bottom"
+                    messageTooltips="Ingresá solo ocho dígitos del DNI"
+                    name="documentNumberClientModal"
+                  ></sxf-textbox>
+                </div>
+                <div class="col-6" *ngIf="typeClient === 'Person'">
+                  <sxf-textbox
+                    type="text"
+                    formControlName="firstname"
+                    label=""
+                    placeholder="Ingresá el nombre"
+                    placement="bottom"
+                    name="firstnameClientModal"
+                  ></sxf-textbox>
+                </div>
+                <div class="col-6" *ngIf="typeClient === 'Company'">
+                  <sxf-textbox
+                    type="text"
+                    formControlName="companyname"
+                    label=""
+                    placeholder="Ingresá el nombre"
+                    placement="bottom"
+                    name="companynameClientModal"
+                  ></sxf-textbox>
+                </div>
+              </div>
+              <div class="row pt-3">
+                <div class="col-lg-6" *ngIf="typeClient === 'Person'">
+                  <label>
+                    Apellido
+                    <sup>*</sup>
+                  </label>
+                </div>
+                <div class="col-lg-6">
+                  <label>
+                    Email
+                    <sup>*</sup>
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6" *ngIf="typeClient === 'Person'">
+                  <sxf-textbox
+                    type="text"
+                    formControlName="lastname"
+                    label=""
+                    placeholder="Ingresá el apellido"
+                    placement="bottom"
+                    name="lastnameClientModal"
+                  ></sxf-textbox>
+                </div>
+                <div class="col-6">
+                  <sxf-textbox
+                    type="text"
+                    formControlName="email"
+                    label=""
+                    placeholder="Ingresá tu email"
+                    [helpFeedback]=""
+                    placement="bottom"
+                    name="emailClientModal"
+                  ></sxf-textbox>
+                </div>
+              </div>
+              <div class="description">
+                Mantendremos el valor de la cotización durante los próximos 15
+                días.
+              </div>
+            </div>
+          </div>
+          <div *ngIf="responseQuote$ | async as clientData">
+            <h3 *ngIf="clientData && !isUW">
+              ¡Cotización guardada con exito a nombre de
+              {{ clientData.client.firstname }}
+              {{ clientData.client.lastname }} bajo el numero
+              {{ currentPolicy.job.number }}!
+              <!-- <br />
+            <label *ngIf="currentPolicy.client.email" style="font-size: 16px;">
+              <b>{{ currentPolicy.client.email }}</b>
+            </label> -->
+            </h3>
+            <!-- <p *ngIf="clientData && !isUW && !clientData.code">
+              Para retomar la cotización y continuarla deberás ingresar en la
+              <b>web de Productores</b>
+              desde
+              <b>Consultas – “Consultas Clientes Guidewire”</b>
+              con tu número de cotización.
+            </p> -->
+            <h3 *ngIf="clientData && isUW && clientData.error.code === 105">
+              Tu solicitud número
+              {{ currentPolicy.job.number }} fue enviada con éxito y será
+              revisada dentro de las próximas 48hs.
+            </h3>
+            <p *ngIf="clientData && isUW && clientData.error.code === 105">
+              Para ver el estado de la misma y retomar el proceso, en caso de
+              ser aprobada, deberás ingresar a la web de Productores desde
+              Consultas – “Consultas Clientes Guidewire” con tu número de
+              solicitud.
+            </p>
+            <h3 *ngIf="clientData.code">
+              ¡Hubo un error, por favor intenta de nuevo!
+            </h3>
+          </div>
+        </div>
+        <div class="modal-footer" [ngSwitch]="currentStepOfSave">
+          <div class="button-step-1" *ngSwitchCase="'screenOne'">
+            <div class="row">
+              <div
+                class="col-4 offset-md-8"
+                *ngIf="contacts$ | async as contacts"
+              >
+                <button
+                  *ngIf="!contacts?.code && contacts.length < 1"
+                  type="button"
+                  class="btn btn-primary btn-lg btn-block"
+                  (click)="newClientToSave()"
+                  name="newClientBtn"
+                  [disabled]="typeClient === 'Company' && hasMobility"
+                >
+                  Crear contacto nuevo
+                </button>
+              </div>
+              <div class="col-4 offset-md-8">
+                <button
+                  type="button"
+                  *ngIf="
+                    currentContactSelected &&
+                    !savingPolicy &&
+                    !isUW &&
+                    (contacts$ | async)?.length > 0
+                  "
+                  class="btn btn-primary btn-lg btn-block"
+                  (click)="saveDataUser()"
+                  name="asignClientBtn"
+                  [disabled]="typeClient === 'Company' && hasMobility"
+                >
+                  Asignar
+                </button>
+
+                <button
+                  type="button"
+                  *ngIf="currentContactSelected && !savingPolicy && isUW"
+                  class="btn btn-primary btn-lg btn-block"
+                  (click)="saveDataUser()"
+                  name="askAuthorizationBtn"
+                >
+                  Solicitar
+                </button>
+
+                <button
+                  type="button"
+                  disabled
+                  *ngIf="savingPolicy && !isUW"
+                  class="btn btn-primary btn-lg btn-block"
+                  name="asignAuthorizationBtn"
+                >
+                  Asignando...
+                </button>
+                <button
+                  type="button"
+                  disabled
+                  *ngIf="savingPolicy && isUW"
+                  class="btn btn-primary btn-lg btn-block"
+                  name="authorizationBtn"
+                >
+                  Solicitando...
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="button-step-2" *ngSwitchCase="'newClient'">
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4"></div>
+              <div class="col-4">
+                <button
+                  type="button"
+                  *ngIf="!savingPolicy && !isUW"
+                  [disabled]="!formClient.valid"
+                  class="btn btn-primary btn-lg btn-block"
+                  (click)="saveDataNewUser()"
+                  name="saveNewClientBtn"
+                >
+                  Guardar
+                </button>
+                <button
+                  type="button"
+                  disabled
+                  *ngIf="savingPolicy && !isUW"
+                  class="btn btn-primary btn-lg btn-block"
+                  name="savingNewClientBtn"
+                >
+                  Guardando...
+                </button>
+
+                <button
+                  type="button"
+                  *ngIf="!savingPolicy && isUW"
+                  [disabled]="!formClient.valid"
+                  class="btn btn-primary btn-lg btn-block"
+                  (click)="saveDataNewUser()"
+                  name="askAuthorizationBtn"
+                >
+                  Solicitar
+                </button>
+                <button
+                  type="button"
+                  disabled
+                  *ngIf="savingPolicy && isUW"
+                  class="btn btn-primary btn-lg btn-block"
+                  name="askingAuthorizationBtn"
+                >
+                  Solicitando...
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="button-step-3" *ngSwitchCase="'lastStep'">
+            <div class="row">
+              <div class="offset-4 col-4">
+                <button
+                  *ngIf="!isUW && isMobilityRoute"
+                  type="button"
+                  class="btn btn-primary btn-lg btn-block"
+                  (click)="goToEmission()"
+                  name="aceptModalBtn"
+                >
+                  Continuar a emisión
+                </button>
+              </div>
+              <div class="col-4">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-lg btn-block"
+                  (click)="goHome()"
+                  name="aceptModalBtn"
+                >
+                  Volver al inicio
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sxf-modal>
+    </div>
+  </div>
+
+  <div
+    class="py-2 px-3 noprint footer"
+    id="footer"
+    style="
+      box-shadow: 0px -1px 4px rgba(0, 0, 0, 0.18);
+      position: fixed;
+      bottom: 0;
+      width: 25%;
+      height: auto;
+      background: #ffffff;
+      z-index: 2000;
+    "
+  >
+    <div class="row my-3">
+      <div
+        class="col-6"
+        [ngbTooltip]="!isMobilityRoute ? tipSave : ''"
+        placement="bottom"
+        tooltipClass="saveTooltip"
+      >
+        <ng-template #tipSave style="height: 10px;">
+          <p style="font-size: 12px;">
+            Se podrá guardar cotización en el paso de movilidad
+          </p>
+        </ng-template>
+        <button
+          [disabled]="
+            !currentPackageSelected ||
+            isUW ||
+            loadingCost ||
+            patentInUse ||
+            !isMobilityRoute ||
+            !mobilityFormValid
+          "
+          class="btn btn-secondary btn-sm btn-block"
+          (click)="openModalClient()"
+          name="saveQuotingBtn"
+        >
+          <sxf-icon
+            *ngIf="
+              !(
+                !currentPackageSelected ||
+                isUW ||
+                loadingCost ||
+                patentInUse ||
+                !isMobilityRoute ||
+                !mobilityFormValid
+              )
+            "
+            class="icon-green"
+            type="save"
+          ></sxf-icon>
+          <sxf-icon
+            *ngIf="
+              !currentPackageSelected ||
+              isUW ||
+              loadingCost ||
+              patentInUse ||
+              !isMobilityRoute ||
+              !mobilityFormValid
+            "
+            type="save"
+          ></sxf-icon>
+          Guardar
+        </button>
+      </div>
+      <div class="col-6">
+        <div
+          [ngbTooltip]="!quoteIsSaved ? tipContent : ''"
+          placement="bottom"
+          tooltipClass="downloadTooltip"
+        >
+          <ng-template #tipContent>
+            <p style="font-size: 12px;">
+              Para descargarla, guardá primero la cotización.
+            </p>
+          </ng-template>
+
+          <button
+            *ngIf="(isQuoteDonwload$ | async) !== true"
+            [disabled]="
+              !currentPackageSelected ||
+              isUW ||
+              loadingCost ||
+              !quoteIsSaved ||
+              patentInUse
+            "
+            class="btn btn-secondary btn-sm btn-block"
+            (click)="downloadQuote()"
+            name="downloadQuotingBtn"
+          >
+            <sxf-icon
+              *ngIf="
+                !currentPackageSelected ||
+                isUW ||
+                loadingCost ||
+                !quoteIsSaved ||
+                patentInUse
+              "
+              type="download"
+            ></sxf-icon>
+            <sxf-icon
+              *ngIf="
+                !(
+                  !currentPackageSelected ||
+                  isUW ||
+                  loadingCost ||
+                  !quoteIsSaved ||
+                  patentInUse
+                )
+              "
+              class="icon-green"
+              type="download"
+            ></sxf-icon>
+            Descargar
+          </button>
+          <button
+            disabled
+            *ngIf="isQuoteDonwload$ | async"
+            class="btn btn-secondary btn-sm btn-block"
+            (click)="downloadQuote()"
+          >
+            Descargando
+          </button>
+        </div>
+      </div>
+      <!-- <div class="col-4">
+          <button
+            [disabled]="!currentPackageSelected || isUW || loadingCost"
+            class="btn btn-secondary btn-sm btn-block"
+          >
+            Imprimir
+          </button>
+        </div> -->
+    </div>
+    <div class="row mb-3">
+      <div class="col-lg-12">
+        <button
+          *ngIf="!isUW || !isMobilityRoute"
+          [disabled]="
+            !currentPackageSelected ||
+            loadingCost ||
+            patentInUse ||
+            (isMobilityRoute && !mobilityFormValid)
+          "
+          (click)="continue()"
+          class="continue btn btn-primary btn-lg btn-block btn-next-screen"
+          name="continueToEmisionBtn"
+        >
+          {{ isMobilityRoute ? 'Continuar a Emisión' : 'Continuar' }}
+        </button>
+        <button
+          *ngIf="isUW && isMobilityRoute"
+          [disabled]="
+            !currentPackageSelected ||
+            loadingCost ||
+            patentInUse ||
+            !mobilityFormValid ||
+            !form.valid
+          "
+          (click)="authorizeAsk()"
+          class="continue btn btn-primary btn-lg btn-block btn-next-screen"
+          name="askAuthorizationBtn"
+        >
+          Solicitar Autorización
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <sxf-modal #modalNoClient>
+    <div class="modal-header modal-header-items">
+      <h4 class="modal-title" id="modal-basic-title">Cliente existente</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="closeModalNoClient()"
+        name="closeModalBtn"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body modal-body-items">
+      <h3>Este cliente pertenece a otro productor</h3>
+      <p>
+        Pertenece a otra organización comercial deberá comunicarse con su
+        ejecutivo de cuenta para poder avanzar con esta solicitud.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <div class="row">
+        <div class="col-lg-4 offset-lg-8 pl-0">
+          <button
+            type="button"
+            class="btn btn-primary btn-lg btn-block"
+            (click)="closeModalNoClient()"
+            name="backModal"
+          >
+            Volver
+          </button>
+        </div>
+      </div>
+    </div>
+  </sxf-modal>
+</div>

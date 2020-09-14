@@ -1,0 +1,18 @@
+<div *ngIf="quantityMotors > 1" class="container" style="background: gray">
+  <div class="d-flex justify-content-start">
+    <button
+      *ngFor="let item of motors"
+      class="btn btn-primary"
+      (click)="changeMotor(item)"
+    >
+      Auto {{ item }}
+    </button>
+    <button class="btn btn-primary" type="button" (click)="addMotor()">
+      Agregar Auto
+    </button>
+  </div>
+</div>
+
+<button class="btn btn-primary" type="button" (click)="addMotor()">
+  Agregar Auto
+</button>

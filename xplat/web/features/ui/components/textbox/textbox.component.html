@@ -1,0 +1,109 @@
+<div class="form-input-label {{ inputStyle }}">
+  <div id="type-number" class="input-group">
+    <input
+      class="form-control"
+      [textMask]="{ mask: mask }"
+      (keypress)="omit_special_char($event)"
+      [type]="type"
+      [value]="value"
+      [(ngModel)]="value"
+      [placeholder]="placeholder"
+      (input)="onInput($event.target.value)"
+      (blur)="onBlur()"
+      [maxLength]="maxLength"
+      [minLength]="minLength"
+      [disabled]="disabled"
+      [min]="min"
+      [max]="max"
+      allowkey="allowkey"
+      (keypress)="onKeyUp()"
+      (mouseenter)="messageTooltips == '' && t.open()"
+      (mouseleave)="t.close()"
+      #t="ngbTooltip"
+      [placement]="placement"
+      [ngbTooltip]="messageTooltips"
+      [ngClass]="{
+        invalid:
+          !formControl.valid && (formControl.dirty || formControl.touched),
+        input_icon_append: iconConfig.append.display
+      }"
+    />
+    <span class="input-group-text">$</span>
+    <div
+      *ngIf="iconConfig.append.display"
+      class="input-group-append"
+      id="icon-tooltip"
+    >
+      <span
+        class="input-group-text span-icon"
+        [ngbTooltip]="iconConfig.append.tooltip"
+        [placement]="placement"
+      >
+        <sxf-icon
+          *ngIf="iconConfig.append.type; else iconByUrl"
+          class="{{ 'icon-' + iconConfig.append.color }}"
+          [type]="iconConfig.append.type"
+        ></sxf-icon>
+
+        <ng-template #iconByUrl>
+          <img
+            *ngIf="iconConfig.append.url"
+            [src]="iconConfig.append.url"
+            [attr.width]="iconConfig.append.width"
+            [attr.height]="iconConfig.append.height"
+          />
+        </ng-template>
+      </span>
+    </div>
+  </div>
+  <label
+    [ngClass]="{
+      invalid: !formControl.valid && (formControl.dirty || formControl.touched)
+    }"
+  >
+    {{ label }}
+  </label>
+
+  <small
+    *ngIf="
+      (helpFeedback && (!formControl.dirty || !formControl.touched)) ||
+      (helpFeedback && !formControl.errors)
+    "
+    class="form-text text-muted"
+  >
+    {{ helpFeedback }}
+  </small>
+  <!--<div *ngIf="validFeedback && !invalidFeedback" class="valid-feedback">
+    {{ validFeedback }}
+  </div>
+  <div *ngIf="invalidFeedback && !validFeedback" class="invalid-feedback">
+    <sxf-icon type="ok"></sxf-icon>
+    {{ invalidFeedback }} -->
+  <div
+    class="text-danger"
+    *ngIf="
+      formControl &&
+      formControl.errors &&
+      (formControl.dirty || formControl.touched)
+    "
+  >
+    <small *ngIf="formControl.errors['pattern']" class="invalid-feedback">
+      <!-- <sxf-icon type="ok"></sxf-icon> -->
+      {{
+        invalidFeedback ? invalidFeedback : 'El formato ingresado es invalido'
+      }}
+    </small>
+    <small *ngIf="formControl.errors['required']" class="invalid-feedback">
+      <!-- <sxf-icon type="ok"></sxf-icon> -->
+      El campo es requerido
+    </small>
+    <small *ngIf="formControl.errors['max']" class="invalid-feedback">
+      <!-- <sxf-icon type="ok"></sxf-icon> -->
+      El campo supera el limite establecido
+    </small>
+    <small *ngIf="formControl.errors['min']" class="invalid-feedback">
+      <!-- <sxf-icon type="ok"></sxf-icon> -->
+      El campo supera el limite establecido
+    </small>
+  </div>
+</div>

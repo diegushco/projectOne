@@ -1,0 +1,62 @@
+<div class="row mb-3">
+  <div class="col-lg-3 offset-lg-2 pl-0">
+    <div class="form-group">
+      <sxf-select
+        [formControl]="year"
+        (keydown.enter)="onEnter(year.value)"
+        [items]="filteredYears"
+        bindLabel="code"
+        bindValue="code"
+        [multiple]="false"
+        class="custom"
+        [searchable]="true"
+        placeholder="Seleccione el año"
+        dropdownPosition="bottom"
+        name="year"
+        id="year"
+        ngDefaultControl
+      ></sxf-select>
+    </div>
+  </div>
+  <div class="col-lg-1 input-group">
+    <div class="form-checkbox-as-radio">
+      <input
+        [formControl]="zeroKm"
+        type="checkbox"
+        name="switch-0km"
+        id="switch-0km"
+      />
+      <label for="switch-0km"></label>
+    </div>
+    <label class="ml-2">0km</label>
+  </div>
+  <!--<div class="col-lg-2 input-group">
+    <div class="form-checkbox-as-radio">
+      <input
+        type="checkbox"
+        [formControl]="classic"
+        name="clasico"
+        id="clasico"
+      />
+      <label for="clasico"></label>
+    </div>
+    <label class="ml-2">Clásico</label>
+  </div>-->
+</div>
+<div class="row">
+  <div class="col-lg-8 offset-lg-2 pl-0">
+    <span>
+      <button
+        [disabled]="!year.valid"
+        class="btn btn-primary btn-heft"
+        (click)="yearSelected(year.value)"
+        name="yearBtn"
+      >
+        Continuar
+      </button>
+    </span>
+    <span class="press-enter ml-3 mr-4">
+      o presiona ENTER
+    </span>
+  </div>
+</div>

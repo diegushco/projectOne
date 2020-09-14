@@ -1,0 +1,45 @@
+@import '~@sura-platform/scss/variables';
+
+.summary-general {
+  sxf-icon::ng-deep.icon.icon-sm {
+    height: 20px;
+  }
+  .card {
+    border: 0;
+  }
+  ul {
+    &.list-group {
+      li {
+        &.list-group-item,
+        &.list-group-item-no-border {
+          border: 0;
+          border-bottom: 0.5px solid $sura_light_gray_color;
+          border-radius: 0;
+          padding-left: 0;
+          padding-right: 0;
+
+          &.label {
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 14px;
+          }
+          ul {
+            &.list-group {
+              li {
+                &.list-group-item:first-child {
+                  border-top: 0.5px solid $sura_light_gray_color;
+                  margin-top: 0.5rem;
+                }
+              }
+            }
+          }
+        }
+
+        &.list-group-item-no-border {
+          border: 0;
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+}

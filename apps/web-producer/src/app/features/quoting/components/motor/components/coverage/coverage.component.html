@@ -1,0 +1,267 @@
+<div class="row">
+  <div
+    class="col-lg-9 pr-2 ps"
+    style="position: relative; max-height: 90vh;"
+    [perfectScrollbar]="{ suppressScrollY: false }"
+    id="print"
+  >
+    <div class="row row-coverage" *ngIf="slideCompare">
+      <!-- <sxf-comparecoverage
+        (removeCoverFromCompare)="compareCoverage($event)"
+        [compareCoveragePane]="compareCoveragePane"
+        (compareCoverageList)="coverageListTop($event)"
+        (showCardsCompare)="showCardCompare($event)"
+        (slideCompare)="sldCompare($event)"
+      ></sxf-comparecoverage> -->
+    </div>
+    <div
+      class="row row-coverage"
+      *ngIf="showCardsCompare"
+      (click)="backToPlans()"
+    >
+      <h4>
+        <!-- < Volver a todos los planes -->
+      </h4>
+    </div>
+    <div class="row ml-2 mr-0 mt-4">
+      <div class="col-lg-3 mt-2 mr-0 pr-0 pl-2">
+        <div class="title" *ngIf="!showCardsCompare">Elegí la cobertura</div>
+        <div class="car-info pl-2 py-4">
+          <div class="card" [ngClass]="{ 'no-additional': !withAdditional }">
+            <div class="card-body">
+              <div class="img-coverage">
+                <div class="row no-gutters">
+                  <div class="col-lg-12 mb-2">
+                    <img
+                      class="car-img"
+                      src="/assets/icons/TYPE_{{
+                        currentMotor.group | uppercase
+                      }}.svg"
+                      alt=""
+                    />
+                    <!-- <div style="width: 5rem; height: 5rem;"></div> -->
+                  </div>
+                </div>
+                <div class="row no-gutters">
+                  <div class="col-lg-6 patent-box">
+                    <ng-container *ngIf="currentMotor.license">
+                      <span *ngIf="!patentInUse" class="patent">
+                        {{ currentMotor.license | uppercase }}
+                      </span>
+                      <span
+                        *ngIf="patentInUse"
+                        ngbTooltip="El vehiculo tiene una patente existente en una poliza activa. No podrás emitir la poliza."
+                        class="patent patent-used"
+                        placement="top-left"
+                        tooltipClass="tooltip-coverage"
+                      >
+                        {{ currentMotor.license | uppercase }}
+                      </span>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="row no-gutters">
+                  <div class="col-lg-12">
+                    <span class="card-info-title">
+                      <b>{{ currentMotor.brand.description }}</b>
+                      &nbsp; {{ currentModel }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row no-gutters">
+                  <div class="col-lg-12">
+                    <span class="card-info-title">
+                      {{ currentMotor.model.description }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row no-gutters">
+                  <div class="col-lg-12">
+                    <span class="card-info-title">
+                      {{ currentMotor.year }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row no-gutters">
+                  <div class="col-lg-12">
+                    <a
+                      style="cursor: pointer;"
+                      name="editCarBtn"
+                      (click)="backStepOne()"
+                    >
+                      Editar
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="list-coverage"
+            *ngIf="features$ | async as listFeature"
+            [ngClass]="{ 'no-additional': !withAdditional }"
+          >
+            <sxf-listcoverage
+              [listFeature]="listFeature[0]"
+              [morefeatures]="morefeatures"
+            ></sxf-listcoverage>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 ml-0 px-0">
+        <div class="show-compare" *ngIf="showCardsCompare">
+          <div
+            class="d-flex text-center"
+            style="color: #000; justify-content: space-between;"
+          >
+            <sxf-blockcoverage
+              *ngFor="let coverage of compareCoverageArr"
+              (addNewCoverage)="backToPlans($event)"
+              (compareCoverage)="compareCoverage($event)"
+              [morefeatures]="morefeatures"
+              [currentGroup]="currentGroup"
+            ></sxf-blockcoverage>
+          </div>
+        </div>
+        <div class="coverage-tabs" *ngIf="!showCardsCompare">
+          <sxf-tabset
+            *ngIf="currentConfCoverages$ | async as groupsCoverage"
+            class="mt-4 tabCoverage"
+            customNavClass="coverage justify-content-end"
+            (tabSelectedValue)="groupSelected($event, false)"
+          >
+            <sxf-tabset-step
+              *ngFor="let item of groupsCoverage"
+              tabTitle="{{ item.name }}"
+              tabValue="{{ item.code }}"
+              [active]="currentGroup == item.code"
+              id="tab{{ item.code }}"
+              customPaneClass="coverage-pane pl-3 pr-0 pt-4"
+              class="print"
+            >
+              <ng-template #stillLoading>
+                <div>
+                  <div class="row no-gutters">
+                    <div *ngFor="let i of item.packages" class="col-lg-3">
+                      <sxf-blockcoverage
+                        initValues="true"
+                        [title]="i.description"
+                        [package]="i"
+                        [packageValue]="i"
+                        [morefeatures]="morefeatures"
+                        [currentGroup]="currentGroup"
+                        *ngIf="
+                          evalPackage(i.code) && features$
+                            | async as listFeature
+                        "
+                        [listFeature]="listFeature[0]"
+                      ></sxf-blockcoverage>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <div>
+                <ng-container>
+                  <div>
+                    <div *ngIf="currentMotor$ | async as vehicle">
+                      <div class="row no-gutters">
+                        <ng-container
+                          *ngFor="let i of packages(vehicle.packages)"
+                        >
+                          <div class="col-lg-3" *ngIf="groupTR === ''">
+                            <ng-container>
+                              <sxf-blockcoverage
+                                *ngIf="features$ | async as listFeature"
+                                initValues="false"
+                                [title]="i.description"
+                                [loadingCost]="loadingCost"
+                                (compareCoverage)="compareCoverage($event)"
+                                [package]="i"
+                                [packageValue]="i"
+                                (openModalAdditional)="
+                                  openDialogAdditionals($event)
+                                "
+                                [morefeatures]="morefeatures"
+                                [currentGroup]="currentGroup"
+                                [listFeature]="listFeature[0]"
+                                name="block{{ i.code }}"
+                                (allowCost)="callCost()"
+                              ></sxf-blockcoverage>
+                            </ng-container>
+                          </div>
+                          <div
+                            class="col-lg-3"
+                            *ngIf="groupTR !== ''"
+                            [hidden]="i.code.split('||')[0] !== groupTR"
+                          >
+                            <ng-container>
+                              <sxf-blockcoverage
+                                *ngIf="features$ | async as listFeature"
+                                initValues="false"
+                                [title]="i.description"
+                                [loadingCost]="loadingCost"
+                                (compareCoverage)="compareCoverage($event)"
+                                [package]="i"
+                                [packageValue]="i"
+                                (openModalAdditional)="
+                                  openDialogAdditionals($event)
+                                "
+                                [morefeatures]="morefeatures"
+                                [currentGroup]="currentGroup"
+                                [listFeature]="listFeature[0]"
+                                name="block{{ i.code }}"
+                                (allowCost)="callCost()"
+                              ></sxf-blockcoverage>
+                            </ng-container>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </sxf-tabset-step>
+          </sxf-tabset>
+        </div>
+      </div>
+    </div>
+    <div
+      style="display: none; margin: 10px !important; text-align: justify;"
+      class="legalInfo"
+    >
+      <span style="display: block;" id="legal">
+        Seguros Sura S.A., a través de su Web para Productores Asesores de
+        Seguros (https://productores.segurossura.com.ar/Menu/Login.aspx),
+        concede al usuario, el acceso y la posibilidad de informarse y comparar
+        las distintas alternativas sobre los seguros que se encuentran
+        disponibles. Dicho resultado, no implica el inicio del seguro o
+        aceptación por parte de la Compañía.
+      </span>
+      <br />
+      <span style="display: block;">
+        El usuario será responsable por la veracidad de la información que
+        incluya en el del formulario, y debe tener en cuenta la posibilidad de
+        futuros cambios en las condiciones de los datos.
+      </span>
+      <br />
+      <span style="display: block;">
+        La aplicación de la presente información corresponde al ámbito de la
+        República Argentina, y es meramente informativa, quedando sujeta a las
+        condiciones particulares de suscripción de Seguros Sura S.A., motivo el
+        cual, las mismas pueden sufrir modificaciones.
+      </span>
+    </div>
+  </div>
+
+  <div class="col-lg-3 px-0 ps summary-coverage">
+    <sxf-summarycoverage
+      [loadingCost]="loadingCost"
+      (allowCost)="callCostFromSidebar()"
+    ></sxf-summarycoverage>
+  </div>
+</div>
+<!-- </div> -->
+<router-outlet></router-outlet>

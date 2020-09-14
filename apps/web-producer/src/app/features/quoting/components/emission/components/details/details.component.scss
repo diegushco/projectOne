@@ -1,0 +1,192 @@
+@import '~@sura-platform/scss/variables';
+
+$border-color: #c4c4c4;
+$change-coverage-color: #e6162f;
+
+.details {
+  background: $white;
+  margin-top: 1px;
+  padding-top: 0px !important;
+  border-left: 1px solid $border-color;
+  background-color: $white;
+  font-size: 0.875rem; //14px en resolución de 1280 de ancho
+
+  height: 100vh;
+
+  .title {
+    margin: 0 0 1rem 0;
+    font-size: 1.625rem; //26px en resolución de 1280 de ancho
+    font-weight: $font-weight-bold;
+    color: $blue;
+  }
+
+  .show-detail {
+    color: $cyan;
+    font-weight: $font-weight-bold;
+    float: right;
+  }
+
+  .change-coverage {
+    color: $cyan;
+    font-weight: $font-weight-bold;
+  }
+
+  .item-title {
+    color: $blue;
+    font-weight: $font-weight-bold;
+  }
+
+  label {
+    margin-bottom: 0;
+    font-size: 0.75rem;
+  }
+
+  .tsummary {
+    // background-color: $light-blue;
+    // padding: 1rem;
+    table {
+      margin: 0;
+      font-size: 0.875rem;
+      tr {
+        border-bottom: 1px solid $border-color;
+      }
+      th,
+      td {
+        padding-left: 0;
+        padding-bottom: 0.05rem;
+      }
+    }
+  }
+}
+
+input[type='text'].form-control {
+  border-top-left-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+  border-top: 0.0625rem solid #c4c4c4;
+  border-bottom: 0.0625rem solid #c4c4c4;
+  border-right: none;
+  background-color: transparent;
+  padding: 0 !important;
+  height: auto;
+  box-shadow: none;
+  color: #000;
+}
+
+.icon-blue {
+  color: $cyan !important;
+}
+
+.input-group-text {
+  padding: 0 !important;
+  border-top-right-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  border: 1px solid #c4c4c4 !important;
+  &:hover {
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    border: 1px solid #c4c4c4 !important;
+  }
+}
+.edit-vehicle-coverage {
+  cursor: pointer !important;
+  font-size: 0.9375rem !important;
+  font-weight: 700 !important;
+  color: #00aec7 !important;
+}
+input[type='text'] {
+  text-align: center;
+}
+
+.input-group-append {
+  height: 32px;
+}
+
+.append {
+  border-radius: 1em;
+  border-top: 0.0625rem solid #c4c4c4;
+  border-bottom: 0.0625rem solid #c4c4c4;
+  background-color: transparent;
+  padding: 0;
+  height: 32px;
+  box-shadow: none;
+  color: #000;
+  line-height: 35px;
+}
+
+.append {
+  padding-right: 3px;
+}
+
+// Estilos para info extra de premio total
+.costs-details {
+  .main {
+    display: flex;
+    align-items: center;
+
+    div:last-child {
+      margin-left: auto;
+      font-weight: bold;
+    }
+  }
+
+  .childrens {
+    display: flex;
+    flex-direction: column;
+
+    .child {
+      margin-left: 10px;
+      border-bottom: 1px solid #c4c4c4;
+      font-weight: normal;
+      font-size: 12px;
+      padding: 5px 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.quantityVehicles {
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  margin-left: 1px;
+  padding: 6px;
+}
+.modal-title {
+  font-size: 1rem;
+}
+
+.modal-vehicle-title {
+  font-size: 1.125rem; //18px en resolución de 1280 de ancho
+  font-weight: normal;
+  color: $blue-text;
+}
+
+.details-table {
+  font-size: 0.875rem; //14px en resolución de 1280 de ancho
+  margin-left: -20px;
+  tr {
+    border-top: 1px solid #c4c4c4;
+  }
+  tr:last-child {
+    border-bottom: 1px solid #c4c4c4;
+  }
+  td {
+    padding: 5px;
+  }
+}
+
+.additional-table {
+  tr: {
+    border-bottom: 1px solid #c4c4c4;
+  }
+  td:last-child {
+    min-width: 5rem;
+    border-bottom: 1px solid $black;
+  }
+}

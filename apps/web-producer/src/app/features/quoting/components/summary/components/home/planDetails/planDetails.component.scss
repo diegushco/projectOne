@@ -1,0 +1,64 @@
+@import '~@sura-platform/scss/variables';
+
+.arrowUp {
+  transform: rotate(180deg);
+}
+.title {
+  font-family: $font-family-regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 18px;
+  color: $blue-text;
+  margin: 0.5rem 1rem !important;
+}
+
+.arrowHome {
+  filter: invert(54%) sepia(38%) saturate(6375%) hue-rotate(155deg)
+    brightness(99%) contrast(101%);
+}
+
+ngb-accordion::ng-deep.card::ng-deep .card-body {
+  border: none !important;
+  padding: 0rem 1.25rem;
+}
+
+.list-coverage {
+  list-style-type: none;
+  padding: 0;
+  font-family: $font-family-regular;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  margin: 0 0 1rem 0.6rem;
+
+  li > label {
+    font-family: $font-family-medium;
+  }
+
+  li {
+    padding: 0.2rem 0rem;
+  }
+}
+
+.li-coverage {
+  font-family: $font-family-regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  border-bottom: 0.5px solid #c4c4c4;
+  padding-bottom: 0.8em !important;
+}
+
+.btn-back {
+  background: none;
+  color: $cyan;
+  border: none;
+  padding: 0;
+  font-family: $font-family-medium;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+}

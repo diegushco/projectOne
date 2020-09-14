@@ -1,0 +1,240 @@
+<div class="not-cover" *ngIf="!packageValue?.code">
+  <div class="card column-coverage" style="min-height: 32em;">
+    <div class="card-body" (click)="addCoverage()">
+      <h5 class="card-title">Sumar otra cobertura</h5>
+      <h1>+</h1>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="packageValue"
+  class="card column-coverage text-center"
+  [ngClass]="{
+    cardActive: packageValue.selected,
+    cardS: !packageValue.selected
+  }"
+  [class.disabled]="!currentCost"
+  id="{{ packageValue?.code }}"
+  style="z-index: 1; cursor: pointer;"
+>
+  <div
+    class="card-body"
+    [class.disabled]="!currentCost"
+    (click)="
+      !currentCost && currentMotorError?.code !== 105
+        ? $event.stopPropagation()
+        : coverageSelected(packageValue)
+    "
+  >
+    <div class="group1-card">
+      <h6 class="title-group">{{ itemGroup[currentGroup] }}</h6>
+      <h6 class="card-title">{{ packageValue.description }}</h6>
+
+      <div
+        class="card-text price"
+        *ngIf="
+          currentMotorError?.code != 105 && !loadingCost && installments$
+            | async as installment
+        "
+      >
+        ${{
+          (currentCost && currentCost.invoice ? currentCost.invoice : 0)
+            | number: '1.0-0'
+        }}
+      </div>
+      <div class="card-text price" *ngIf="loadingCost">
+        <ng-lottie
+          width="20%"
+          height="48px"
+          [options]="lottieConfig"
+        ></ng-lottie>
+      </div>
+
+      <!-- UW Issue -->
+      <div
+        *ngIf="currentMotorError?.code == 105 && !loadingCost"
+        class="card-text text-authorization-required"
+      >
+        Esta cobertura requiere la autorización de la compañia para cotizarse
+      </div>
+      <div class="card-text mt-4 mb-2">
+        <button
+          [class.disabled]="!currentCost && currentMotorError?.code !== 105"
+          type="button"
+          class="btn btn-secondary"
+        >
+          <ng-container *ngIf="packageValue.selected">
+            Seleccionado
+          </ng-container>
+          <ng-container *ngIf="!packageValue.selected">
+            Seleccionar
+          </ng-container>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="packageValue"
+  class="card column-coverage text-center"
+  id="{{ packageValue?.code }}"
+>
+  <div class="card-body" [class.disabled]="!currentCost">
+    <ng-container *ngIf="additionalAccesories$ | async as addacc">
+      <div class="group1-card noprint">
+        <div
+          *ngIf="
+            currentMotorError?.code == 105 &&
+            addacc?.length === 0 &&
+            withAdditional
+          "
+          class="card-text"
+        >
+          <button
+            class="btn additional mt-3 p-0"
+            (click)="openModalAdditionalMethod(packageValue)"
+          >
+            <span class="circle plus primary"></span>
+            Adicionales
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="card-text noprint"
+        *ngIf="
+          !currentMotorError?.code && addacc?.length === 0 && withAdditional
+        "
+      >
+        <button
+          name="additionalBtn"
+          class="btn additional mt-3 p-0"
+          (click)="openModalAdditionalMethod(packageValue)"
+        >
+          <span class="circle plus primary"></span>
+          Adicionales
+        </button>
+      </div>
+      <ng-container>
+        <div class="card-text noprint" *ngIf="addacc?.length > 0">
+          <ng-template #popContentAdditionalAccesories>
+            <ul class="list-group">
+              <li *ngFor="let it of addacc" class="list-group-item">
+                {{ it.pattern.description }}
+              </li>
+            </ul>
+          </ng-template>
+          <div class="btn-group additional-m" id="containerelem">
+            <button
+              name="additionalBtn"
+              type="button"
+              class="btn additional additional-items"
+              [ngbPopover]="popContentAdditionalAccesories"
+              placement="bottom"
+            >
+              {{ addacc?.length }} adicionales
+            </button>
+            <button
+              name="additionalBtn"
+              class="btn additional additional-items-icons mt-3 p-0"
+              (click)="openModalAdditionalMethod(packageValue)"
+            >
+              <span class="circle plus primary"></span>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container>
+        <div
+          style="display: none;"
+          *ngIf="addacc?.length > 0"
+          class="card-text print adicionalprint"
+        >
+          <div class="btn-group">
+            <span>{{ addacc?.length }} adicionales</span>
+          </div>
+        </div>
+        <div
+          style="display: none;"
+          *ngIf="addacc?.length == 0"
+          class="card-text print adicionalprint"
+        >
+          <div class="btn-group">
+            <span>Sin adicionales</span>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="list-coverage">
+    <ul class="list-group list-group-flush">
+      <li
+        *ngIf="mechanicalAssists$ | async as assists"
+        class="list-group-item color-coverages"
+      >
+        <div *ngIf="assists?.length > 0; else noAssistance">
+          <sxf-select
+            name="assistanceSelect"
+            #assistanceCombo
+            [formControl]="assistance"
+            [items]="assists"
+            bindLabel="description"
+            bindValue="code"
+            [multiple]="false"
+            class="custom"
+            [searchable]="true"
+            placeholder="Asistencia"
+            [dropdownPosition]="'bottom'"
+          ></sxf-select>
+        </div>
+        <ng-template #noAssistance>
+          <sxf-select
+            [items]="[{ name: 'Sin Asistencia' }]"
+            class="custom"
+            bindLabel="name"
+            bindValue="name"
+            [disabled]="true"
+            markFirst="true"
+          ></sxf-select>
+        </ng-template>
+      </li>
+      <li
+        class="list-group-item color-coverages font-block-1"
+        *ngFor="let feature of listFeature"
+        style="height: 65px;"
+      >
+        <ng-container *ngIf="feature">
+          <div>
+            <sxf-icon
+              *ngIf="
+                belongPackage(feature) !== null &&
+                belongPackage(feature) !== undefined &&
+                belongPackage(feature)[0]
+              "
+              class="icon-green"
+              type="ok"
+            ></sxf-icon>
+            <sxf-icon
+              *ngIf="
+                belongPackage(feature) !== null &&
+                belongPackage(feature) !== undefined &&
+                !belongPackage(feature)[0]
+              "
+              class="icon-red"
+              type="close"
+            ></sxf-icon>
+            <sxf-icon
+              *ngIf="
+                belongPackage(feature) === null ||
+                belongPackage(feature) === undefined
+              "
+              type="minus"
+            ></sxf-icon>
+          </div>
+        </ng-container>
+      </li>
+    </ul>
+  </div>
+</div>

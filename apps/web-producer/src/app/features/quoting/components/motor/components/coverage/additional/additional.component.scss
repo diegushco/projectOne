@@ -1,0 +1,57 @@
+@import '~@sura-platform/scss/variables';
+.scroll-modal {
+  height: 35em;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.line {
+  border-bottom: 1px solid $black_125;
+  padding-left: 0;
+}
+
+.line_dark {
+  border-bottom: 1px solid $black;
+}
+
+ul {
+  list-style: none;
+}
+.modal-checkbox {
+  margin: 0;
+  position: unset;
+}
+
+.form-checkbox-label {
+  font-size: 0.875rem;
+  color: $gray_dark;
+  font-weight: $font-weight-normal;
+}
+
+li {
+  color: $gray_dark;
+}
+
+.items-modal {
+  font-size: 14px;
+  vertical-align: top;
+  padding-left: 10px;
+  .row {
+    margin: 0;
+  }
+}
+
+.title-checkbox-no-items {
+  padding-left: 10px;
+}
+
+.long-text {
+  width: 430px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.loadings {
+  height: 15.625rem;
+  margin-top: 7.5rem;
+}

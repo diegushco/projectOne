@@ -1,0 +1,63 @@
+<div
+  class="row"
+  *ngIf="(gettingCoverage$ | async) === false; else stillLoadingCoverage"
+>
+  <div class="col-lg-8 offset-lg-2 pl-0">
+    <div [formGroup]="form">
+      <div class="row">
+        <div class="col-lg-4">
+          <label>
+            Provincia
+            <sup>*</sup>
+          </label>
+          <sxf-select
+            #province
+            formControlName="province"
+            disabledOnEmpty="true"
+            [items]="provinces$"
+            bindLabel="description"
+            bindValue="code"
+            [multiple]="false"
+            class="custom"
+            [searchable]="true"
+            placeholder="Provincia"
+            [dropdownPosition]="'bottom'"
+            name="province"
+          ></sxf-select>
+        </div>
+        <div class="col-lg-4">
+          <label>
+            Localidad
+            <sup>*</sup>
+          </label>
+          <sxf-select
+            #location
+            formControlName="location"
+            disabledOnEmpty="true"
+            [items]="locations$"
+            bindLabel="city"
+            bindValue="city"
+            [multiple]="false"
+            class="custom"
+            [searchable]="true"
+            placeholder="Localidad"
+            [dropdownPosition]="'bottom'"
+            name="location"
+          ></sxf-select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #stillLoadingCoverage>
+  <div class="row">
+    <div class="col-12 text-center">
+      <ng-lottie
+        [options]="lottieConfig"
+        width="8.75rem"
+        height="6.25rem"
+      ></ng-lottie>
+    </div>
+  </div>
+</ng-template>

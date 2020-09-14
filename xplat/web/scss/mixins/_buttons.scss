@@ -1,0 +1,15 @@
+/* Buttons */
+@mixin btn-hover {
+  color: color('white');
+  background-color: color('blue');
+  border-color: color('blue');
+}
+
+@mixin btn-active {
+  color: color('blue');
+  border-color: color('blue');
+  background-color: color('light-blue');
+  &:focus {
+    box-shadow: none;
+  }
+}

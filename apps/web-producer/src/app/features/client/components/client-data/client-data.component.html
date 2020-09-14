@@ -1,0 +1,707 @@
+<div [formGroup]="form" class="col-lg-12">
+  <div class="row">
+    <div class="col-lg-4 pl-0">
+      <label>
+        Documento
+        <sup>*</sup>
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 input-group pl-0">
+      <sxf-select
+        #documentType
+        style="width: 100px;"
+        formControlName="document"
+        [items]="documents$"
+        bindLabel="description"
+        bindValue="code"
+        [multiple]="false"
+        class="custom"
+        [searchable]="false"
+        placeholder="Documento..."
+        [dropdownPosition]="'bottom'"
+        name="documentClientEmission"
+        [disabled]="disabledByRetrieve"
+      ></sxf-select>
+      <sxf-textbox
+        type="text"
+        formControlName="documentNumber"
+        (keyup.enter)="validateDocumentNumber()"
+        label=""
+        placeholder=""
+        [helpFeedback]="''"
+        placement="bottom"
+        [maxLength]="maxLength"
+        messageTooltips="Ingresá los {{
+          maxLength !== 0 ? maxLength : ''
+        }} dígitos del {{ documentDescription }}"
+        name="documentNumberClientEmission"
+        [disabled]="disabledByRetrieve"
+      ></sxf-textbox>
+      <br />
+    </div>
+    <div class="col-lg-3">
+      <!-- <span *ngIf="!loadingData"> -->
+      <button
+        [disabled]="
+          !form.valid || isLegalPerson !== 'undefined' || disabledByRetrieve
+        "
+        (click)="validateDocumentNumber()"
+        class="btn btn-primary btn-block"
+        name="validateDocumentNumberBtn"
+      >
+        <ng-lottie
+          [hidden]="!loadingData"
+          [options]="lottieConfig"
+          (animationCreated)="animationCreated($event)"
+          height="24px"
+          width="24px"
+        ></ng-lottie>
+        {{ buttonLabel }}
+        <!-- Validar -->
+      </button>
+      <!-- </span>
+      <span *ngIf="loadingData">
+        <button disabled class="btn btn-primary">
+          Validando...
+        </button>
+      </span> -->
+      <div class="press-enter ml-3 mr-4">
+        o presiona ENTER
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <span
+        class="question-class"
+        (click)="openModal()"
+        style="cursor: pointer;"
+      >
+        <b>¿Los datos no coinciden?</b>
+      </span>
+    </div>
+  </div>
+</div>
+<div *ngIf="(searchClient$ | async) || (client$ | async)">
+  <input type="hidden" *ngIf="clientBaseN$ | async" />
+  <!-- Formulario Persona Fisica -->
+
+  <div
+    [formGroup]="formPhysicalPerson"
+    class="col-12"
+    *ngIf="
+      !loadingData && isLegalPerson !== 'undefined' && isLegalPerson === 'not'
+    "
+  >
+    <div class="row">
+      <div class="col-lg-4 pl-0">
+        <label>
+          Nombre
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-4">
+        <label>
+          Apellido
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-4">
+        <label>
+          Fecha de Nacimiento
+          <sup>*</sup>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 pl-0">
+        <sxf-textbox
+          type="text"
+          [disabled]="(clientFromEmission$ | async)?.firstname"
+          formControlName="firstname"
+          label=""
+          placeholder="Ingresá el nombre"
+          [helpFeedback]=""
+          maxlength="100"
+          placement="bottom"
+          [value]="(client$ | async)?.firstname"
+          name="firstnameClientEmission"
+        ></sxf-textbox>
+      </div>
+      <div class="col-4">
+        <sxf-textbox
+          type="text"
+          [disabled]="(clientFromEmission$ | async)?.lastname"
+          formControlName="lastname"
+          maxlength="100"
+          label=""
+          placeholder="Ingresá el apellido"
+          [helpFeedback]=""
+          placement="bottom"
+          name="lastnameClientEmission"
+        ></sxf-textbox>
+      </div>
+      <div class="col-4">
+        <sxf-datetimepicker
+          [disabled]="(clientFromEmission$ | async)?.birth"
+          formControlName="birth"
+          navigation="select"
+          [minDate]="minDateClient"
+          [maxDate]="maxDateClient"
+          [helpFeedback]=""
+          name="birthClientEmission"
+        ></sxf-datetimepicker>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 pl-0">
+        <label>
+          Nacionalidad
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-4">
+        <label>
+          Estado Civil
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-4">
+        <label>
+          Sexo
+          <sup>*</sup>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 pl-0">
+        <sxf-select
+          [disabled]="(clientFromEmission$ | async)?.nationality"
+          formControlName="nationality"
+          [items]="nationalities$"
+          bindLabel="description"
+          bindValue="code"
+          [multiple]="false"
+          [helpFeedback]=""
+          class="custom"
+          [searchable]="true"
+          placeholder="Nacionalidad"
+          [dropdownPosition]="'bottom'"
+          name="nationalityClientEmission"
+        ></sxf-select>
+      </div>
+      <div class="col-4">
+        <sxf-select
+          [disabled]="(clientFromEmission$ | async)?.maritalstatus"
+          formControlName="maritalstatus"
+          [items]="maritalStatus$"
+          bindLabel="description"
+          bindValue="code"
+          [multiple]="false"
+          [helpFeedback]=""
+          class="custom"
+          [searchable]="true"
+          placeholder="Estado Civil"
+          [dropdownPosition]="'bottom'"
+          name="maritalstatusClientEmission"
+        ></sxf-select>
+      </div>
+      <div class="col-4">
+        <sxf-select
+          [disabled]="(clientFromEmission$ | async)?.gender"
+          formControlName="gender"
+          [items]="genders$"
+          bindLabel="description"
+          bindValue="code"
+          [multiple]="false"
+          [helpFeedback]=""
+          class="custom"
+          [searchable]="true"
+          placeholder="Sexo"
+          [dropdownPosition]="'bottom'"
+          name="genderClientEmission"
+        ></sxf-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-1 pl-0">
+        <label>
+          Cód. Área
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-3">
+        <label>
+          Teléfono
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-4">
+        <label>
+          Mail
+          <sup>*</sup>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-1 pl-0 pr-0">
+        <sxf-textbox
+          type="text"
+          formControlName="prefix"
+          [maxLength]="5"
+          [minLength]="2"
+          placeholder="Cód. Área"
+          [helpFeedback]="
+            formPhysicalPerson.controls['prefix'].disabled
+              ? 'No es modificable'
+              : ''
+          "
+          name="prefixClientEmission"
+          [disabled]="
+            (clientFromEmission$ | async)?.cellphone?.area && disabledByRetrieve
+          "
+        ></sxf-textbox>
+      </div>
+      <div class="col-3">
+        <sxf-textbox
+          type="text"
+          formControlName="phone"
+          label=""
+          placeholder="Teléfono"
+          [minLength]="6"
+          [maxLength]="8"
+          [helpFeedback]="
+            formPhysicalPerson.controls['phone'].disabled
+              ? 'No es modificable'
+              : ''
+          "
+          name="phoneClientEmission"
+          [disabled]="
+            (clientFromEmission$ | async)?.cellphone?.number &&
+            disabledByRetrieve
+          "
+        ></sxf-textbox>
+      </div>
+      <div class="col-4">
+        <sxf-textbox
+          type="text"
+          formControlName="email"
+          label=""
+          placeholder="Ingresá el email"
+          [maxLength]="60"
+          [helpFeedback]="
+            formPhysicalPerson.controls['email'].disabled
+              ? 'No es modificable'
+              : ''
+          "
+          name="emailClientEmission"
+          [disabled]="
+            (clientFromEmission$ | async)?.email && disabledByRetrieve
+          "
+        ></sxf-textbox>
+        <span
+          *ngIf="
+            (formPhysicalPerson.controls.email.dirty ||
+              formPhysicalPerson.controls.email.touched) &&
+            !formPhysicalPerson.controls.email.errors
+          "
+          class="text-danger"
+        >
+          <b>Este email será usado para enviar la inspección por photo up</b>
+        </span>
+      </div>
+      <div class="col-4">
+        <div class="form-checkbox" id="containerExposedPerson">
+          <span
+            placement="bottom"
+            ngbTooltip="Funcionarios públicos nacionales, provinciales o municipales que ocupan u ocuparon altos cargos, puestos jerárquicos, como así también sus familiares"
+          >
+            <input
+              type="checkbox"
+              formControlName="exposedPerson"
+              class="form-checkbox-input"
+              id="exposedPerson"
+              name="exposedPersonClientEmission"
+              messageTooltips="Funcionarios públicos nacionales, provinciales o municipales que ocupan u ocuparon altos cargos, puestos jerárquicos, como así también sus familiares"
+            />
+            <label class="form-checkbox-label" for="exposedPerson"></label>
+            <label class="label-checkbox">
+              Persona politicamente expuesta
+            </label>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8 pl-0">
+        <span>
+          <button
+            [disabled]="!formPhysicalPerson.valid"
+            class="btn btn-primary btn-heft"
+            (click)="continue()"
+            name="continueDataClientEmisionBtn"
+          >
+            Continuar
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- Formulario Persona Juridica -->
+  <div
+    [formGroup]="formLegalPerson"
+    class="col-12"
+    *ngIf="
+      !loadingData && isLegalPerson !== 'undefined' && isLegalPerson === 'yes'
+    "
+  >
+    <div class="row">
+      <div class="col-lg-4 pl-0">
+        <label>
+          Razon Social
+          <sup>*</sup>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 pl-0">
+        <sxf-textbox
+          type="text"
+          [value]="(client$ | async)?.companyname"
+          formControlName="companyname"
+          [disabled]="(clientFromEmission$ | async)?.companyname"
+          label=""
+          placeholder="Ingresá el nombre"
+          [maxLength]="255"
+          [helpFeedback]=""
+          placement="bottom"
+          messageTooltips="Ingresá solo carácteres alfanumericos"
+          name="companynameClientEmission"
+        ></sxf-textbox>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-1 pl-0">
+        <label>
+          Cód. Área
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-3">
+        <label>
+          Teléfono
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-4">
+        <label>
+          Mail
+          <sup>*</sup>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-1 pl-0 pr-0">
+        <sxf-textbox
+          type="text"
+          formControlName="prefix"
+          label=""
+          [maxLength]="5"
+          [minLength]="2"
+          placeholder="Cód. Área"
+          [helpFeedback]="''"
+          name="prefixClientEmission"
+        ></sxf-textbox>
+      </div>
+      <div class="col-3">
+        <sxf-textbox
+          type="text"
+          formControlName="phone"
+          label=""
+          placeholder="Teléfono"
+          [minLength]="6"
+          [maxLength]="8"
+          [helpFeedback]="''"
+          name="phoneClientEmission"
+        ></sxf-textbox>
+      </div>
+      <div class="col-4">
+        <sxf-textbox
+          type="text"
+          formControlName="email"
+          label=""
+          placeholder="Ingresá el email"
+          [maxLength]="60"
+          [helpFeedback]="''"
+          name="emailClientEmission"
+        ></sxf-textbox>
+        <span
+          *ngIf="
+            (formLegalPerson.controls.email.dirty ||
+              formLegalPerson.controls.email.touched) &&
+            !formLegalPerson.controls.email.errors
+          "
+          class="text-danger"
+        >
+          <b>Este email será usado para enviar la inspección por photo up</b>
+        </span>
+      </div>
+    </div>
+    <div class="row" style="display: none;">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4"></div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <div class="form-checkbox">
+          <input
+            type="checkbox"
+            id="officialorganism"
+            class="form-checkbox-input"
+            formControlName="officialorganism"
+            name="officialorganismClientEmission"
+          />
+          <label class="form-checkbox-label" for="officialorganism"></label>
+          <label>
+            Organismo social
+          </label>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-checkbox">
+          <input
+            type="checkbox"
+            id="consortium"
+            formControlName="consortium"
+            class="form-checkbox-input"
+            name="consortiumClientEmission"
+          />
+          <label class="form-checkbox-label" for="consortium"></label>
+          <label>
+            Consorcio
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-lg-8 pl-0">
+        <span>
+          <button
+            [disabled]="!formLegalPerson.valid"
+            class="btn btn-primary btn-heft"
+            (click)="continue()"
+            name="continueClientEmissionBtn"
+          >
+            Continuar
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<sxf-modal #modalClient>
+  <div class="modal-header modal-header-items">
+    <!-- <h4 class="modal-title" id="modal-basic-title">¿Los datos no coinciden?</h4> -->
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModal()"
+      name="closeModalBtn"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-body-items">
+    <h3>¿Los datos no coinciden?</h3>
+    <p>
+      Si el número de {{ documentDescription }} no coincide con los datos de
+      nombre y apellido verificá que no haya errores de tipeo. Si el error
+      persiste, por favor comunicate con tu ejecutivo de cuenta.
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-8 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="closeModal()"
+          name="closeModalBtn"
+        >
+          Volver
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+
+<sxf-modal #modalNoClient>
+  <div class="modal-header modal-header-items">
+    <h4 class="modal-title" id="modal-basic-title">Cliente existente</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModalNoClient()"
+      name="closeModalBtn"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-body-items">
+    <h3>Este cliente pertenece a otro productor</h3>
+    <p>
+      Pertenece a otra organización comercial deberá comunicarse con su
+      ejecutivo de cuenta para poder avanzar con esta solicitud.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-8 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="closeModalNoClient()"
+          name="closeModalBtn"
+        >
+          Volver
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+
+<sxf-modal #modalUW (closed)="closeUWModal()">
+  <div class="modal-header" style="padding: 1rem 2rem;">
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeUWModal('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h4>
+      La presente emisión va a requerir autorización de la compañía.
+    </h4>
+    <h4>¿Desea solicitar autorización?</h4>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-3 pl-0">
+        <button
+          type="button"
+          class="btn btn-modal btn-lg btn-block"
+          (click)="closeUWModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-lg-5 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="closeUWModal('continue')"
+        >
+          Continuar
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+<sxf-modal #modalMobility [options]="{ size: 'lg' }">
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">
+      Movilidad Sura
+    </h6>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModalMobility()"
+      [disabled]="loadingCosts"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h3>Movilidad Sura sólo está disponible para personas físicas.</h3>
+    <h6>
+      Si tu cliente es Jurídico debemos cancelar este producto y realizar una
+      recotización
+    </h6>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-2 offset-lg-4 pl-0">
+        <button
+          type="button"
+          class="btn btn-modal btn-lg btn-block"
+          (click)="closeModalMobility()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-lg-6 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="continueIsLegalPerson()"
+        >
+          <span *ngIf="!loadingCosts">Recotizar como Persona Jurídica</span>
+          <!-- <span *ngIf="loadingCosts">Recotizando</span> -->
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+
+<sxf-modal #newCosts [options]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Recotizando
+    </h4>
+  </div>
+  <div class="modal-body modal-body-items">
+    <p *ngIf="!loadingCosts; else stillLoadingCost">
+      Recotizamos sin el seguro de Movilidad, el nuevo valor de la cuota es de
+      <b>$ {{ newQuote | number: '1.0-0' }}</b>
+
+      <br />
+      Para mas detalle revisar el detalle del menú lateral.
+    </p>
+    <ng-template #stillLoadingCost>
+      <div class="row">
+        <div class="col-12 text-center">
+          <ng-lottie
+            [options]="suraLoaderConfig"
+            width="8.75rem"
+            height="6.25rem"
+          ></ng-lottie>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-8 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="closeModalNewCosts()"
+          [disabled]="loadingCosts"
+          name="closeModalNewCostsBtn"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>

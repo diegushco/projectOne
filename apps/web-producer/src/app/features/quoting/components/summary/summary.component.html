@@ -1,0 +1,81 @@
+<div
+  class="row ps no-gutters"
+  style="position: relative; max-height: 100vh;"
+  [perfectScrollbar]="{ suppressScrollY: false }"
+>
+  <div class="col-lg-8 offset-lg-2" style="margin-top: 3em;">
+    <div class="row no-gutters justify-content-between">
+      <div class="col-6 title">
+        Resumen de cotización
+      </div>
+      <div class="col-6 text-right">
+        <button
+          (mouseover)="btnHover.btnSave = true"
+          (mouseout)="btnHover.btnSave = false"
+          class="btn small-button btn-secondary btn-sm btn-save"
+          name="saveQuotingBtn"
+        >
+          <sxf-icon
+            *ngIf="!btnHover.btnSave"
+            class="icon-green"
+            type="save"
+          ></sxf-icon>
+          <sxf-icon
+            *ngIf="btnHover.btnSave"
+            class="icon-white"
+            type="save"
+          ></sxf-icon>
+          Guardar en el portal
+        </button>
+        <button
+          class="btn small-button btn-secondary btn-sm btn-download"
+          name="downloadQuotingBtn"
+          (mouseover)="btnHover.btnDownload = true"
+          (mouseout)="btnHover.btnDownload = false"
+        >
+          <sxf-icon
+            *ngIf="!btnHover.btnDownload"
+            class="icon-green"
+            type="download"
+          ></sxf-icon>
+          <sxf-icon
+            *ngIf="btnHover.btnDownload"
+            class="icon-white"
+            type="download"
+          ></sxf-icon>
+          Descargar
+        </button>
+      </div>
+    </div>
+    <div class="row no-gutters" style="margin: 2rem 0rem;">
+      <div class="col-6 pr-2">
+        <div class="summary-card">
+          <sxf-summary-general
+            [packageSelected]="packageSelected"
+            [policy]="policy"
+          ></sxf-summary-general>
+        </div>
+      </div>
+      <div class="col-6 pl-2">
+        <div class="summary-card mb-3">
+          <sxf-housedata [policy]="policy"></sxf-housedata>
+        </div>
+        <div class="summary-card mb-3">
+          <sxf-plandetail
+            [packageSelected]="packageSelected"
+            [policy]="policy"
+          ></sxf-plandetail>
+        </div>
+        <div class="summary-card">
+          <sxf-payment-commissions [policy]="policy"></sxf-payment-commissions>
+        </div>
+      </div>
+    </div>
+    <button
+      name="continueToEmmision"
+      class="btn btn-primary btn-block btn-heft btn-emission"
+    >
+      Continuar a emisión
+    </button>
+  </div>
+</div>

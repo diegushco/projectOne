@@ -1,0 +1,21 @@
+@import '~@sura-platform/scss/variables';
+
+label {
+  color: $gray_dark;
+  margin-bottom: 0;
+  font-size: 0.75rem;
+}
+
+.press-enter {
+  color: #a3adb3;
+  font-size: 0.75rem;
+  padding-top: 0.5em;
+}
+
+.label-regular {
+  font-family: $font-family-medium;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+}

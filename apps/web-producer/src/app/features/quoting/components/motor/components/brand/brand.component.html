@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="col-lg-8 offset-lg-2 pl-0">
+    <sxf-tabset
+      *ngIf="groups"
+      customNavClass="brand-class"
+      (tabSelectedValue)="groupSelected($event)"
+    >
+      <sxf-tabset-step
+        *ngFor="let item of groups"
+        tabTitle="{{ item.code | titlecase }}"
+        tabValue="{{ item.code }}"
+        [active]="currentGroup === item.code"
+        urlImage="/assets/icons/TYPE_{{ item.code }}.svg"
+      >
+        <div class="row mt-5">
+          <ng-template #stillLoading>
+            <div class="col-lg-4 offset-lg-4 d-flex flex-wrap mt-4">
+              <ng-lottie
+                [options]="lottieConfig"
+                width="8.75rem"
+                height="6.25rem"
+              ></ng-lottie>
+            </div>
+          </ng-template>
+
+          <div class="col-lg-6">
+            <sxf-textbox
+              [formControl]="filter"
+              placeholder="Podes escribir o buscar abajo"
+              type="text"
+              label="Marca"
+              name="brand"
+              id="brand"
+              ngDefaultControl
+            ></sxf-textbox>
+          </div>
+          <ng-container *ngIf="brands$ | async as brands; else stillLoading">
+            <div class="col-lg-12 d-flex flex-wrap mt-4">
+              <span class="data-not-found" *ngIf="brands.length == 0">
+                No se encontraron resultados
+              </span>
+
+              <div *ngFor="let brand of brands">
+                <button
+                  style="width: 140px; height: 110px;"
+                  class="btn btn-primary mr-2 mb-2"
+                  [ngClass]="{
+                    active: brand.code === currentMotor.brand.code
+                  }"
+                  (click)="brandSelected(brand)"
+                  name="brand{{ brand.code }}"
+                >
+                  <img
+                    width="50"
+                    height="50"
+                    src="{{ '/assets/brands/' + brand.code + '.svg' }}"
+                    (error)="updateUrlImageError($event, item.code)"
+                  />
+                  <div>
+                    {{ brand.description | titlecase }}
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div
+              [ngClass]="{ 'mt-4': showAllBrandsButton }"
+              class="col-8 ml-5 pl-4 pr-4"
+            >
+              <button
+                *ngIf="showAllBrandsButton"
+                name="brandBtnViewAll"
+                (click)="showAllBrands()"
+                type="button"
+                class="btn btn-cyan btn-block"
+              >
+                Ver todas las marcas &nbsp;
+                <i class="arrow-char down"></i>
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </sxf-tabset-step>
+    </sxf-tabset>
+  </div>
+</div>

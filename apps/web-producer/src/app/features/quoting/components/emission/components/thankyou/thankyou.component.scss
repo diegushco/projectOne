@@ -1,0 +1,194 @@
+@import '~@sura-platform/scss/variables';
+.span_text_sure {
+  color: $blue-text;
+  font-size: 1.625rem;
+}
+
+.span_text_info {
+  color: $blue-text;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.span_text {
+  color: $cyanblue_shadow;
+  font-size: 0.875rem;
+}
+.span_text_data {
+  color: $gray_dark;
+  font-size: 0.875rem;
+}
+.span_text_brand {
+  color: $gray_dark;
+  font-size: 0.875rem;
+}
+
+.span_text_primary {
+  color: $primary;
+  font-size: 0.875rem;
+  font-weight: $font-weight-bold;
+  position: absolute;
+}
+
+.boxes {
+  width: 12.5rem;
+  background: #f5f7f8;
+  padding: 5px;
+}
+
+.box_white {
+  background: $white;
+}
+
+.box_border {
+  padding: 1rem;
+  border: 0.0625rem solid #e9e9e9;
+  text-align: justify;
+  border-radius: 5px;
+}
+
+.button_primary {
+  font-size: 0.875rem;
+}
+
+.links {
+  width: 12.5rem;
+  background: transparent;
+}
+.warning {
+  color: red;
+}
+.loading {
+  top: 10rem;
+  position: absolute;
+}
+
+.only_coupon {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-container {
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 20px;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+
+  .vehicle-info {
+    justify-self: end;
+
+    &:nth-of-type(2) {
+      justify-self: start;
+    }
+
+    width: 100%;
+    height: 45px;
+    padding: 6px;
+
+    border: 0.5px solid #c4c4c4;
+    border-radius: 5px;
+
+    font-size: 12px;
+    line-height: 14px;
+
+    display: flex;
+    align-items: center;
+
+    .check {
+      align-self: flex-start;
+
+      img {
+        display: flex;
+      }
+    }
+
+    .info {
+      margin-left: 5px;
+
+      .vehicle-model {
+        width: 100%;
+        padding-left: 5px;
+      }
+
+      .coverage-info {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .payment-info {
+    height: 55px;
+    grid-column: span 2;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    border-radius: 5px;
+    background-color: #ecf0f1;
+    color: #768692;
+
+    justify-content: space-between;
+    align-items: center;
+
+    .detail {
+      padding: 10px;
+      font-size: 14px;
+      line-height: 18px;
+
+      text-align: center;
+
+      &.no-number {
+        grid-column: span 2;
+
+        display: flex;
+        justify-content: center;
+
+        .separator {
+          margin: 0 5px;
+        }
+      }
+    }
+
+    .card-info {
+      margin-right: 8px;
+      height: 39px;
+
+      background-color: #fff;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 5px;
+
+      .card-image {
+        height: 25px;
+
+        margin-right: 15px;
+      }
+
+      .ellipse {
+        height: 5px;
+        width: 5px;
+
+        margin: 0 2px;
+        border-radius: 50%;
+
+        background-color: #c4c4c4;
+      }
+    }
+  }
+}
+
+.ty-result {
+  max-height: 90vh !important;
+
+  & > div {
+    padding-bottom: 20px;
+  }
+}

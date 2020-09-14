@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col-lg-8 offset-lg-2">
+    <div [formGroup]="form">
+      <div>
+        <div class="row mb-2">
+          <div class="col-lg-6 pl-0">
+            <label for="uses">Uso</label>
+            <sxf-select
+              #use
+              disabledOnEmpty="true"
+              formControlName="use"
+              [items]="uses$"
+              bindLabel="description"
+              bindValue="code"
+              [multiple]="false"
+              class="custom"
+              [searchable]="true"
+              placeholder="Seleccione el uso"
+              dropdownPosition="bottom"
+              name="use"
+            ></sxf-select>
+          </div>
+          <!-- TODO: DG, descomentar si deciden volver a poner UBER
+                  <div class="col-lg-4 pl-0 pt-3">
+          <div class="form-checkbox">
+            <input
+              #uber
+              type="checkbox"
+              (change)="uberChange($event)"
+              class="form-checkbox-input"
+              id="uber"
+            />
+            <label class="form-checkbox-label" for="uber"></label>
+            <label class="label-checkbox">
+              UBER
+            </label>
+          </div>
+        </div>-->
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-6 pl-0">
+            <label for="destinations">Destino</label>
+            <sxf-select
+              #destination
+              disabledOnEmpty="true"
+              formControlName="destination"
+              [items]="destinations$"
+              bindLabel="description"
+              bindValue="code"
+              [multiple]="false"
+              class="custom"
+              [searchable]="true"
+              placeholder="Seleccione destino"
+              dropdownPosition="bottom"
+              name="destination"
+            ></sxf-select>
+            <label *ngIf="destinationSelected">
+              La suma asegurada es de manera referencial.
+            </label>
+          </div>
+        </div>
+        <!-- *ngIf="(activities$ | async)?.length > 1" -->
+        <div class="row">
+          <div class="col-lg-6 pl-0">
+            <label for="activities">Actividad</label>
+            <sxf-select
+              #activity
+              disabledOnEmpty="true"
+              formControlName="activity"
+              [items]="activities$"
+              (loadComplete)="onLoadActivitiesComplete($event)"
+              bindLabel="description"
+              bindValue="code"
+              [multiple]="false"
+              class="custom"
+              [searchable]="true"
+              placeholder="Seleccione actividad"
+              dropdownPosition="bottom"
+              name="activity"
+            ></sxf-select>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-lg-6 pl-0">
+          <span>
+            <button
+              [disabled]="!form.valid"
+              type="button"
+              class="btn btn-primary btn-heft"
+              (click)="continue()"
+              name="continueUseDestinationActivityBtn"
+            >
+              Continuar
+            </button>
+          </span>
+          <span class="press-enter ml-3 mr-4">
+            o presiona ENTER
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

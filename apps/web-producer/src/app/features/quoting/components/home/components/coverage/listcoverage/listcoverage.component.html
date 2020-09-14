@@ -1,0 +1,198 @@
+<div class="row no-gutters home-list-coverage">
+  <div class="col-lg-12">
+    <!-- <div class="row no-gutters" style="margin-bottom: 2.0625rem;">
+      <div class="col-lg-12" style="padding-left: 8.0625rem;">
+        <div class="title">Elegí el plan</div>
+        <div class="subtitle">Coberturas incluídas</div>
+        <div class="gray-title">
+          ¡Podes editarlas para armar tu plan a medida!
+        </div>
+      </div>
+    </div> -->
+    <div [formGroup]="form">
+      <ng-container formArrayName="coveragesBenefits">
+        <ul class="list-group">
+          <ng-container
+            *ngFor="
+              let featureGroup of coveragesBenefits.controls;
+              let i = index
+            "
+          >
+            <li
+              class="list-group-item item-benefits"
+              [formGroup]="featureGroup"
+              *ngIf="featureGroup.get('visible').value"
+              [ngClass]="{
+                'item-resize-benefits': !featureGroup.get('chk').value
+              }"
+            >
+              <div class="form-checkbox mb-0">
+                <input
+                  type="checkbox"
+                  formControlName="chk"
+                  id="{{ featureGroup.get('code').value }}"
+                  class="form-checkbox-input"
+                  (change)="onClickCheckboxBenefits($event)"
+                />
+                <label
+                  class="form-checkbox-label"
+                  for="{{ featureGroup.get('code').value }}"
+                >
+                  {{ featureGroup.get('description').value }}
+                </label>
+              </div>
+              <div class="row no-gutters" *ngIf="featureGroup.get('chk').value">
+                <div class="col-lg-8">
+                  <sxf-textbox
+                    type="text"
+                    formControlName="suggested"
+                    style="display: inherit;"
+                    [disabled]="!featureGroup.get('editable').value"
+                    [mask]="moneyMask"
+                    invalidFeedback="La suma asegurada no puede ser 0"
+                    (keyup)="onChangeSum(featureGroup.get('code').value)"
+                  ></sxf-textbox>
+                </div>
+                <div
+                  class="col-lg-4 min-max"
+                  *ngIf="featureGroup.get('showMinMax').value"
+                >
+                  <span style="display: block;">
+                    Min {{ featureGroup.get('min').value | currencyFormat }}
+                  </span>
+                  <span>
+                    Máx {{ featureGroup.get('max').value | currencyFormat }} *
+                  </span>
+                </div>
+                <div
+                  class="item-static"
+                  *ngIf="featureGroup.get('inherit').value"
+                >
+                  <div
+                    *ngFor="let child of featureGroup.get('child').value"
+                    style="margin-bottom: 0.5rem;"
+                  >
+                    + {{ child.suggested | currencyFormat }} por
+                    {{ child.description }}
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ng-container>
+        </ul>
+      </ng-container>
+
+      <ng-container formArrayName="coveragesOthers">
+        <div style="margin: 2rem 0 1.5rem 8.0625rem;">
+          <span class="subtitle">
+            Otras coberturas
+            <i
+              class="arrow-char down"
+              (click)="showOthersCoverages()"
+              *ngIf="!showOthersCoveragesValue"
+            ></i>
+            <i
+              class="arrow-char up"
+              (click)="showOthersCoverages()"
+              *ngIf="showOthersCoveragesValue"
+            ></i>
+          </span>
+        </div>
+        <ul class="list-group" *ngIf="showOthersCoveragesValue">
+          <ng-container
+            *ngFor="let featureGroup of coveragesOthers.controls; let i = index"
+          >
+            <li
+              class="list-group-item"
+              [formGroup]="featureGroup"
+              *ngIf="featureGroup.get('visible').value"
+              [ngClass]="{
+                'item-resize-others': !featureGroup.get('chk').value
+              }"
+            >
+              <div class="form-checkbox mb-0">
+                <input
+                  type="checkbox"
+                  formControlName="chk"
+                  id="{{ featureGroup.get('code').value }}"
+                  class="form-checkbox-input"
+                  (change)="onClickCheckboxOthers($event)"
+                />
+                <label
+                  class="form-checkbox-label"
+                  for="{{ featureGroup.get('code').value }}"
+                  [ngClass]="{ disabled: !featureGroup.get('editable').value }"
+                >
+                  {{ featureGroup.get('description').value }}
+                </label>
+              </div>
+              <div class="row no-gutters" *ngIf="featureGroup.get('chk').value">
+                <div class="col-lg-8">
+                  <sxf-textbox
+                    type="text"
+                    formControlName="suggested"
+                    style="display: inherit;"
+                    [disabled]="!featureGroup.get('editable').value"
+                    [mask]="moneyMask"
+                    invalidFeedback="La suma asegurada no puede ser 0"
+                    (keyup)="onChangeSum(featureGroup.get('code').value)"
+                  ></sxf-textbox>
+                </div>
+                <div
+                  class="col-lg-4 min-max"
+                  *ngIf="featureGroup.get('showMinMax').value"
+                >
+                  <span style="display: block;">
+                    Min {{ featureGroup.get('min').value | currencyFormat }}
+                  </span>
+                  <span>
+                    Máx {{ featureGroup.get('max').value | currencyFormat }} *
+                  </span>
+                </div>
+              </div>
+            </li>
+          </ng-container>
+        </ul>
+      </ng-container>
+
+      <ng-container formArrayName="coveragesPremiums">
+        <div style="margin: 2rem 0 1.5rem 8.0625rem;">
+          <span class="subtitle">
+            Beneficios exclusivos Plan Premium
+            <i
+              class="arrow-char down"
+              (click)="showPremiumsCoverages()"
+              *ngIf="!showPremiumsCoveragesValue"
+            ></i>
+            <i
+              class="arrow-char up"
+              (click)="showPremiumsCoverages()"
+              *ngIf="showPremiumsCoveragesValue"
+            ></i>
+          </span>
+        </div>
+        <ul class="list-group" *ngIf="showPremiumsCoveragesValue">
+          <ng-container
+            *ngFor="
+              let featureGroup of coveragesPremiums.controls;
+              let i = index
+            "
+          >
+            <li
+              class="list-group-item item-resize-premiums"
+              [formGroup]="featureGroup"
+              *ngIf="featureGroup.get('visible').value"
+            >
+              {{ featureGroup.get('suggested').value | currencyFormat }} por
+              {{ featureGroup.get('description').value }}
+            </li>
+          </ng-container>
+        </ul>
+      </ng-container>
+    </div>
+    <div class="info">
+      * Al superar los límites máximos se necesitará la aprobación de la
+      compañía
+    </div>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+@import '~@sura-platform/scss/variables';
+// Inputbox
+.form-input-label {
+  label {
+    display: block;
+    position: absolute;
+    color: $black;
+    bottom: 90%;
+    font-size: 0.75rem;
+    color: $gray_dark;
+
+    &.invalid {
+      color: color('red');
+    }
+  }
+}
+.form-text.text-muted {
+  /*color: $black !important;*/
+  font-size: 0.75rem;
+  color: $cyanblue_shadow !important;
+}
+input[type]:not([type='button']):not([type='checkbox']):not([type='range']):not([type='submit']).form-control {
+  border-radius: 5px;
+  text-align: left;
+  padding: 0.375rem 1rem;
+  border: 0.0625rem solid $grey_light;
+  color: $black;
+  height: 32px;
+  &:focus {
+    border: 0.0625rem solid $primary;
+  }
+  &:invalid,
+  &.invalid {
+    border-color: color('red');
+  }
+  &:valid + label + .valid-feedback {
+    display: inline;
+    color: $black !important;
+  }
+
+  &:read-only {
+    background-color: transparent;
+    &:disabled {
+      background-color: $gray-200;
+      opacity: 1;
+    }
+  }
+}
+.form-control::-webkit-input-placeholder {
+  opacity: 1;
+  color: $placeholder-color;
+}
+.form-control::-moz-placeholder {
+  opacity: 1;
+  color: $placeholder-color;
+}
+.form-control::placeholder {
+  opacity: 1;
+  color: $placeholder-color;
+}
+.form-control::-ms-input-placeholder {
+  opacity: 1;
+  color: $placeholder-color;
+}
+
+.invalid-feedback {
+  display: inline;
+}
+
+.btn {
+  border: none;
+  background-color: transparent;
+
+  &:not(:disabled):not(.disabled):active {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  &.calendar {
+    padding: 0.3rem 0 0 0;
+    margin-left: -2rem;
+  }
+}
+
+// </ Inputbox>

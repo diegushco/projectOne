@@ -1,0 +1,112 @@
+<div [formGroup]="form">
+  <div class="row mb-3">
+    <div class="col-lg-3 offset-lg-2 pl-0">
+      <label class="label-regular">
+        Tipo de vivienda
+      </label>
+      <sxf-select
+        #types
+        formControlName="homeType"
+        [items]="homeTypes"
+        bindLabel="description"
+        bindValue="code"
+        [multiple]="false"
+        class="custom"
+        [searchable]="false"
+        placeholder="Tipo de vivienda"
+        [dropdownPosition]="'bottom'"
+        name="home_type"
+      ></sxf-select>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-lg-3 offset-lg-2 pl-0">
+      <label class="label-regular">
+        Uso de la vivienda
+      </label>
+      <sxf-select
+        #uses
+        formControlName="homeUse"
+        [items]="homeUses"
+        bindLabel="description"
+        bindValue="code"
+        [multiple]="false"
+        class="custom"
+        [searchable]="false"
+        placeholder="Uso de vivienda"
+        [dropdownPosition]="'bottom'"
+        name="home_use"
+      ></sxf-select>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-lg-3 offset-lg-2 pl-0">
+      <label class="label-regular">
+        Construcción de la vivienda
+      </label>
+      <sxf-select
+        #construction
+        formControlName="construction"
+        [items]="constructions$ | async"
+        bindLabel="description"
+        bindValue="code"
+        [multiple]="false"
+        class="custom"
+        [searchable]="false"
+        placeholder="Seleccione el tipo de Construcción"
+        [dropdownPosition]="'bottom'"
+        name="construction"
+      ></sxf-select>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-lg-2 offset-lg-2 pl-0">
+    <button
+      [disabled]="!construction.items || !uses.items || !types.items"
+      name="continue"
+      class="btn btn-primary btn-block btn-heft"
+      (click)="continue()"
+    >
+      Continuar
+    </button>
+  </div>
+  <div class="col-lg-2 press-enter">
+    o presiona ENTER
+  </div>
+</div>
+
+<sxf-modal #modalRequireApproval (closed)="modalRequireApproval.closeModal()">
+  <div class="modal-header" style="padding: 1rem 2rem;">
+    <h4 class="modal-title" id="modal-basic-title">Advertencia</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modalRequireApproval.closeModal('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h4>
+      El tipo de construcción solicitada requiere la aprobación de la compañía.
+    </h4>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-5 offset-lg-7 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="modalRequireApproval.closeModal('continue')"
+        >
+          Continuar
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>

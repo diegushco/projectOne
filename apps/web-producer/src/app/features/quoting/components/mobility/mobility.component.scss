@@ -1,0 +1,72 @@
+@import '~@sura-platform/scss/variables';
+
+label {
+  &.question {
+    font-size: 1.625rem;
+    color: $blue;
+    font-weight: 700;
+  }
+}
+
+.title {
+  color: $cyan;
+  font-weight: 700;
+}
+
+.tag {
+  background-color: $blue;
+  color: $white;
+  padding: 0.3rem 0.5rem;
+  border-radius: 2px;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.form-radio-label {
+  margin: 0rem;
+  input[type='radio'] {
+    + .radio-label {
+      font-size: 0.875rem; // 14px en resolución 1280 de ancho
+      &:before {
+        top: 0.15rem;
+      }
+    }
+  }
+}
+
+.line {
+  border-bottom: 1px solid $black_125;
+  padding-bottom: 7px;
+  span {
+    font-size: 0.875rem;
+  }
+}
+
+label[for='suma'] {
+  font-size: 0.75rem; // 12px en resolución 1280 de ancho
+}
+
+:host ::ng-deep .disabled-mobility-tooltip {
+  z-index: inherit !important;
+
+  .arrow {
+    left: 25% !important;
+
+    &::before {
+      border-bottom: 0.75rem solid red !important;
+    }
+  }
+
+  .tooltip-inner {
+    color: red;
+    border-color: red !important;
+
+    padding: 1rem;
+
+    p {
+      padding: 0;
+      margin: 0;
+    }
+  }
+}

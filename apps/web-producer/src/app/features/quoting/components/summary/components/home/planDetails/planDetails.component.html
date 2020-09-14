@@ -1,0 +1,101 @@
+<ngb-accordion #houseData="ngbAccordion">
+  <ngb-panel id="planDetailPanel">
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between text-right">
+        <div class="col-11 text-left">
+          <h5 class="m-0 title">Detalles del plan</h5>
+        </div>
+        <sxf-icon
+          (click)="houseData.toggle('planDetailPanel')"
+          ngbPanelToggle
+          [ngClass]="opened ? 'arrowUp' : ''"
+          class="icon-down arrowHome"
+        ></sxf-icon>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <ul class="list-coverage">
+        <li>
+          <label>Plan:</label>
+          <ng-container>
+            {{ packageSelected.description }}
+          </ng-container>
+        </li>
+        <li *ngIf="packageSelected.code === 'premium'">
+          <label>Beneficios:</label>
+          <ng-container>
+            Exclusivos Plan Premium
+          </ng-container>
+        </li>
+        <li>
+          <label>Asistencia:</label>
+          <ng-container>
+            {{ quoteHome.assistence.terms[0].value }}
+          </ng-container>
+        </li>
+        <li>
+          <label>Coberturas aseguradas</label>
+        </li>
+        <ng-container
+          *ngFor="let cov of packageSelected.coverages; let i = index"
+        >
+          <ng-container *ngIf="i < limit">
+            <li
+              *ngIf="cov.pattern.code !== 'SURA_HOE_Asistencia'"
+              class="li-coverage d-flex justify-content-between"
+            >
+              <div style="max-width: 18rem; word-break: break-word;">
+                {{ cov.pattern.description }}
+              </div>
+              <div>
+                {{ cov.terms[0].value.current | currencyFormat }}
+              </div>
+            </li>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="moreCoverage">
+          <ng-container
+            *ngFor="let cov of packageSelected.coverages; let ndx = index"
+          >
+            <li
+              *ngIf="ndx >= limit && cov.pattern.code !== 'SURA_HOE_Asistencia'"
+              class="li-coverage d-flex justify-content-between"
+            >
+              <div style="max-width: 18rem; word-break: break-word;">
+                {{ cov.pattern.description }}
+              </div>
+              <div>
+                {{ cov.terms[0].value.current | currencyFormat }}
+              </div>
+            </li>
+          </ng-container>
+        </ng-container>
+        <li
+          *ngIf="packageSelected.coverages.length > 10"
+          (click)="moreCoverage = !moreCoverage"
+        >
+          <label *ngIf="!moreCoverage">Ver todas las coberturas</label>
+          <label *ngIf="moreCoverage">Ver menos coberturas</label>
+          <sxf-icon
+            *ngIf="!moreCoverage"
+            class="icon-green"
+            type="plus-circle"
+          ></sxf-icon>
+          <sxf-icon
+            *ngIf="moreCoverage"
+            class="icon-green"
+            type="minus-circle"
+          ></sxf-icon>
+        </li>
+        <li>
+          <button
+            [routerLink]="'/quoting/home/coverage/' + currentHome"
+            class="btn-back"
+          >
+            Modificar plan y coberturas
+          </button>
+        </li>
+      </ul>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

@@ -1,0 +1,72 @@
+@import '~@sura-platform/scss/variables';
+.btn {
+  padding: 0 0.4rem;
+  font-size: 1.5rem;
+  font-weight: normal;
+  border: 1px solid hsl(0, 0%, 77%);
+  border-radius: 5px;
+  line-height: 0.5;
+}
+
+input[type='text'].form-control {
+  border-radius: 0;
+  border-top: 0.0625rem solid #c4c4c4;
+  border-bottom: 0.0625rem solid #c4c4c4;
+  border-left: none;
+  border-right: none;
+  background-color: transparent;
+  padding: 0;
+  height: auto;
+  box-shadow: none;
+  color: #000;
+}
+
+input[type='text'] {
+  text-align: center;
+}
+
+.input-group-prepend {
+  height: 32px;
+}
+
+.input-group-append {
+  height: 32px;
+}
+
+.display {
+  border-radius: 0;
+  border-top: 0.0625rem solid #c4c4c4;
+  border-bottom: 0.0625rem solid #c4c4c4;
+  border-left: none;
+  border-right: none;
+  background-color: transparent;
+  padding: 0;
+  height: 32px;
+  box-shadow: none;
+  color: #000;
+  text-align: center;
+  width: 1%;
+  flex: 1 1 auto;
+  line-height: 35px;
+}
+
+.prepend,
+.append {
+  border-radius: 0;
+  border-top: 0.0625rem solid #c4c4c4;
+  border-bottom: 0.0625rem solid #c4c4c4;
+  background-color: transparent;
+  padding: 0;
+  height: 32px;
+  box-shadow: none;
+  color: #000;
+  line-height: 35px;
+}
+
+.prepend {
+  padding-left: 3px;
+}
+
+.append {
+  padding-right: 3px;
+}

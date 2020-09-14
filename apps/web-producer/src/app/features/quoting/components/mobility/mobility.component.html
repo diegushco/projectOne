@@ -1,0 +1,179 @@
+<div *ngIf="form" [formGroup]="form">
+  <div class="row">
+    <div
+      class="col-lg-9 pr-2 ps pt-4"
+      style="position: relative; max-height: 90vh;"
+      [perfectScrollbar]="{ suppressScrollY: false }"
+    >
+      <div class="row">
+        <div class="offset-lg-3">
+          <div class="row mb-2">
+            <div class="col-lg-12">
+              <span class="tag mr-2">Nuevo</span>
+              <a
+                href="https://www.segurossura.com.ar/wp-content/uploads/2020/06/Movilidad-SURA.pdf"
+                target="_blank"
+              >
+                <sxf-icon class="icon-green" type="info"></sxf-icon>
+                <span class="title">Info sobre Movilidad Sura</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-lg-12">
+              <label class="question">
+                ¿Querés sumar el seguro de Movilidad a tu póliza?
+              </label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-5 input-group">
+              <div
+                #t="ngbTooltip"
+                class="form-radio-label"
+                [ngbTooltip]="disabledContent"
+                [triggers]="null"
+                placement="bottom"
+                tooltipClass="disabled-mobility-tooltip"
+              >
+                <input
+                  type="radio"
+                  name="yes"
+                  id="yes"
+                  value="on"
+                  formControlName="yes"
+                />
+                <label for="yes" class="radio-label">
+                  &nbsp;&nbsp;Sí, quiero sumarla
+                </label>
+
+                <ng-template #disabledContent>
+                  <p>
+                    Este producto no está habilitado para la cobertura
+                    seleccionada. Si quieres sumar Movilidad tendrás que cambiar
+                    de cobertura.
+                  </p>
+                </ng-template>
+              </div>
+            </div>
+            <div class="col-lg-6 input-group">
+              <div class="form-radio-label">
+                <input
+                  type="radio"
+                  name="yes"
+                  id="no"
+                  value="off"
+                  formControlName="yes"
+                />
+                <label for="no" class="radio-label">
+                  &nbsp;&nbsp;No, no quiero sumarla
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="form.get('yes').value === 'on'">
+        <div class="row pt-3">
+          <div class="offset-lg-3 col-lg-3 pl-0">
+            <label for="suma">Suma asegurada</label>
+            <sxf-select
+              formControlName="coverageSum"
+              [items]="mobility"
+              bindLabel="description"
+              bindValue="code"
+              [multiple]="false"
+              [class]="'custom'"
+              [searchable]="true"
+              [placeholder]="'Seleccione suma asegurada'"
+              [dropdownPosition]="'bottom'"
+              name="sumaAsegurada"
+            ></sxf-select>
+          </div>
+        </div>
+        <div class="row pt-4">
+          <div class="offset-lg-3 mr-2">
+            <img
+              src="/assets/mobility/ROBO_Y_DANIO_POR_USO.svg"
+              alt="Robo y daño por uso de Bicicleta/Monopatin/Skates/Rollers"
+              width="30px"
+              height="30px"
+            />
+          </div>
+          <div class="col-lg-6 pl-0 line">
+            <span>
+              Robo y daño por uso de Bicicleta/Monopatin/Skates/Rollers
+            </span>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="offset-lg-3 mr-2">
+            <img
+              src="/assets/mobility/ACCIDENTES_PERSONALES.svg"
+              alt="Accidentes
+          personales"
+              width="30px"
+              height="30px"
+            />
+          </div>
+          <div class="col-lg-6 pl-0 line">
+            <span>Accidentes personales</span>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="offset-lg-3 mr-2">
+            <img
+              src="/assets/mobility/ROBO_AL_DESPLAZARSE.svg"
+              alt="Robo al
+          desplazarse"
+              width="30px"
+              height="30px"
+            />
+          </div>
+          <div class="col-lg-6 pl-0 line">
+            <span>Robo al desplazarse</span>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="offset-lg-3 mr-2">
+            <img
+              src="/assets/mobility/DANIOS_A_TERCEROS.svg"
+              alt="Daños a
+          terceros"
+              width="30px"
+              height="30px"
+            />
+          </div>
+          <div class="col-lg-6 pl-0 line">
+            <span>Daños a terceros</span>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="offset-lg-3 mr-2">
+            <img
+              src="/assets/mobility/ASISTENCIA_MOVILIDAD.svg"
+              alt="Asistencia
+          Movilidad"
+              width="30px"
+              height="30px"
+            />
+          </div>
+          <div class="col-lg-6 pl-0 line">
+            <span>Asistencia Movilidad</span>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="col-lg-3 px-0 ps">
+      <sxf-summarycoverage
+        [loadingCost]="loadingCost"
+        (allowCost)="allowCost()"
+      ></sxf-summarycoverage>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

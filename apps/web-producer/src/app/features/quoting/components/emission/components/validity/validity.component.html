@@ -1,0 +1,45 @@
+<div [formGroup]="formValidaty">
+  <div class="row">
+    <div class="col-lg-4 pl-0">
+      <label>
+        Inicio de vigencia
+        <sup>*</sup>
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4 pl-0">
+      <sxf-datetimepicker
+        (keydown.enter)="onEnter()"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        formControlName="beginningValidity"
+        name="beginningValidityPolicy"
+        [disabled]="disabledByRetrieve"
+      ></sxf-datetimepicker>
+    </div>
+  </div>
+  <div class="row" *ngIf="retroactiveVigence">
+    <div class="col-5 pl-0">
+      <span class="text-danger" style="font-size: 15px;">
+        <b>La fecha ingresada requiere autorización.</b>
+      </span>
+    </div>
+  </div>
+  <div class="row pt-4">
+    <div class="col-lg-8 pl-0">
+      <span>
+        <button
+          (click)="continue()"
+          class="btn btn-primary btn-heft"
+          name="continueValidatePolicyBtn"
+        >
+          Continuar
+        </button>
+      </span>
+      <span class="press-enter ml-3 mr-4">
+        o presiona ENTER
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,457 @@
+<div class="quotes-container">
+  <div class="top-container">
+    <div class="title">Cotizaciones</div>
+    <!-- <div class="col-lg-2">
+    <sxf-select-producer
+      (selected)="getSelectedProducer($event)"
+      (currentProducer)="setCurrentProducer($event)"
+      (currentProducerProfile)="setCurrentProducerProfile($event)"
+    ></sxf-select-producer>
+  </div> -->
+  </div>
+
+  <div class="buttons-grid">
+    <div class="btn-coverage">
+      <button
+        placement="bottom"
+        ngbTooltip="Cotizá uno o más vehículos"
+        class="btn btn-primary btn-lg btn-block"
+        (click)="goToQuote(lineEnumGroup.MOTOR)"
+      >
+        <div class="icon">
+          <img
+            src="/assets/icons/GENERAL_WHEEL.svg"
+            alt="ok"
+            class="icon-plus"
+          />
+        </div>
+        <div class="title-container">
+          <h2>Vehículos</h2>
+          <p>Nueva Cotización</p>
+        </div>
+      </button>
+    </div>
+    <div
+      *ngIf="
+        env === 'localhost' ||
+        env === 'development' ||
+        env === 'qa' ||
+        env === 'uat'
+      "
+      class="btn-coverage"
+    >
+      <button
+        class="btn btn-primary btn-lg btn-block"
+        (click)="goToQuote(lineEnumGroup.HOME)"
+      >
+        <div class="icon">
+          <img
+            src="/assets/icons/GENERAL_HOME_NEW.svg"
+            alt="ok"
+            class="icon-plus"
+          />
+        </div>
+        <div class="title-container">
+          <h2>Hogar</h2>
+          <p>Nueva Cotización</p>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <hr class="line-color" />
+
+  <div class="combo-and-search-grid">
+    <div id="div-select">
+      <sxf-select
+        [items]="typeOptions"
+        [formControl]="type"
+        bindLabel="description"
+        bindValue="code"
+        [multiple]="false"
+        class="custom"
+        [searchable]="true"
+        placeholder=""
+        [dropdownPosition]="'bottom'"
+      ></sxf-select>
+    </div>
+    <div class="search-container">
+      <sxf-textbox-search
+        (keyup)="updateFilter($event)"
+        placeholder="Buscá por Nombre, DNI"
+      ></sxf-textbox-search>
+    </div>
+    <!-- Se usa un arreglo de botones para simular los tabs ya que ngx-datatable funciona de manera inesperada con los tab.
+           En nuestro caso el error se presenta renderizando las filas al cambiar tab, las filas desaparecen o la tabla cambia a un
+           tamaño estrecho. Por otro lado, el desplegable de detalles en cada fila en el segundo tab no funciona, trabaja correctamente
+           en el primer tab por ejemplo, pero en el segundo y tercer tab se pierde la funcionalidad.
+
+           Una solución que no nos sirvió https://stackoverflow.com/questions/52945429/ngx-datatable-rows-are-not-rendered-properly-in-tab-set
+           Caso reportado: https://github.com/swimlane/ngx-datatable/issues/417
+           Otro caso: https://github.com/swimlane/ngx-datatable/issues/1325
+
+      -->
+    <div
+      class="button-tab btn-group btn-group-sm"
+      role="group"
+      aria-label="Basic"
+    >
+      <button
+        [ngClass]="
+          quoteStatusActive === 1 ? 'btn btn-primary' : 'btn btn-secondary'
+        "
+        type="button"
+        autofocus
+        (click)="getQuotes(1)"
+      >
+        {{ rActive.length }} Activas
+      </button>
+      <button
+        [ngClass]="
+          quoteStatusActive === 2 ? 'btn btn-primary' : 'btn btn-secondary'
+        "
+        type="button"
+        (click)="getQuotes(2)"
+      >
+        {{ rPending.length }} Pendientes
+      </button>
+      <button
+        [ngClass]="
+          quoteStatusActive === 3 ? 'btn btn-primary' : 'btn btn-secondary'
+        "
+        type="button"
+        (click)="getQuotes(3)"
+      >
+        {{ rRejected.length }} Rechazadas
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container" *ngIf="rows.length !== 0 || loadingIndicator">
+    <ngx-datatable
+      #quotesTable
+      class="material striped expandable"
+      [rows]="rows"
+      [columnMode]="ColumnMode.force"
+      [headerHeight]="64"
+      [footerHeight]="82"
+      [rowHeight]="64"
+      [loadingIndicator]="loadingIndicator"
+      [sorts]="[{ prop: 'updatetime', dir: 'desc' }]"
+      [scrollbarV]="true"
+      [scrollbarH]="false"
+      [virtualization]="true"
+      (scroll)="onDatatableScroll()"
+    >
+      <!-- [limit]="10" -->
+      <ngx-datatable-row-detail [rowHeight]="150" #detailRow>
+        <ng-template
+          let-row="row"
+          let-expanded="expanded"
+          ngx-datatable-row-detail-template
+        >
+          <div *ngIf="!loadingDetails; else loadingDetailsIcon">
+            <table
+              class="details-table"
+              id="details-table"
+              style="max-width: 100%; min-width: 100%; width: 100%;"
+            >
+              <tr>
+                <th style="width: 10%;"></th>
+                <th style="width: 11%;">Derivación</th>
+                <th style="width: 57%;">Descripción</th>
+                <th style="width: 11%;">Finalización</th>
+                <th style="width: 20%;">Usuario a cargo</th>
+              </tr>
+              <tr *ngFor="let uw of uwResponse">
+                <td class="text-center">
+                  <img
+                    src="/assets/icons/GENERAL_ROWARROW.svg"
+                    alt="general_rowarrow"
+                  />
+                </td>
+                <td>
+                  {{ uw?.escalationdate | date: 'dd.MM.yyy' }}
+                </td>
+                <td
+                  class="text-wrap"
+                  style="padding-right: 5%; font-size: 14px;"
+                >
+                  {{ uw?.description }}
+                </td>
+                <td>{{ uw?.targetdate | date: 'dd.MM.yyy' }}</td>
+                <td>
+                  {{ uw?.assigneduser?.firstname }}
+                  {{ uw?.assigneduser?.lastname }}
+                </td>
+              </tr>
+            </table>
+          </div>
+          <ng-template #loadingDetailsIcon>
+            <div class="row">
+              <div class="col-12 text-center">
+                <ng-lottie
+                  [options]="suraLoaderConfig"
+                  width="8.75rem"
+                  height="6.25rem"
+                ></ng-lottie>
+              </div>
+            </div>
+          </ng-template>
+        </ng-template>
+      </ngx-datatable-row-detail>
+
+      <ngx-datatable-column
+        name="Ramo"
+        [sortable]="false"
+        headerClass="text-center"
+        cellClass="text-center ramo"
+      >
+        <ng-template
+          let-row="row"
+          let-value="value"
+          ngx-datatable-cell-template
+        >
+          <div class="icon-car"></div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column
+        *ngFor="let col of columns.slice(0, 2)"
+        [name]="col.name"
+        [prop]="col.prop"
+        [sortable]="col.sortable"
+        [pipe]="col.pipe"
+      ></ngx-datatable-column>
+      <ngx-datatable-column
+        [name]="'Estado'"
+        [prop]="'uwstatus'"
+        [sortable]="'false'"
+      >
+        <ng-template
+          let-row="row"
+          let-value="value"
+          ngx-datatable-cell-template
+        >
+          <span
+            *ngIf="
+              quoteStatusActive === PENDING && row.inspection.pending === true;
+              else status
+            "
+          >
+            Inspección
+          </span>
+          <ng-template #status>
+            <span>{{ statusTranslate[value] }}</span>
+          </ng-template>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column
+        *ngFor="let col of columns.slice(2, columns.length)"
+        [name]="col.name"
+        [prop]="col.prop"
+        [sortable]="col.sortable"
+        [pipe]="col.pipe"
+      ></ngx-datatable-column>
+      <ngx-datatable-column [sortable]="false">
+        <ng-template
+          let-row="row"
+          let-value="value"
+          let-expanded="expanded"
+          ngx-datatable-cell-template
+        >
+          <span
+            class="btn-icon mr-3"
+            *ngIf="quoteStatusActive == ACTIVE && type.value === 'cotizaciones'"
+          >
+            <button
+              class="btn btn-secundary"
+              (click)="downloadQuote(row)"
+              title="Descargar documento de cotización"
+              [disabled]="isQuoteDownload || row?.loading || isGoToEmision"
+            >
+              <sxf-icon
+                *ngIf="
+                  (!isQuoteDownload && !isQuoteDownloadOk) || !row?.loading
+                "
+                class="icon-green"
+                type="download"
+              ></sxf-icon>
+              <img
+                *ngIf="isQuoteDownloadOk && row?.loading"
+                src="/assets/icons/GENERAL_OK_SM.svg"
+                alt="ok"
+                width="26px"
+                height="26px"
+              />
+              <ng-lottie
+                [hidden]="!isQuoteDownload || !row?.loading"
+                width="26px"
+                height="26px"
+                [options]="inputLoaderConfig"
+              ></ng-lottie>
+            </button>
+          </span>
+          <span *ngIf="quoteStatusActive == ACTIVE">
+            <button
+              (click)="goToEmission(row)"
+              class="btn btn-primary btn-sm"
+              [disabled]="
+                isGoToEmision ||
+                row?.loading ||
+                selectedQuote ||
+                isQuoteDownload ||
+                isQuoteDownloadOk
+              "
+            >
+              <span *ngIf="!isGoToEmision || !row?.loading">
+                Continuar
+              </span>
+              <span *ngIf="isGoToEmision && row?.loading">
+                Cargando
+              </span>
+              <ng-lottie
+                [hidden]="!isGoToEmision || !row?.loading"
+                [options]="lottieConfig"
+                width="20px"
+                height="20px"
+                (animationCreated)="animationHandler($event)"
+              ></ng-lottie>
+            </button>
+          </span>
+          <div *ngIf="quoteStatusActive == PENDING">
+            <a
+              href="javascript:void(0)"
+              (click)="toggleExpandRow(row, expanded)"
+            >
+              <span *ngIf="expanded">Ocultar</span>
+              <span *ngIf="!expanded">Ver detalle</span>
+            </a>
+          </div>
+          <div *ngIf="quoteStatusActive == REJECTED">
+            <a
+              href="javascript:void(0)"
+              (click)="toggleExpandRow(row, expanded)"
+            >
+              <span *ngIf="expanded">Ocultar</span>
+              <span *ngIf="!expanded">Ver detalle</span>
+            </a>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-footer *ngIf="rows?.length > 0 && rows?.length <= 10">
+        <ng-template ngx-datatable-footer-template>
+          <div class="datatable-pager">
+            <ul class="pager">
+              <li class="disabled">
+                <a href="" role="button">
+                  <i class="datatable-icon-prev"></i>
+                </a>
+              </li>
+              <li class="disabled">
+                <a href="" role="button">
+                  <i class="datatable-icon-left"></i>
+                </a>
+              </li>
+              <li role="button" class="pages active">
+                <a>1</a>
+              </li>
+              <li class="disabled">
+                <a href="" role="button">
+                  <i class="datatable-icon-right"></i>
+                </a>
+              </li>
+              <li class="disabled">
+                <a href="" role="button">
+                  <i class="datatable-icon-skip"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </ng-template>
+      </ngx-datatable-footer>
+    </ngx-datatable>
+  </div>
+
+  <div *ngIf="rows.length === 0 && !loadingIndicator">
+    <div
+      *ngIf="quoteStatusActive == ACTIVE && type.value === 'cotizaciones'"
+      class="text-center m-img"
+    >
+      <img src="/assets/icons/GENERAL_TRAY.svg" alt="ok" />
+      <div class="text-img">
+        <span>No tenés ninguna cotización guardada o pendiente</span>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        quoteStatusActive !== ACTIVE ||
+        (quoteStatusActive === ACTIVE && type.value === 'solicitudes')
+      "
+      class="text-center m-img"
+    >
+      <img src="/assets/icons/GENERAL_OK_HAND.svg" alt="ok" />
+    </div>
+    <div
+      *ngIf="quoteStatusActive === PENDING && type.value === 'cotizaciones'"
+      class="text-center"
+    >
+      <div class="text-img">
+        <span>No tenés ninguna cotización pendiente de aprobación</span>
+      </div>
+    </div>
+    <div
+      *ngIf="quoteStatusActive === REJECTED && type.value === 'cotizaciones'"
+      class="text-center"
+    >
+      <div class="text-img">
+        <span>
+          No tenés ninguna cotización rechazada por la compañía
+        </span>
+      </div>
+    </div>
+    <div
+      *ngIf="quoteStatusActive === ACTIVE && type.value === 'solicitudes'"
+      class="text-center"
+    >
+      <div class="text-img">
+        <span>No tenés ninguna solicitud pendiente de emisión</span>
+      </div>
+    </div>
+    <div
+      *ngIf="quoteStatusActive === PENDING && type.value === 'solicitudes'"
+      class="text-center"
+    >
+      <div class="text-img">
+        <span>No tenés ninguna solicitud pendiente de aprobación</span>
+      </div>
+    </div>
+    <div
+      *ngIf="quoteStatusActive === REJECTED && type.value === 'solicitudes'"
+      class="text-center"
+    >
+      <div class="text-img">
+        <span>
+          No tenés ninguna solicitud rechazada por la compañía
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="container-floating">
+  <button type="button" (click)="onContactUsClick()" class="btn btn-primary">
+    <img
+      style="
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(305deg)
+          brightness(103%) contrast(103%);
+      "
+      class="icon-plus"
+      src="/assets/icons/GENERAL_INFO.svg"
+      width="14"
+      height="14"
+      alt="general_info"
+    />
+    ¿Alguna sugerencia?
+  </button>
+</div>

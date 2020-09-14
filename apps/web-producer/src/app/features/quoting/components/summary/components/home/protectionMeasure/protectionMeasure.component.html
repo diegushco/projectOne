@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="col-12">
+    <div
+      class="scroll-protection"
+      style="position: relative; max-height: 25vh;"
+      [perfectScrollbar]="{ suppressScrollY: false }"
+    >
+      <div class="protection" [formGroup]="form">
+        <div class="label-regular title">
+          Protección contra Incendio
+        </div>
+        <div class="form-checkbox mb-0">
+          <input
+            type="checkbox"
+            formControlName="differentialcircuitbreaker"
+            id="differentialcircuitbreaker"
+            class="form-checkbox-input"
+          />
+          <label
+            class="form-checkbox-label label-regular"
+            for="differentialcircuitbreaker"
+          >
+            Disyuntor Diferencial
+          </label>
+        </div>
+        <div class="form-checkbox mb-0">
+          <input
+            type="checkbox"
+            formControlName="embeddedelectricalwiring"
+            id="embeddedelectricalwiring"
+            class="form-checkbox-input"
+          />
+          <label
+            class="form-checkbox-label label-regular"
+            for="embeddedelectricalwiring"
+          >
+            Cableado Electrico Embutido
+          </label>
+        </div>
+        <div class="form-checkbox mb-0">
+          <input
+            type="checkbox"
+            formControlName="goodconditionelectric"
+            id="goodconditionelectric"
+            class="form-checkbox-input"
+          />
+          <label
+            class="form-checkbox-label label-regular"
+            for="goodconditionelectric"
+          >
+            Buen Estado General de la Red Electrica
+          </label>
+        </div>
+        <div class="label-regular title">
+          Protección contra Robo
+        </div>
+        <div class="form-checkbox mb-0">
+          <input
+            type="checkbox"
+            formControlName="soundalarmwithmonitoring"
+            id="soundalarmwithmonitoring"
+            class="form-checkbox-input"
+          />
+          <label
+            class="form-checkbox-label label-regular"
+            for="soundalarmwithmonitoring"
+          >
+            Alarma Sonora con Monitoreo
+          </label>
+        </div>
+        <div class="form-checkbox mb-0">
+          <input
+            type="checkbox"
+            formControlName="soundalarmonly"
+            id="soundalarmonly"
+            class="form-checkbox-input"
+          />
+          <label class="form-checkbox-label label-regular" for="soundalarmonly">
+            Solo Alarma Sonora
+          </label>
+        </div>
+        <div class="form-checkbox mb-0">
+          <input
+            type="checkbox"
+            formControlName="reinforceddoor"
+            id="reinforceddoor"
+            class="form-checkbox-input"
+          />
+          <label class="form-checkbox-label label-regular" for="reinforceddoor">
+            Puerta Blindada
+          </label>
+        </div>
+        <div class="form-checkbox mb-0">
+          <input
+            type="checkbox"
+            formControlName="permanentvigilance"
+            id="permanentvigilance"
+            class="form-checkbox-input"
+          />
+          <label
+            class="form-checkbox-label label-regular"
+            for="permanentvigilance"
+          >
+            Vigilancia Permanente
+          </label>
+        </div>
+        <div class="form-checkbox mb-0">
+          <input
+            type="checkbox"
+            formControlName="doublelock"
+            id="doublelock"
+            class="form-checkbox-input"
+          />
+          <label class="form-checkbox-label label-regular" for="doublelock">
+            Cerradura Doble Paleta Obligatoria
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<ul class="list-group list-group-flush">
+  <li class="list-group-item color-coverages">
+    Asistencia
+  </li>
+  <li
+    class="list-group-item color-coverages"
+    *ngFor="let feature of listFeature"
+    style="height: 65px;"
+  >
+    <span>{{ feature.name }}</span>
+  </li>
+  <!-- <ng-container *ngIf="morefeatures">
+    <ng-container *ngFor="let feature of listFeature; let ndx = index">
+      <li class="list-group-item color-coverages" *ngIf="ndx >= limit">
+        {{ feature.name }}
+      </li>
+    </ng-container>
+  </ng-container> -->
+</ul>

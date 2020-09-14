@@ -1,0 +1,50 @@
+/* Los estilos en ng-select solo funcionan de manera global, no sirve aplicarlos en el componente select
+   https://github.com/ng-select/ng-select#custom-styles
+*/
+
+.ngb-dp-header {
+  background-color: $white !important;
+}
+
+.ngb-dp-month-name {
+  background-color: $white !important;
+  font-size: 0.75rem !important; //12px en pantalla 1280 de ancho
+  text-transform: capitalize;
+}
+
+.ngb-dp-weekdays {
+  border-bottom: none !important;
+
+  .ngb-dp-weekday {
+    width: 2.5rem !important;
+
+    &.small {
+      font-size: 0.625rem !important; //10px en pantalla 1280 de ancho
+      font-weight: $font-weight-bold !important;
+    }
+  }
+}
+
+.ngb-dp-week {
+  font-size: 0.75rem !important;
+
+  .ngb-dp-day {
+    width: 2.5rem !important;
+
+    .btn-light {
+      box-shadow: none !important;
+    }
+  }
+}
+
+[ngbDatepickerDayView] {
+  width: 2.5rem !important;
+}
+
+.custom-select {
+  border: 0;
+  color: #0b3056;
+  &:disabled {
+    border: 0;
+  }
+}

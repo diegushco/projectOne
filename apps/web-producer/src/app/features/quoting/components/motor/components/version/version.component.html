@@ -1,0 +1,46 @@
+<ng-container *ngIf="filteredVersions$ | async as versions; else stillLoading">
+  <div class="row mb-3">
+    <div class="col-lg-8 offset-lg-2 pl-0">
+      <sxf-textbox
+        [formControl]="filter"
+        label="Version"
+        placeholder="Podes escribir o buscar abajo"
+        type="text"
+        name="version"
+      ></sxf-textbox>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2 pl-0">
+      <div class="grid-container">
+        <span class="data-not-found" *ngIf="versions.length == 0">
+          No se encontraron resultados
+        </span>
+        <div class="grid-item" *ngFor="let modelVersion of versions">
+          <button
+            [ngClass]="{
+              active: modelVersion.code === currentMotor.model.code
+            }"
+            (click)="selectModelVersion(modelVersion)"
+            class="btn btn-primary btn-block"
+            name="version{{ modelVersion.code }}"
+          >
+            {{ modelVersion.description }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #stillLoading>
+  <div class="row">
+    <div class="col-lg-4 offset-lg-4 d-flex flex-wrap mt-4">
+      <ng-lottie
+        [options]="lottieConfig"
+        width="8.75rem"
+        height="6.25rem"
+      ></ng-lottie>
+    </div>
+  </div>
+</ng-template>

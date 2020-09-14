@@ -1,0 +1,253 @@
+@import "~@sura-platform/scss/variables";
+body {
+  overflow-y: hidden;
+}
+
+.coverage-pane {
+  padding-top: 3rem;
+}
+
+/* Coverage */
+
+// 14px en resolución 1280 de ancho
+$font-size-nav-item: 0.875rem;
+$color-nav-item: #393b3d;
+$border-color-tab: #c4c4c4;
+ul.coverage,
+ul.quotes-tabset {
+  li {
+    border: 1px solid $border-color-tab;
+    border-left: none;
+  }
+  > :first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid $border-color-tab;
+  }
+  > :last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid $border-color-tab;
+    border-left: none;
+  }
+  .nav-item {
+    // margin-right: 1rem;
+    // background-color: #f6f6f6;
+    background-color: $white;
+    // .nav-link:not(:active):not(.active) {
+    //   color: $gray-600;
+    // }
+    .nav-link {
+      // font-weight: $font-weight-bold;
+      font-size: $font-size-nav-item;
+      color: $color-nav-item !important;
+      padding: 0.3rem 1rem;
+    }
+    &.active {
+      #tab0 {
+        background-color: #78be20;
+        color: $white !important;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+      #tab1 {
+        background-color: #e31c79;
+        color: $white !important;
+      }
+      #tab2 {
+        background-color: #ed8b00;
+        color: $white !important;
+      }
+      #tab3 {
+        background-color: #ffcd00;
+        color: $white !important;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+    }
+  }
+}
+
+/* End Coverage */
+
+ul.quotes-tabset {
+  .nav-item {
+    &.active {
+      #tab0,
+      #tab1,
+      #tab2 {
+        background-color: $primary !important;
+      }
+    }
+  }
+}
+
+.nav-modal-class {
+  &.nav {
+    .nav-link {
+      // font-weight: $font-weight-bold;
+      font-size: $font-size-nav-item;
+      padding: 0.3rem 1.5rem;
+    }
+    .nav-item {
+      .active {
+        background-color: $primary;
+        color: white !important;
+      }
+      &.active {
+        border: 1px solid $primary;
+      }
+    }
+  }
+}
+
+ul.nav-modal-class {
+  li {
+    border: 1px solid $lightslate_gray;
+    color: $lightslate_gray;
+    font-weight: bold;
+  }
+  > :first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  > :last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-left: none;
+  }
+}
+
+/* blockcoverage */
+
+#containerelem {
+  .popover {
+    max-width: none;
+    min-width: 18rem;
+    font-size: 0.75rem;
+    border: 0;
+    left: 78% !important;
+    .list-group-item {
+      border: 0;
+    }
+  }
+}
+
+#containerelem {
+  .popover-body {
+    padding: 0.1rem;
+  }
+}
+
+#containerelem {
+  .bs-popover-bottom {
+    > .arrow {
+      left: 10% !important;
+    }
+  }
+}
+
+/* End blockcoverage */
+
+/*client-data*/
+#containerExposedPerson {
+  .tooltip {
+    left: 10% !important;
+  }
+  .bs-tooltip-bottom {
+    > .arrow {
+      left: 7% !important;
+    }
+  }
+}
+/*End client-data*/
+
+/*quotes*/
+#div-select {
+  .ng-select .ng-select-container {
+    border: 0 !important;
+    .ng-value-container {
+      color: $primary;
+      font-size: 26px;
+      font-weight: $font-weight-bold;
+      padding-top: 7px;
+    }
+  }
+}
+/* End quotes */
+.data-not-found {
+  color: #c4c4c4;
+  font-size: 1rem;
+}
+
+/*additional*/
+#calendar-container {
+  .dropdown-menu.show {
+    left: -8.4375rem !important;
+  }
+}
+/*End additional*/
+
+.sentry-error-embed-wrapper {
+  z-index: 1060 !important;
+}
+/*quotes*/
+.datatable-row-detail {
+  background: $white !important;
+}
+/*End quotes*/
+
+/*textbox*/
+#icon-tooltip {
+  .tooltip {
+    right: calc(100% - 20%) !important;
+  }
+  .bs-tooltip-bottom {
+    > .arrow {
+      left: 30% !important;
+    }
+  }
+}
+/*End textbox*/
+
+/*detail*/
+#detail-tooltip {
+  .tooltip {
+    left: -75% !important;
+  }
+  .bs-tooltip-bottom {
+    > .arrow {
+      left: 85% !important;
+    }
+  }
+}
+/*End detail*/
+
+.tooltip-coverage .tooltip-inner {
+  background-color: #fff;
+  border: solid 1px #ff585d;
+}
+.tooltip-coverage .arrow::before {
+  border-bottom-color: #ff585d;
+  border-left: 0.75rem solid transparent;
+  border-right: 0.75rem solid transparent;
+  border-top: 0.9rem solid #f7626b !important;
+}
+
+.tooltip-coverage .arrow::after {
+  border-top: 0.8125rem solid #fff;
+  border-bottom: none;
+  margin-top: 0rem;
+  margin-top: -1px;
+}
+
+@page {
+  size: 1920px 1080px;
+}
+
+@media print {
+  #bottom-footer,
+  #container-floating {
+    display: none !important;
+  }
+}

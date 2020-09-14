@@ -1,0 +1,25 @@
+@import '~@sura-platform/scss/variables';
+
+label {
+  color: $gray_dark;
+  margin-bottom: 0;
+  font-size: 0.75rem;
+}
+
+.press-enter {
+  color: #a3adb3;
+  font-size: 0.75rem;
+}
+
+.label-checkbox {
+  vertical-align: top;
+  margin-left: 3px;
+}
+
+.form-checkbox {
+  margin-bottom: 0px;
+}
+
+.loading {
+  margin-top: -1.875rem;
+}

@@ -1,0 +1,29 @@
+<ngx-datatable
+  [class]="class"
+  [rows]="rows"
+  [columns]="columns"
+  [columnMode]="columnMode"
+  [limit]="10"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="'auto'"
+  [loadingIndicator]="loadingIndicator"
+  (activate)="onActivate($event)"
+>
+  <!-- Se hace un workaround usando column.content para pasar html desde el componente que instancia ya que 
+ angular no permite content projection en mas de dos niveles de profundidad https://github.com/swimlane/ngx-datatable/issues/1299
+https://github.com/angular/angular/issues/8563-->
+  <ngx-datatable-column
+    *ngFor="let col of columns"
+    [name]="col.name"
+    [prop]="col.prop"
+    [sortable]="col.sortable"
+  >
+    <ng-template let-value="value" ngx-datatable-cell-template>
+      <div *ngIf="!col.content; else htmlContent">{{ value }}</div>
+      <ng-template #htmlContent>
+        <div [innerHtml]="sanitizer.bypassSecurityTrustHtml(col.content)"></div>
+      </ng-template>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>

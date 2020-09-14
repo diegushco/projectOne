@@ -1,0 +1,122 @@
+<div
+  [formGroup]="form"
+  class="mt-3"
+  *ngIf="sumInsured$ | async as sum; else loadingSum"
+>
+  <div class="row">
+    <div class="col-lg-2 offset-lg-2 pl-0">
+      <sxf-textbox
+        formControlName="amount"
+        [value]="form.get('amount').value"
+        invalidFeedback="Solo puede ingresar caracteres numericos"
+        specialChar="false"
+        placeholder="Ingrese la suma asegurada"
+        label="Suma asegurada"
+        [mask]="sumInsuredMask"
+        name="sumAssured"
+      ></sxf-textbox>
+    </div>
+    <div class="col-lg-4 input-group" *ngIf="clauses$ | async as clauses">
+      <span class="text-span">Claúsula de ajuste</span>
+      <sxf-select
+        formControlName="clause"
+        [disabled]="this.currentMotor.zerokm || lowerThanInfoauto"
+        [items]="clauses"
+        bindLabel="description"
+        placeholder="Seleccione una clausula..."
+        bindValue="code"
+        [multiple]="false"
+        class="custom"
+        [searchable]="false"
+        [dropdownPosition]="'bottom'"
+        markFirst="true"
+        name="sumAssuredClause"
+      ></sxf-select>
+    </div>
+  </div>
+  <ng-container
+    *ngIf="
+      !this.currentMotor.zerokm || this.currentMotor.model.originalcostnew !== 0
+    "
+  >
+    <ng-container>
+      <div class="row mt-3">
+        <div class="col-lg-3 offset-lg-2 pl-0">
+          <input
+            *ngIf="inputType == 1"
+            formControlName="amount"
+            [value]="form.get('amount').value"
+            type="range"
+            class="slider"
+            [min]="sum.minimum"
+            [max]="sum.maximum"
+            [step]="step"
+            name="sumAssuredSlider"
+          />
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-lg-6 offset-lg-2 pl-0" *ngIf="inputType == 1">
+          <div class="row">
+            <div class="col-lg-3">
+              <small class="form-text text-muted mt-n1 text-left">
+                {{ sum.minimum | currencyFormat }}
+              </small>
+            </div>
+            <div class="col-lg-3">
+              <small class="form-text text-muted mt-n1 text-right">
+                {{ sum.maximum | currencyFormat }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4" *ngIf="isTechnicalPricing">
+        <div class="col-lg-6 offset-lg-2 pl-0">
+          <span>
+            <button
+              [disabled]="!form.valid"
+              type="button"
+              class="btn btn-primary btn-heft"
+              (click)="continue()"
+              name="continueSum"
+            >
+              Continuar
+            </button>
+          </span>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <div class="row justify-content-end" *ngIf="!isTechnicalPricing">
+    <div class="col-3 text-right">
+      <!-- <button class="btn btn-secondary btn-lg" (click)="continueQuoting()">
+          <sxf-icon type="plus"></sxf-icon>
+          Sumar otro vehículo
+        </button> -->
+    </div>
+    <div class="col-3 text-right">
+      <button
+        [disabled]="form.invalid"
+        class="btn btn-primary btn-lg btn-next-screen"
+        (click)="continueQuoting()"
+        name="continuesumAssuredBtn"
+      >
+        Continuar Cotización
+      </button>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>
+
+<ng-template #loadingSum>
+  <div class="col-lg-4 offset-lg-4 d-flex flex-wrap mt-4">
+    <ng-lottie
+      [options]="lottieConfig"
+      width="8.75rem"
+      height="6.25rem"
+    ></ng-lottie>
+  </div>
+</ng-template>

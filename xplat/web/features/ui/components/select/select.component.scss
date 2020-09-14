@@ -1,0 +1,62 @@
+$ng-gray-color: #c4c4c4;
+$ng-arrow-color: #393b3d;
+
+.ng-select.ng-select-single .ng-select-container {
+  min-height: 32px;
+  height: 32px;
+}
+
+.ng-select .ng-select-container {
+  min-height: 32px;
+}
+
+.form-text.text-muted {
+  font-size: 0.75rem;
+  color: #768692 !important;
+}
+
+.select {
+  padding-left: 1rem;
+  min-height: 32px;
+  height: 32px;
+  border: 1px solid $ng-gray-color;
+  border-radius: 5px;
+
+  .ng-arrow-wrapper {
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: transform 0.3s, -webkit-transform 0.3s;
+    padding-right: 5px;
+    width: 40px;
+    // margin-left: 81%;
+    .ng-arrow {
+      pointer-events: none;
+      display: inline-block;
+      position: relative;
+      border-style: solid;
+      border-width: 0.1rem 0.1rem 0 0;
+      height: 8px !important;
+      width: 8px !important;
+      top: -2px;
+      transform: rotate(135deg);
+      color: rgba(57, 59, 61, 0.25);
+      border-color: #393b3d;
+    }
+  }
+  ng-lottie {
+    // position: absolute;
+    float: left;
+  }
+}
+.ng-select .ng-arrow-wrapper .ng-arrow {
+  border-radius: 1.5px;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
+  color: black;
+  background-color: #ffffff;
+}

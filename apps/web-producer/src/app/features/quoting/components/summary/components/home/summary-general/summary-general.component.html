@@ -1,0 +1,116 @@
+<div class="summary-general">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">
+        <h4 class="font-regular text-sura-blue-color">Cotización</h4>
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item c2 text-sura-dark-gray-color font-regular">
+          <span class="float-left">Prima Comisionable</span>
+          <span class="float-right">
+            {{ packageSelected?.premiums?.total | currencyFormat }}
+          </span>
+        </li>
+        <li class="list-group-item c2 text-sura-dark-gray-color font-regular">
+          <span class="float-left">Descuento Promocional</span>
+          <span class="float-right">
+            {{ currentCost?.discount | currencyFormat }}
+          </span>
+        </li>
+        <li class="list-group-item c2 text-sura-dark-gray-color font-regular">
+          <span class="float-left">Comisión de {{ producerComission }}%</span>
+          <span class="float-right">
+            {{ currentCost?.commission | currencyFormat }}
+          </span>
+        </li>
+
+        <li class="list-group-item c2 text-sura-dark-gray-color font-medium"
+          [ngClass]="{ 'list-group-item-no-border': expandPremioTotal }">
+          <span class="float-left">
+            Premio total
+          </span>
+          <sxf-icon (click)="togglePremioTotal()" class="icon-green" [type]="expandPremioTotal ? 'up' : 'down'"
+            [size]="'sm'"></sxf-icon>
+          <span class="float-right">
+            {{ currentCost?.total | currencyFormat }}
+          </span>
+          <ul class="list-group" *ngIf="expandPremioTotal">
+            <li class="list-group-item label text-sura-dark-gray-color font-regular">
+              <span class="float-left">Gastos de adquisición</span>
+              <span class="float-right">
+                {{ currentCost?.administrativecharge | currencyFormat }}
+              </span>
+            </li>
+            <li class="list-group-item label text-sura-dark-gray-color font-regular">
+              <span class="float-left">Gastos de explotación</span>
+              <span class="float-right">
+                {{
+                  currentCost?.submissionfee | currencyFormat
+                }}
+              </span>
+            </li>
+            <li class="list-group-item label text-sura-dark-gray-color font-regular">
+              <span class="float-left">Prima total(GWP)</span>
+              <span class="float-right">
+                {{
+                  packageSelected?.premiums?.total +
+                    currentCost?.submissionfee +
+                    currentCost?.administrativecharge | currencyFormat
+                }}
+              </span>
+            </li>
+            <li class="list-group-item label text-sura-dark-gray-color font-regular">
+              <span class="float-left">Recargo financiero</span>
+              <span class="float-right">
+                {{ currentCost?.financial | currencyFormat }}
+              </span>
+            </li>
+            <li class="list-group-item label text-sura-dark-gray-color font-regular">
+              <span class="float-left">Impuestos internos</span>
+              <span class="float-right">
+                {{ currentCost?.internaltax | currencyFormat }}
+              </span>
+            </li>
+            <li class="list-group-item label text-sura-dark-gray-color font-regular">
+              <span class="float-left">Tasa SSN</span>
+              <span class="float-right">
+                {{ currentCost?.ssnrate | currencyFormat }}
+              </span>
+            </li>
+            <li class="list-group-item label text-sura-dark-gray-color font-regular">
+              <span class="float-left">Servicios Sociales</span>
+              <span class="float-right">
+                {{ currentCost?.socialservice | currencyFormat }}
+              </span>
+            </li>
+            <li class="list-group-item label text-sura-dark-gray-color font-regular">
+              <span class="float-left">Seguridad vial</span>
+              <span class="float-right">
+                {{ currentCost?.vialrate | currencyFormat }}
+              </span>
+            </li>
+            <li class="list-group-item label text-sura-dark-gray-color font-regular">
+              <span class="float-left">Sellados</span>
+              <span class="float-right">
+                {{ currentCost?.sellado?.total | currencyFormat }}
+              </span>
+            </li>
+            <li class="list-group-item label text-sura-dark-gray-color font-regular">
+              <span class="float-left">IVA</span>
+              <span class="float-right">
+                {{ currentCost?.iva?.total | currencyFormat }}
+              </span>
+            </li>
+          </ul>
+        </li>
+
+        <li class="list-group-item c2 text-sura-dark-gray-color font-medium">
+          <span class="float-left">Cuotas ({{ policy.paymentTerm.maximumnumberofinstallments }})</span>
+          <span class="float-right">
+            {{ currentCost?.invoice | currencyFormat }}
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

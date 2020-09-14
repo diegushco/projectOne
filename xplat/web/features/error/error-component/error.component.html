@@ -1,0 +1,56 @@
+<div class="error-container">
+  <div *ngIf="data?.error">
+    <h1>ERROR {{ data?.error }}</h1>
+    <h5 *ngIf="data?.error === 404">
+      La pagina que esta solicitando no existe
+    </h5>
+    <a mat-raised-button [routerLink]="'/'">
+      <h5>Volver al inicio</h5>
+    </a>
+  </div>
+
+  <div *ngIf="routeParams.message">
+    <h1 *ngIf="routeParams?.status">ERROR {{ routeParams?.status }}</h1>
+    <br />
+    <h3 *ngIf="routeParams?.message">{{ routeParams?.message }}</h3>
+    <br />
+    <h1 *ngIf="routeParams?.url && routeParams?.url !== '/'">
+      Error en la pagina {{ routeParams?.url | uppercase }} , Le pido disculpas
+      {{ routeParams?.user }} :(
+    </h1>
+    <h4 *ngIf="routeParams?.id">
+      Este error fue reportado al administrador con el codigo:
+      <br />
+      {{ routeParams?.id }}
+    </h4>
+    <a
+      mat-raised-button
+      [routerLink]="routeParams?.url"
+      *ngIf="routeParams?.url && routeParams.status !== '404'"
+    >
+      <h5>Volver a {{ routeParams?.url }}</h5>
+    </a>
+    <a
+      mat-raised-button
+      routerLink="/"
+      *ngIf="!routeParams.url || routeParams.status === '404'"
+    >
+      <h5>Volver al inicio</h5>
+    </a>
+  </div>
+
+  <div *ngIf="!routeParams && !data">
+    <h1>Ocurrio un error inesperado</h1>
+    <a mat-raised-button [routerLink]="'/login'">
+      <h5>Volver al inicio</h5>
+    </a>
+  </div>
+</div>
+
+<div class="pre-container" *ngIf="routeParams?.message">
+  <p>Ocurrio un error al enviar al servidor</p>
+  <pre>
+      {{ this.routeParams | json }}
+    </pre
+  >
+</div>

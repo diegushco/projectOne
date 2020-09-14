@@ -1,0 +1,40 @@
+.tooltip {
+  .arrow {
+    &::after {
+      position: absolute;
+      content: '';
+      width: 0;
+      height: 0;
+      margin-top: 0.0625rem;
+      margin-left: 0.0625rem;
+      border-left: 0.6875rem solid transparent;
+      border-right: 0.6875rem solid transparent;
+      border-bottom: 0.8125rem solid white;
+    }
+  }
+}
+
+.bs-tooltip-bottom {
+  > .arrow {
+    left: 7% !important;
+    &::before {
+      content: '';
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-left: 0.75rem solid transparent;
+      border-right: 0.75rem solid transparent;
+      border-bottom: 0.75rem solid $grey_light !important;
+    }
+  }
+}
+
+.tooltip-inner {
+  max-width: none;
+  min-width: 18rem;
+  font-size: 0.75rem;
+  border: 0.0625rem solid $grey_light;
+  text-align: left;
+  padding: 1.125rem;
+  @include border-radius($tooltip-border-radius);
+}

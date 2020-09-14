@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /quoting
+Disallow: /local/tab/
+
+# AdsBot
+User-agent: AdsBot-Google
+Allow: /maps/api/js?
+Disallow: /maps/api/js/
+
+# Certain social media sites are whitelisted to allow crawlers to access page markup when links to google.com/imgres* are shared. To learn more, please contact images-robots-whitelist@google.com.
+User-agent: Twitterbot
+Allow: /imgres
+
+User-agent: facebookexternalhit
+Allow: /imgres
+
+Sitemap: https://www.google.com/sitemap.xml

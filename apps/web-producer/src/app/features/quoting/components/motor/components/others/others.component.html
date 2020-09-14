@@ -1,0 +1,499 @@
+<div *ngFor="let vehicle of vehicles; index as i">
+  <div *ngIf="i + 1 < currentMotor.number" class="row pb-4">
+    <div class="col-lg-5 px-0 btn-vehicle">
+      <div class="row">
+        <div class="col-lg-12 text-right">
+          <span class="circle-ok">
+            <sxf-icon
+              type="ok"
+              class="icon-white"
+              style="cursor: none !important;"
+            ></sxf-icon>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 icon">
+          <img
+            src="/assets/icons/TYPE_{{ vehicle.group | uppercase }}.svg"
+            alt="vehicle"
+            class="icon-vehicle"
+            width="64px"
+          />
+        </div>
+
+        <div class="col-lg-8 pl-0 text-left" style="margin-top: -15px;">
+          <div class="title-primary">{{ vehicle?.brand?.description }}</div>
+          <div class="title-secondary">
+            {{ vehicle?.shortModel }} {{ vehicle?.year }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="currentMotor.number === i + 1" class="row pb-4">
+    <div
+      [formGroup]="form"
+      class="col-lg-12 py-4"
+      style="border: 0.5px solid #00aec7;"
+    >
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="row">
+            <div class="col-lg-12">
+              <span class="vehicle-type">
+                <img
+                  src="/assets/icons/TYPE_{{ vehicle.group | uppercase }}.svg"
+                  alt="vehicle icon"
+                  width="64px;"
+                />
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <span class="brand-span">
+                {{ currentMotor.brand.description }}
+                {{ currentMotor?.shortModel }}
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <span class="model-span">
+                {{ currentMotor.model.description }}
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <span class="year-span">
+                {{ currentMotor.year }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- Formulario -->
+        <div class="col-lg-8 pt-3">
+          <div class="row mb-4">
+            <div class="col-lg-6">
+              <sxf-textbox
+                type="text"
+                formControlName="patent"
+                label="Patente *"
+                placeholder="Ingresá la patente"
+                (keyup.enter)="onEnterPatent()"
+                [maxLength]="maxLength"
+                [disabled]="disabledByRetrieve"
+              ></sxf-textbox>
+            </div>
+            <div class="col-lg-5">
+              <!-- <span> -->
+              <button
+                [disabled]="
+                  (currentMotor.license &&
+                    (currentMotor.chasis || currentMotor.motor)) ||
+                  !form.get('patent').valid ||
+                  disabledValidate
+                "
+                class="btn btn-primary btn-block"
+                (click)="validatePatent()"
+              >
+                <ng-lottie
+                  [hidden]="!loadingPatent"
+                  [options]="lottieConfig"
+                  (animationCreated)="animationCreated($event)"
+                  height="32px"
+                  width="32px"
+                  class="mr-2"
+                ></ng-lottie>
+                <label class="label-btn">
+                  {{ buttonLabel }}
+                </label>
+                <!-- Validar -->
+              </button>
+            </div>
+          </div>
+          <div class="row mb-2" [hidden]="hiddenFormPatent">
+            <div class="col-lg-6">
+              <sxf-textbox
+                type="text"
+                formControlName="engineNumber"
+                (keydown.enter)="onEnter()"
+                label="Número de motor *"
+                placeholder="Número de motor"
+                [minLength]="8"
+                [maxLength]="20"
+                [helpFeedback]="''"
+                [disabled]="disabledByRetrieve"
+              ></sxf-textbox>
+            </div>
+            <div class="col-lg-6">
+              <sxf-textbox
+                type="text"
+                formControlName="chassisNumber"
+                (keydown.enter)="onEnter()"
+                label="Número de chasis *"
+                placeholder=""
+                [minLength]="10"
+                [maxLength]="17"
+                [helpFeedback]="''"
+                [disabled]="disabledByRetrieve"
+              ></sxf-textbox>
+            </div>
+          </div>
+
+          <!-- checkbox -->
+          <div class="row mb-4" [hidden]="hiddenFormPatent">
+            <div class="col-lg-4">
+              <div class="form-checkbox">
+                <input
+                  type="checkbox"
+                  class="form-checkbox-input"
+                  id="creditorPrendario"
+                  formControlName="creditorPrendario"
+                />
+                <label
+                  class="form-checkbox-label"
+                  for="creditorPrendario"
+                ></label>
+                <label class="label-checkbox">
+                  Acreedor Prendario
+                </label>
+              </div>
+            </div>
+            <div
+              class="col-lg-4"
+              *ngIf="currentPolicy.client.type === 'Person'"
+            >
+              <div class="form-checkbox">
+                <input
+                  type="checkbox"
+                  class="form-checkbox-input"
+                  id="driveCustomer"
+                  formControlName="clientIsDriver"
+                />
+                <label class="form-checkbox-label" for="driveCustomer"></label>
+                <label class="label-checkbox">
+                  Conduce el cliente
+                </label>
+              </div>
+            </div>
+            <div class="col-lg-4" *ngIf="!gncNotRequired">
+              <div class="form-checkbox">
+                <input
+                  type="checkbox"
+                  class="form-checkbox-input"
+                  id="gnc"
+                  formControlName="gnc"
+                />
+                <label class="form-checkbox-label" for="gnc"></label>
+                <label class="label-checkbox">
+                  GNC
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- Fin checkbox-->
+
+          <!-- Acreedor prendario-->
+          <div *ngIf="applyBondHolderFlag" [hidden]="hiddenFormPatent">
+            <div class="row mb-4">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label>Tipo de acreedor prendario</label>
+                  <sxf-select
+                    formControlName="bondHolderType"
+                    [items]="bondHoldersTypes$ | async"
+                    bindLabel="description"
+                    bindValue="code"
+                    [multiple]="false"
+                    [helpFeedback]=""
+                    class="custom"
+                    [searchable]="true"
+                    placeholder="Seleccione el tipo"
+                    dropdownPosition="bottom"
+                    name="bondHolderType"
+                  ></sxf-select>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label>
+                  Cuotas
+                  <sup>*</sup>
+                </label>
+                <sxf-select
+                  formControlName="bondHolderQuotas"
+                  [items]="bondHoldersQuotesQuantity"
+                  bindLabel="description"
+                  bindValue="code"
+                  [multiple]="false"
+                  [helpFeedback]=""
+                  class="custom"
+                  [searchable]="true"
+                  placeholder="Seleccione las cuotas"
+                  dropdownPosition="bottom"
+                  name="bondHoldersQuotesQuantity"
+                ></sxf-select>
+              </div>
+            </div>
+          </div>
+          <!-- Fin acreedor prendario -->
+
+          <!-- Conductor -->
+          <div
+            [hidden]="hiddenFormPatent"
+            *ngIf="
+              (!currentMotor.driver.clientIsDriver &&
+                clientType !== 'Company') ||
+              clientType == 'Company'
+            "
+            [formGroup]="formClient"
+            class="row mt-4"
+          >
+            <div class="col-lg-6">
+              <sxf-textbox
+                type="text"
+                formControlName="driverName"
+                (keydown.enter)="onEnter()"
+                label="Nombre *"
+                placeholder="Ingresá el nombre del conductor"
+                [helpFeedback]="''"
+                placement="bottom"
+                messageTooltips="Nombre"
+                name="driverNameEmission"
+              ></sxf-textbox>
+            </div>
+            <div class="col-lg-6">
+              <sxf-textbox
+                type="text"
+                formControlName="driverLastName"
+                (keydown.enter)="onEnter()"
+                label="Apellido *"
+                placeholder="Ingresá el apellido del conductor"
+                [helpFeedback]="''"
+                placement="bottom"
+                messageTooltips="Apellido"
+                name="driverLastNameEmission"
+              ></sxf-textbox>
+            </div>
+          </div>
+          <!-- Fin conductor -->
+
+          <!-- GNC -->
+          <div
+            [hidden]="hiddenFormPatent"
+            *ngIf="currentMotor.gnc || showGNC"
+            [formGroup]="formGNC"
+            class="row mb-3"
+          >
+            <div class="col-lg-6">
+              <sxf-textbox
+                type="text"
+                formControlName="summa"
+                (keydown.enter)="onEnter()"
+                label="Suma asegurada de equipo de GNC *"
+                [disabled]="true"
+                [helpFeedback]="'No es modificable'"
+                placement="bottom"
+                messageTooltips="Suma asegurada"
+                name="summaGNCEmission"
+              ></sxf-textbox>
+            </div>
+            <div class="col-lg-6">
+              <sxf-datetimepicker
+                [minDate]="minDateGNC"
+                label="Vencimiento de equipo de GNC *"
+                formControlName="expiration"
+                (keydown.enter)="onEnter()"
+                name="expirationGNCEmission"
+              ></sxf-datetimepicker>
+            </div>
+          </div>
+          <!-- Fin GNC -->
+
+          <!-- Botón -->
+          <div class="row mt-4">
+            <div class="col-lg-8">
+              <span>
+                <button
+                  [disabled]="
+                    form.invalid ||
+                    (formClient.invalid &&
+                      ((!currentMotor.driver.clientIsDriver &&
+                        clientType !== 'Company') ||
+                        clientType == 'Company'))
+                  "
+                  (click)="continue()"
+                  class="btn btn-primary btn-heft"
+                  name="continueEmissionOthers"
+                  style="width: 10rem;"
+                >
+                  Siguiente
+                </button>
+              </span>
+              <span class="press-enter ml-3 mr-4">
+                o presiona ENTER
+              </span>
+            </div>
+          </div>
+          <!-- Fin botón -->
+        </div>
+        <!-- Fin formulario -->
+      </div>
+    </div>
+  </div>
+  <div *ngIf="i + 1 > currentMotor.number" class="row pb-4">
+    <div class="col-lg-5 px-0 btn-vehicle">
+      <div class="row">
+        <div class="col-lg-12 text-right">
+          <span class="circle-ok" style="visibility: hidden;">
+            <sxf-icon
+              type="ok"
+              class="icon-white"
+              style="cursor: none !important;"
+            ></sxf-icon>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 icon">
+          <img
+            src="/assets/icons/TYPE_{{ vehicle.group | uppercase }}.svg"
+            alt="vehicle"
+            class="icon-vehicle"
+            width="64px"
+          />
+        </div>
+
+        <div class="col-lg-8 pl-0 text-left" style="margin-top: -15px;">
+          <div class="title-primary">{{ vehicle?.brand?.description }}</div>
+          <div class="title-secondary">
+            {{ vehicle?.shortModel }} {{ vehicle?.year }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<sxf-modal #modalNoGNC>
+  <div class="modal-header modal-header-items">
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModalNoGNC()"
+      name="closeModalNoGNCBtn"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-body-items">
+    <h3>El equipo de GNC es solo a modo</h3>
+    <h3>declarativo ¿Desea asegurar el equipo?</h3>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-3 pl-0">
+        <button
+          type="button"
+          class="btn btn-modal btn-lg btn-block"
+          (click)="closeModalNoGNC()"
+          name="closeModalNoGNCBtn"
+        >
+          No solictar
+        </button>
+      </div>
+      <div class="col-lg-5 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="redirectCoverage()"
+          name="redirectCoverageGNCBtn"
+        >
+          Asegurar el equipo de GNC
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+
+<sxf-modal #modalPatentInUse (closed)="closeModalPatentInUse()">
+  <div class="modal-header modal-header-items">
+    <h4 class="modal-title" id="modal-basic-title">
+      Patente asociada a otra póliza
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModalPatentInUse()"
+      name="closeModalPatentInUseBtn"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-body-items">
+    <p>
+      La patente está asociada a una póliza o solicitud activa y actualmente no
+      podrá ser asegurada. Comunicate con tu Ejecutivo de Cuenta para más
+      información.
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-8 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="closeModalPatentInUse()"
+          name="closeModalPatentInUseBtn"
+        >
+          Volver
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+
+<sxf-modal #modalUW (closed)="closeUWModal()">
+  <div class="modal-header" style="padding: 1rem 2rem;">
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeUWModal('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h4>
+      La presente emisión va a requerir autorización de la compañía.
+    </h4>
+    <h4>¿Desea solicitar autorización?</h4>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-3 pl-0">
+        <button
+          type="button"
+          class="btn btn-modal btn-lg btn-block"
+          (click)="closeUWModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-lg-5 pl-0">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="closeUWModal('continue')"
+        >
+          Continuar
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>

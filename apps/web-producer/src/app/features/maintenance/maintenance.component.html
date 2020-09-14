@@ -1,0 +1,21 @@
+<div class="maintenance-container">
+  <div>
+    <div class="logo">
+      <img src="../assets/icons/GENERAL_COG.svg" />
+    </div>
+    <div class="message" *ngIf="!endDate; else withDate">
+      <p><b>¡Ups! ¡Te pedimos disculpas!</b></p>
+      <p>Estamos haciendo algunas mejoras.</p>
+      <p>Por favor volvé a intentarlo más tarde.</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #withDate>
+  <div class="message">
+    <p><b>¡Ups! ¡Te pedimos disculpas!</b></p>
+    <p>Estamos haciendo algunas mejoras hasta el</p>
+    <p>día {{ date }} a las {{ time }} horas.</p>
+    <p>Por favor volvé a intentarlo más tarde.</p>
+  </div>
+</ng-template>

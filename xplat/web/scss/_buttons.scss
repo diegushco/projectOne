@@ -1,0 +1,54 @@
+.btn {
+  font-weight: $font-weight-bold;
+  border-radius: 1.5rem;
+  // Disabled comes first so active can properly restyle
+  &.disabled,
+  &:disabled {
+    color: color('white');
+    border-color: color('gray');
+    background-color: color('gray');
+  }
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active {
+    @include btn-active;
+  }
+}
+
+.btn-primary {
+  &:not(:disabled):hover {
+    @include btn-hover;
+  }
+}
+
+.btn-secondary {
+  color: $primary;
+  border-color: $primary;
+  background-color: transparent;
+  &:hover {
+    @include btn-hover;
+  }
+  &.disabled,
+  &:disabled {
+    color: color('gray');
+    border-color: color('gray');
+    background-color: transparent;
+  }
+}
+
+.btn-heft {
+  padding: 10px 0px;
+  width: 15em;
+  height: 40px !important;
+  line-height: 0px;
+}
+
+.btn-next-screen {
+  height: 48px;
+  line-height: 0px;
+  &.disabled,
+  &:disabled {
+    color: color('white');
+    border-color: #c4c4c4;
+    background-color: #c4c4c4;
+  }
+}

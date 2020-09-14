@@ -1,0 +1,30 @@
+@import '~@sura-platform/scss/variables';
+
+// Large devices (desktops, 992px and up)
+// @media (min-width: 992px) {
+//   .grid-container {
+//     grid-template-rows: repeat(3, 60px);
+//   }
+// }
+
+// .btn-primary {
+//   background-color: white;
+//   border-color: white;
+//   color: $blue;
+//   font-weight: $font-weight-bold;
+//   &.select {
+//     background-color: transparent;
+//     border-color: transparent;
+//     box-shadow: none;
+//   }
+// }
+.input-group {
+  label {
+    color: $gray_dark;
+  }
+}
+
+.press-enter {
+  color: #a3adb3;
+  font-size: 0.75rem;
+}

@@ -1,0 +1,24 @@
+{
+  "npmScope": "sura-platform",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "libs": {
+      "tags": []
+    },
+    "xplat": {
+      "tags": []
+    },
+    "web-producer": {
+      "tags": ["producer"]
+    },
+    "web-producer-e2e": {
+      "tags": []
+    }
+  }
+}

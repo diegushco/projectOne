@@ -1,0 +1,223 @@
+/* Icons from directory "" */
+
+.icon {
+  cursor: pointer;
+  background-image: url('/assets/icons.svg');
+  background-repeat: no-repeat;
+  display: inline-block;
+  &.icon-edit2 {
+    background-position: 0 0px;
+  }
+  &.icon-erase {
+    background-position: 0 -25px;
+  }
+  &.icon-send {
+    background-position: 0 -55px;
+  }
+  &.icon-save {
+    background-position: 0 -80px;
+  }
+  &.icon-page {
+    background-position: 0 -110px;
+  }
+  &.icon-print {
+    background-position: 0 -145px;
+  }
+  &.icon-calendar {
+    background-position: 0 -175px;
+  }
+  &.icon-expand {
+    background-position: 0 -205px;
+  }
+  &.icon-refresh {
+    background-position: 0 -240px;
+  }
+  &.icon-back {
+    background-position: 0 -275px;
+  }
+  &.icon-down-big {
+    background-position: 0 -300px;
+  }
+  &.icon-down {
+    background-position: 0 -325px;
+  }
+  &.icon-up {
+    background-position: 0 -325px;
+    transform: rotate(180deg);
+  }
+  &.icon-arrow-right {
+    background-position: 0 -350px;
+  }
+  &.icon-arrow-left {
+    background-position: 0 -380px;
+  }
+  &.icon-ok {
+    background-position: 0 -410px;
+  }
+  &.icon-minus {
+    background-position: 0 -435px;
+  }
+  &.icon-close-big {
+    background-position: 0 -460px;
+  }
+  &.icon-close {
+    background-position: 0 -485px;
+  }
+  &.icon-close-small {
+    background-position: 0 -510px;
+  }
+  &.icon-close-circle {
+    background-position: 0 -535px;
+  }
+  &.icon-plus {
+    background-position: 0 -560px;
+  }
+  &.icon-plus-small {
+    background-position: 0 -585px;
+  }
+  &.icon-plus-circle {
+    background-position: 0 -615px;
+  }
+  &.icon-find {
+    background-position: 0 -645px;
+  }
+  &.icon-download {
+    background-position: 0 -665px;
+  }
+  &.icon-redo {
+    background-position: 0 -695px;
+  }
+  &.icon-view {
+    background-position: 0 -720px;
+  }
+  &.icon-info {
+    background-position: 0 -745px;
+
+    &.icon-xs {
+      background-position: -5px -747px;
+    }
+  }
+  &.icon-image {
+    background-position: 0 -772px;
+  }
+  &.icon-trash {
+    background-position: 0 -800px;
+  }
+  &.icon-minus-circle {
+    background-position: 0 -828px;
+  }
+  &.icon-sm {
+    width: 26px;
+    height: 26px;
+    vertical-align: middle;
+  }
+  &.icon-xs {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+  }
+
+  /*&.icon-back {
+    background-position: 0 0;
+  }
+  &.icon-calendar {
+    background-position: 0 -20px;
+  }
+  &.icon-checkbox-off {
+    background-position: 0 -38px;
+  }
+  &.icon-checkbox-on {
+    background-position: 0 -55px;
+  }
+  &.icon-close-circle {
+    background-position: 0 -74px;
+  }
+  &.icon-close-small {
+    background-position: 0 -92px;
+  }
+  &.icon-close {
+    background-position: 0 -110px;
+  }
+  &.icon-down {
+    background-position: 0 -128px;
+  }
+  &.icon-download {
+    background-position: 0 -146px;
+  }
+  &.icon-edit {
+    background-position: 0 -164px;
+  }
+  &.icon-erase {
+    background-position: 0 -182px;
+  }
+  &.icon-erase-dims {
+    width: 18px;
+    height: 18px;
+  }
+  &.icon-expand {
+    background-position: 0 -200px;
+  }
+  &.icon-find {
+    background-position: 0 -218px;
+  }
+  &.icon-minus {
+    background-position: 0 -236px;
+  }
+  &.icon-ok {
+    background-position: 0 -250px;
+  }
+  &.icon-page {
+    background-position: 0 -272px;
+  }
+  &.icon-plus-circle {
+    background-position: 0 -290px;
+  }
+  &.icon-plus-small {
+    background-position: 0 -308px;
+  }
+  &.icon-plus {
+    background-position: 0 -323px;
+  }
+  &.icon-print {
+    background-position: 0 -344px;
+  }
+  &.icon-refresh {
+    background-position: 0 -362px;
+  }
+  &.icon-save {
+    background-position: 0 -380px;
+  }
+  &.icon-send {
+    background-position: 0 -398px;
+  }
+  &.icon-off {
+    filter: grayscale(100%) brightness(3);
+  }
+  &.icon-sm {
+    width: 20px;
+    height: 20px;
+  }*/
+}
+
+.icon-negative {
+  filter: brightness(50);
+}
+
+.icon-green {
+  filter: invert(54%) sepia(38%) saturate(6375%) hue-rotate(155deg)
+    brightness(99%) contrast(101%);
+}
+
+.icon-red {
+  filter: invert(94%) sepia(0%) saturate(0%) hue-rotate(106deg) brightness(86%)
+    contrast(86%);
+}
+.icon-blue {
+  filter: invert(13%) sepia(20%) saturate(2889%) hue-rotate(205deg)
+    brightness(90%) contrast(200%);
+}
+
+.icon-white {
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg)
+    brightness(102%) contrast(102%);
+}

@@ -1,0 +1,296 @@
+<ng-template #mymodal let-modal>
+  <div class="modal-header modal-header-items">
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModal()"
+      name="closeModalAdditional"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <ng-template #addtionalLoading>
+    <div class="row">
+      <div class="col-lg-4 offset-lg-4 pl-5 loadings">
+        <ng-lottie
+          [options]="lottieConfig"
+          width="8.75rem"
+          height="6.25rem"
+        ></ng-lottie>
+      </div>
+    </div>
+  </ng-template>
+  <div class="modal-body">
+    <div
+      *ngIf="
+        (additionalAccesories$ | async) && (additionalAccesoriesGroup$ | async);
+        else addtionalLoading
+      "
+    >
+      <sxf-tabset
+        customNavClass="nav-modal-class"
+        customTabsClass=""
+        (tabSelectedValue)="groupSelected($event)"
+      >
+        <sxf-tabset-step
+          *ngFor="let item of tabsAditional"
+          tabTitle="{{ item.name }}"
+          tabValue="{{ item.code }}"
+          [active]="currentGroup == item.code"
+        >
+          <div class="row mt-4">
+            <div class="col-lg-3 offset-lg-9 pl-0">
+              <!-- <h6 class="text-modal-coverage">Suma Asegurada</h6>-->
+            </div>
+          </div>
+          <div>
+            <!-- {{ currentGroupCode }} -->
+            <div [formGroup]="form" class="items-modal">
+              <ul
+                formArrayName="addittionalaccessories"
+                class="list-group list-group-flush scroll-modal"
+              >
+                <ng-container
+                  *ngFor="
+                    let featureGroup of coveragesAdditionalAccesories.controls;
+                    let i = index
+                  "
+                >
+                  <li
+                    [formGroup]="featureGroup"
+                    *ngIf="
+                      featureGroup.get('category').value === currentGroupCode &&
+                      featureGroup.enabled
+                    "
+                  >
+                    <div class="row mb-4">
+                      <div
+                        class="col-lg-9 input-group pb-3"
+                        *ngIf="
+                          !coveragesAdditionalAccesories.controls[i - 1] &&
+                          featureGroup.get('subtitle').value.length > 0 &&
+                          currentGroupCode ===
+                            featureGroup.get('category').value
+                        "
+                      >
+                        <!--Para mostrar titulo de subgrupo-->
+
+                        <div class="form-checkbox modal-checkbox">
+                          <input
+                            type="checkbox"
+                            formControlName="chk"
+                            class="form-checkbox-input"
+                            id="{{ featureGroup.get('code').value }}"
+                          />
+                          <label
+                            class="form-checkbox-label"
+                            for="{{ featureGroup.get('code').value }}"
+                          ></label>
+                        </div>
+                        <div class="long-text">
+                          <b>{{ featureGroup.get('title').value }}</b>
+                        </div>
+                      </div>
+                      <div
+                        class="col-lg-11 input-group line_dark mb-5"
+                        *ngIf="
+                          coveragesAdditionalAccesories.controls[i - 1] &&
+                          featureGroup.get('subtitle').value.length > 0 &&
+                          featureGroup.get('title').value !==
+                            coveragesAdditionalAccesories.controls[i - 1].get(
+                              'title'
+                            ).value &&
+                          currentGroupCode ===
+                            featureGroup.get('category').value
+                        "
+                      >
+                        <!--Para mostrar titulo de subgrupo-->
+                        <div class="form-checkbox modal-checkbox">
+                          <input
+                            type="checkbox"
+                            formControlName="chk"
+                            class="form-checkbox-input"
+                            id="{{ featureGroup.get('code').value }}"
+                            name="chk{{ featureGroup.get('code').value }}"
+                          />
+                          <label
+                            class="form-checkbox-label"
+                            for="{{ featureGroup.get('code').value }}"
+                          ></label>
+                        </div>
+                        <div class="long-text">
+                          <b>{{ featureGroup.get('title').value }}</b>
+                        </div>
+                      </div>
+                      <!-- <div class="row mb-4"> -->
+                      <div
+                        class="col-lg-8 line input-group mb-4 mr-4"
+                        *ngIf="
+                          currentGroupCode ===
+                            featureGroup.get('category').value &&
+                          featureGroup.get('subtitle').value.length === 0
+                        "
+                      >
+                        <div class="form-checkbox modal-checkbox ">
+                          <input
+                            type="checkbox"
+                            formControlName="chk"
+                            class="form-checkbox-input"
+                            id="{{ featureGroup.get('code').value }}"
+                            name="chk{{ featureGroup.get('code').value }}"
+                          />
+                          <label
+                            class="form-checkbox-label"
+                            for="{{ featureGroup.get('code').value }}"
+                          ></label>
+                        </div>
+                        <div
+                          class="title-checkbox-no-items long-text"
+                          *ngIf="
+                            featureGroup.get('subtitle').value.length === 0
+                          "
+                        >
+                          {{ featureGroup.get('title').value }}
+                          <div
+                            *ngIf="featureGroup.get('visible').value"
+                            style="color:red"
+                          >
+                            El valor ingresado no puede superar los topes
+                            indicados
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col-lg-8 line input-group mb-4 ml-4"
+                        *ngIf="
+                          featureGroup.get('subtitle').value.length > 0 &&
+                          currentGroupCode ===
+                            featureGroup.get('category').value
+                        "
+                      >
+                        <div
+                          class="long-text"
+                          *ngIf="featureGroup.get('subtitle').value.length > 0"
+                        >
+                          {{ featureGroup.get('subtitle').value }}
+                        </div>
+                      </div>
+                      <div
+                        id="calendar-container"
+                        class="col-lg-3"
+                        *ngIf="
+                          currentGroupCode ===
+                          featureGroup.get('category').value
+                        "
+                      >
+                        <span *ngIf="featureGroup.get('min').value !== ''">
+                          <sxf-textbox
+                            [helpFeedback]="
+                              toInt(featureGroup.get('value').value) >=
+                                toInt(featureGroup.get('max').value) ||
+                              toInt(featureGroup.get('value').value) <=
+                                toInt(featureGroup.get('min').value)
+                                ? 'Min $' +
+                                  featureGroup.get('min').value +
+                                  '/Max $' +
+                                  featureGroup.get('max').value
+                                : ''
+                            "
+                            [type]="'number'"
+                            [max]="featureGroup.get('max').value"
+                            [min]="featureGroup.get('min').value"
+                            formControlName="value"
+                            label=""
+                            placeholder="$00,00"
+                            [maxLength]="10"
+                            [placement]="'bottom'"
+                            name="number{{ featureGroup.get('code').value }}"
+                          ></sxf-textbox>
+                        </span>
+                        <span
+                          *ngIf="
+                            featureGroup.get('min').value === '' &&
+                            featureGroup.get('code').value !==
+                              'SURA_CA7_EquipodeGNCFecVencLim'
+                          "
+                        >
+                          <sxf-textbox
+                            [type]="'text'"
+                            formControlName="value"
+                            label=""
+                            placeholder="{{
+                              featureGroup.get('placeholder').value
+                            }}"
+                            [placement]="'bottom'"
+                            name="value{{ featureGroup.get('code').value }}"
+                          ></sxf-textbox>
+                        </span>
+                        <span
+                          *ngIf="
+                            featureGroup.get('code').value ===
+                            'SURA_CA7_EquipodeGNCFecVencLim'
+                          "
+                        >
+                          <sxf-datetimepicker
+                            formControlName="value"
+                            navigation="select"
+                            [minDate]="minDateGNC"
+                            [maxDate]="maxDateGNC"
+                            name="select{{ featureGroup.get('code').value }}"
+                          ></sxf-datetimepicker>
+                        </span>
+                      </div>
+                      <!-- </div> -->
+                    </div>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+        </sxf-tabset-step>
+      </sxf-tabset>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 pl-4">
+        <!--
+        //TODO: DG Descomentar esto cuando decidan aplicar a todas las coberturas adicionales.. 
+        <div class="form-checkbox">
+          <input
+            type="checkbox"
+            [formControl]="applyAll"
+            class="form-checkbox-input"
+            id="applyAll"
+          />
+          <label class="form-checkbox-label" for="applyAll">
+            Aplicar a todas las coberturas
+          </label>
+        </div>-->
+      </div>
+      <div class="col-lg-4 offset-lg-4 pl-0">
+        <button
+          *ngIf="!loadingCost"
+          [disabled]="
+            !form.get('addittionalaccessories').valid || !isValidFormArray
+          "
+          type="button"
+          class="btn btn-primary btn-lg btn-block"
+          (click)="closeModal('added')"
+          name="closeModalAdditional"
+        >
+          Aceptar
+        </button>
+        <button
+          type="button"
+          disabled
+          *ngIf="loadingCost"
+          class="btn btn-primary btn-lg btn-block"
+        >
+          Recotizando...
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

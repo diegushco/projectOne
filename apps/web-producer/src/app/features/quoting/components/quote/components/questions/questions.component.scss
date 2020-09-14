@@ -1,0 +1,66 @@
+@import '~@sura-platform/scss/variables';
+$label-title-size: 1.625rem;
+$label-title-size-visited: 0.9375rem;
+.list-group-item {
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  border: 0;
+  .info {
+    display: none;
+    color: $cyanblue_shadow;
+    font-size: 0.875rem;
+  }
+  &.active {
+    background-color: $white;
+    border-color: $white;
+    margin-bottom: 2rem;
+    .header {
+      margin-bottom: 1.3rem;
+      .edit {
+        display: none;
+      }
+    }
+    label {
+      font-size: $label-title-size;
+      color: $blue;
+      font-weight: $font-weight-bold;
+      margin-bottom: 0;
+    }
+    .info {
+      display: block;
+    }
+    .line {
+      border-bottom: 0;
+      /*padding-left: 15px;*/
+    }
+  }
+  label {
+    color: $grey_light;
+  }
+  &.visited:not(.active) {
+    label {
+      font-size: $label-title-size-visited;
+      color: $grey_light;
+      margin-bottom: 0;
+      .item-value {
+        color: $gray_dark;
+      }
+    }
+  }
+  &:last-child {
+    .line {
+      border-bottom: 0;
+      padding-left: 0;
+    }
+  }
+}
+
+.line {
+  border-bottom: 2px solid $black_125;
+  padding-left: 0;
+}
+
+.questions {
+  margin-top: 1rem;
+}

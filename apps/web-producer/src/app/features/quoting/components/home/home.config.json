@@ -1,0 +1,177 @@
+{
+  "codesBenefitsCoverages": [
+    "SURA_HOE_IncendioEdiCov",
+    "SURA_HOE_IncendioConPRCov",
+    "SURA_HOE_RCLinderosCov",
+    "SURA_HOE_RCVidaPCov",
+    "SURA_HOE_RoboConGRACov",
+    "SURA_HOE_TodoRieEECov",
+    "SURA_HOE_CristalesCov"
+  ],
+  "codesPlanPremiumsCoverages": [
+    "SURA_HOE_ArticulosDepTCov",
+    "SURA_HOE_CajaFueDCov",
+    "SURA_HOE_ReintegroGasRDCov",
+    "SURA_HOE_ReposicionLlaRTCov",
+    "SURA_HOE_RoboBieUVCov",
+    "SURA_HOE_RoboLocCov",
+    "SURA_HOE_RoboMocECov"
+  ],
+  "codesExcludeCoverages": ["SURA_HOE_RemocionEscCov", "SURA_HOE_GastosHosCov"],
+  "codesNoEditables": [
+    "SURA_HOE_GastosMedicosCov",
+    "SURA_HOE_RemocionEscCov",
+    "SURA_HOE_GastosHosCov"
+  ],
+  "codesInheritable": [
+    {
+      "code": "SURA_HOE_IncendioEdiCov",
+      "childs": ["SURA_HOE_RemocionEscCov", "SURA_HOE_GastosHosCov"]
+    }
+  ],
+  "orderCoverage": [
+    "SURA_HOE_IncendioEdiCov",
+    "SURA_HOE_IncendioConPRCov",
+    "SURA_HOE_RCLinderosCov",
+    "SURA_HOE_RCVidaPCov",
+    "SURA_HOE_RoboConGRACov",
+    "SURA_HOE_TodoRieEECov",
+    "SURA_HOE_CristalesCov",
+    "SURA_HOE_AlimentosFreCov",
+    "SURA_HOE_DanoAguCCov",
+    "SURA_HOE_DanoAguECov",
+    "SURA_HOE_RoboObjDCov",
+    "SURA_HOE_RoboIncCov",
+    "SURA_HOE_TodoRieMCov",
+    "SURA_HOE_TodoRieMPCCov",
+    "SURA_HOE_AccidentesPerCov",
+    "SURA_HOE_AccidentesPerDCov",
+    "SURA_HOE_GastosMedicosCov",
+    "SURA_HOE_InstrumentosMCov",
+    "SURA_HOE_PalosGolfCov",
+    "SURA_HOE_AnimalesDomCov",
+    "SURA_HOE_RoboHurCov",
+    "SURA_HOE_Asistencia",
+    "SURA_HOE_ClaPorAutCov",
+    "SURA_HOE_ClaRenAutCov",
+    "SURA_HOE_RCPropietarioCov",
+    "SURA_HOE_AcreedorHipCov",
+    "SURA_HOE_GastosHosCov",
+    "SURA_HOE_IncendioEdiPRCov",
+    "SURA_HOE_RemocionEscCov",
+    "SURA_HOE_ArticulosDepTCov",
+    "SURA_HOE_CajaFueDCov",
+    "SURA_HOE_ReintegroGasRDCov",
+    "SURA_HOE_ReposicionLlaRTCov",
+    "SURA_HOE_RoboBieUVCov",
+    "SURA_HOE_RoboLocCov",
+    "SURA_HOE_RoboMocECov"
+  ],
+  "callCoveragePackage": {
+    "code": "premium",
+    "coverages": [
+      {
+        "pattern": {
+          "code": "SURA_HOE_AccidentesPerCov"
+        },
+        "terms": [
+          {
+            "code": "SURA_HOE_AccidentesPerLim"
+          }
+        ]
+      }
+    ]
+  },
+  "packages": [
+    {
+      "code": "premium",
+      "description": "Plan Premium",
+      "coverages": [
+        "SURA_HOE_IncendioEdiCov",
+        "SURA_HOE_IncendioConPRCov",
+        "SURA_HOE_RCLinderosCov",
+        "SURA_HOE_RCVidaPCov",
+        "SURA_HOE_RoboConGRACov",
+        "SURA_HOE_TodoRieEECov",
+        "SURA_HOE_CristalesCov",
+        "SURA_HOE_AlimentosFreCov",
+        "SURA_HOE_DanoAguCCov",
+        "SURA_HOE_DanoAguECov",
+        "SURA_HOE_RoboObjDCov",
+        "SURA_HOE_RoboIncCov",
+        "SURA_HOE_TodoRieMCov",
+        "SURA_HOE_TodoRieMPCCov",
+        "SURA_HOE_AccidentesPerCov",
+        "SURA_HOE_AccidentesPerDCov",
+        "SURA_HOE_InstrumentosMCov",
+        "SURA_HOE_PalosGolfCov",
+        "SURA_HOE_AnimalesDomCov",
+        "SURA_HOE_RoboHurCov",
+        "SURA_HOE_Asistencia",
+        "SURA_HOE_ClaPorAutCov",
+        "SURA_HOE_ClaRenAutCov",
+        "SURA_HOE_RCPropietarioCov",
+        "SURA_HOE_AcreedorHipCov",
+        "SURA_HOE_DanoAguECov",
+        "SURA_HOE_GastosHosCov",
+        "SURA_HOE_IncendioEdiPRCov",
+        "SURA_HOE_RemocionEscCov",
+        "SURA_HOE_ArticulosDepTCov",
+        "SURA_HOE_ReintegroGasRDCov",
+        "SURA_HOE_ReposicionLlaRTCov",
+        "SURA_HOE_RoboBieUVCov",
+        "SURA_HOE_RoboLocCov",
+        "SURA_HOE_RoboMocECov",
+        "SURA_HOE_CajaFueDCov"
+      ]
+    },
+    {
+      "code": "basic",
+      "description": "Plan Básico",
+      "coverages": [
+        "SURA_HOE_IncendioEdiCov",
+        "SURA_HOE_IncendioConPRCov",
+        "SURA_HOE_RCLinderosCov",
+        "SURA_HOE_RCVidaPCov",
+        "SURA_HOE_RoboConGRACov",
+        "SURA_HOE_TodoRieEECov",
+        "SURA_HOE_CristalesCov",
+        "SURA_HOE_AlimentosFreCov",
+        "SURA_HOE_DanoAguCCov",
+        "SURA_HOE_DanoAguECov",
+        "SURA_HOE_RoboObjDCov",
+        "SURA_HOE_RoboIncCov",
+        "SURA_HOE_TodoRieMCov",
+        "SURA_HOE_AccidentesPerCov",
+        "SURA_HOE_AccidentesPerDCov",
+        "SURA_HOE_InstrumentosMCov",
+        "SURA_HOE_PalosGolfCov",
+        "SURA_HOE_AnimalesDomCov",
+        "SURA_HOE_Asistencia",
+        "SURA_HOE_ClaPorAutCov",
+        "SURA_HOE_ClaRenAutCov",
+        "SURA_HOE_RCPropietarioCov",
+        "SURA_HOE_AcreedorHipCov",
+        "SURA_HOE_GastosHosCov",
+        "SURA_HOE_IncendioEdiPRCov",
+        "SURA_HOE_RemocionEscCov"
+      ]
+    },
+    {
+      "code": "fire",
+      "description": "Plan Incendio",
+      "coverages": [
+        "SURA_HOE_IncendioEdiCov",
+        "SURA_HOE_IncendioConPRCov",
+        "SURA_HOE_RCLinderosCov",
+        "SURA_HOE_Asistencia",
+        "SURA_HOE_ClaPorAutCov",
+        "SURA_HOE_ClaRenAutCov",
+        "SURA_HOE_RCPropietarioCov",
+        "SURA_HOE_AcreedorHipCov",
+        "SURA_HOE_GastosHosCov",
+        "SURA_HOE_RemocionEscCov"
+      ]
+    }
+  ]
+}

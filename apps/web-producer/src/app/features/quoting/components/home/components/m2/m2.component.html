@@ -1,0 +1,59 @@
+<ng-container *ngIf="!loadingCoverage; else stillLoadingCoverage">
+  <div [formGroup]="form">
+    <div class="row mb-3">
+      <div class="col-lg-6 offset-lg-2 pl-0">
+        <p class="description">
+          Con este dato podremos darte sumas sugeridas para cada cobertura
+        </p>
+      </div>
+      <div class="col-lg-3 offset-lg-2 pl-0">
+        <div class="form-group">
+          <sxf-textbox
+            type="text"
+            name="m2"
+            formControlName="m2"
+            label="Metros cuadrados"
+            placeholder="Ingresá los M2 de la vivienda"
+            (keyup.enter)="continue()"
+            [mask]="m2Mask"
+          ></sxf-textbox>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-lg-2 offset-lg-2 pl-0">
+      <button
+        [disabled]="!form.valid || !disabledBtnProducer"
+        name="continue"
+        class="btn btn-primary btn-block btn-heft"
+        (click)="continue()"
+      >
+        Continuar
+      </button>
+    </div>
+    <div class="col-lg-2 press-enter">
+      o presiona ENTER
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-lg-6 offset-lg-2 pl-0">
+      <h3 class="link">Ingresar el valor de la propiedad</h3>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #stillLoadingCoverage>
+  <div class="row">
+    <div class="col-12 text-center">
+      <ng-lottie
+        [options]="lottieConfig"
+        width="8.75rem"
+        height="6.25rem"
+      ></ng-lottie>
+    </div>
+  </div>
+</ng-template>

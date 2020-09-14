@@ -1,0 +1,151 @@
+<div class="row">
+  <div [formGroup]="formClienTax" class="col-lg-12">
+    <div class="row">
+      <div class="col-lg-4 pl-0">
+        <label>
+          Condición fiscal
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-4" *ngIf="showIIBB">
+        <label>
+          Ingresos Brutos
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-4" *ngIf="showiibbNumber">
+        <label>
+          N° IIBB
+          <sup>*</sup>
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 pl-0">
+        <sxf-select #fiscalcondition formControlName="fiscalcondition" (keydown.enter)="onEnter()"
+          [items]="fiscalConditions$ | async" bindLabel="description" bindValue="code" [multiple]="false" class="custom"
+          [searchable]="true" placeholder="Cond. Fiscal" dropdownPosition="bottom" name="fiscalconditionSelectEmission"
+          [disabled]="disabledByRetrieve"></sxf-select>
+      </div>
+      <div class="col-lg-4" *ngIf="showIIBB">
+        <sxf-select #iibb formControlName="iibb" (keydown.enter)="onEnter()" [items]="iibb$ | async"
+          bindLabel="description" bindValue="code" [multiple]="false" class="custom" [searchable]="true"
+          placeholder="Ing. Brutos" dropdownPosition="bottom" name="iibbEmission" [disabled]="disabledByRetrieve">
+        </sxf-select>
+      </div>
+      <div class="col-lg-4" *ngIf="showiibbNumber">
+        <sxf-textbox #numiibb type="text" formControlName="iibbNumber" (keydown.enter)="onEnter()" label=""
+          placeholder="" [helpFeedback]="''" placement="bottom" name="numIibbEmission" [disabled]="disabledByRetrieve">
+        </sxf-textbox>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="showCertified">
+      <div class="col-lg-4 pl-0">
+        <label>
+          Inicio de certificado
+          <sup>*</sup>
+        </label>
+      </div>
+      <div class="col-lg-4">
+        <label>
+          Vencimiento de certificado
+          <sup>*</sup>
+        </label>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="showCertified">
+      <div class="col-lg-4 pl-0">
+        <sxf-datetimepicker formControlName="beginningValidity" (keydown.enter)="onEnter()"
+          name="beginningValidityFiscalConditionEmission"></sxf-datetimepicker>
+      </div>
+      <div class="col-lg-4">
+        <sxf-datetimepicker [minDate]="date" [maxDate]="maxDate" formControlName="endingValidity"
+          (keydown.enter)="onEnter()" name="endingValidityFiscalConditionEmission"></sxf-datetimepicker>
+      </div>
+    </div>
+
+    <div class="row pt-4">
+      <div class="col-lg-8 pl-0">
+        <span>
+          <button [disabled]="!formClienTax.valid" class="btn btn-primary btn-heft" (click)="continue()"
+            name="continueFiscalConditionBtn">
+            Continuar
+          </button>
+        </span>
+        <span class="press-enter ml-3 mr-4">
+          o presiona ENTER
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<sxf-modal #modalFiscal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      La condición fiscal no coincide
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()" name="closeModalFiscalConditionBtn">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-body-items">
+    <p>
+      La condición fiscal usada para cotizar no coincide con la registrada para
+      el cliente. Vamos a recotizar la cobertura elegida con la condición fiscal
+      existente. De haber un cambio en la misma, por favor comunicate con tu
+      Ejecutivo Comercial.
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-8 pl-0">
+        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="closeModal()"
+          name="closeModalFiscalConditionBtn">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>
+
+<sxf-modal #newCosts>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Nueva cotización
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModalNewCosts()"
+      name="closeModalFiscalConditionNewCostsBtn">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-body-items">
+    <ng-template #stillLoading>
+      <div class="row">
+        <div class="col-12 text-center">
+          <ng-lottie [options]="lottieConfig" width="8.75rem" height="6.25rem"></ng-lottie>
+        </div>
+      </div>
+    </ng-template>
+    <p *ngIf="!loadingCosts; else stillLoading">
+      Recotizamos tu cobertura con la condición fiscal registrada. el nuevo
+      valor de la cuota es de {{ newQuote | number: '1.0-0' }} Para mas detalle
+      revisar el detalle del menú lateral.
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-8 pl-0">
+        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="closeModalNewCosts()"
+          [disabled]="loadingCosts" name="closeModalFiscalConditionNewCostsBtn">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</sxf-modal>

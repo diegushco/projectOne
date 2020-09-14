@@ -1,0 +1,8 @@
+<div *ngIf="active" class="pane" [ngClass]="customPaneClass">
+  <div *ngIf="bypassDOM">
+    <ng-container [ngTemplateOutlet]="template"></ng-container>
+  </div>
+  <div *ngIf="!bypassDOM">
+    <ng-content></ng-content>
+  </div>
+</div>

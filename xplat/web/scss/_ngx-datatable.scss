@@ -1,0 +1,66 @@
+/* Los estilos en ngx-datatable solo funcionan de manera global, no sirve aplicarlos en el componente sxf-table
+*/
+
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+.ngx-datatable.material {
+  box-shadow: none;
+  &.striped {
+    .datatable-row-odd {
+      background: rgba($grey_light, 0.1);
+    }
+  }
+  .datatable-header {
+    border-bottom: 0;
+    .datatable-header-cell {
+      color: $cyanblue_shadow;
+      font-weight: $font-weight-bold;
+      padding-left: 0;
+    }
+  }
+  .datatable-footer {
+    border-top: 0;
+    .page-count {
+      display: none;
+    }
+    .datatable-pager {
+      text-align: center;
+      li {
+        a {
+          color: $cyan;
+        }
+        &.pages {
+          a {
+            color: rgba(0, 0, 0, 0.54);
+          }
+          &.active {
+            a {
+              font-weight: $font-weight-bold;
+              background-color: transparent;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .datatable-body {
+    .datatable-body-row {
+      /*height: 3.125rem !important;*/
+      .datatable-body-cell {
+        color: $gray_dark;
+        font-size: 1rem; //16px en resolución de 1280 de ancho
+        padding-top: 0.75rem;
+        padding-bottom: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+    .datatable-row-detail {
+      overflow-x: hidden;
+    }
+  }
+}

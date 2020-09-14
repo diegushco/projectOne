@@ -1,0 +1,164 @@
+// :host ::ng-deep .nav-tabset.nav-test-class {
+//   margin-bottom: 0.4rem;
+// }
+// :host ::ng-deep .group1-card {
+//   line-height: 1.4em;
+// }
+// .row-coverage {
+//   margin-right: 0px;
+//   margin-left: 0px;
+//   background-color: #ffffff;
+//   padding: 0px 15px 15px 15px;
+// }
+// .column-coverage {
+//   padding-right: 0px;
+//   padding-left: 0px;
+// }
+// .color-coverages {
+//   background-color: transparent;
+// }
+// .title-coverage {
+//   margin: 12px 0px 10px 0px;
+//   font-size: 24px;
+// }
+// .text-tabs {
+//   font-size: 14px;
+// }
+// .color-header {
+//   font-size: 12px;
+//   line-height: 20px;
+// }
+// .p-card {
+//   padding: 0.6rem;
+// }
+// .btn-all-features {
+//   margin: 10px 0px;
+// }
+// .card-title {
+//   font-size: 16px;
+//   padding-top: 15px;
+// }
+// .patent {
+//   border: 0.5px solid #cacaca;
+//   box-sizing: border-box;
+//   box-shadow: 0px 3px 13px rgba(0, 75, 156, 0.06);
+//   border-radius: 2px;
+//   padding: 5px;
+// }
+// .container-flex {
+//   display: flex;
+//   flex-wrap: wrap;
+//   padding: 15px 15px 15px 15px;
+//   background: #e5e5e5;
+// }
+// .grid-1 {
+//   width: calc(78% - 15px);
+// }
+// .grid-2 {
+//   width: calc(20% - 15px);
+//   margin-left: 15px;
+// }
+@import '~@sura-platform/scss/variables';
+$card-info-title: 0.875rem;
+$card-info-title-color: $gray_dark;
+// .custom-col-lg-3 {
+//   @media (min-width: 992px) {
+//     flex: 0 0 23.3%;
+//     max-width: 23.3%;
+//   }
+// }
+.title {
+  font-size: 1.625rem;
+  font-weight: $font-weight-bold;
+  color: $blue;
+}
+
+.car-info {
+  background-color: $white;
+  .card {
+    border: none;
+    box-sizing: border-box;
+    height: calc(13rem + 15px);
+    // box-shadow: 0px 3px 13px rgba(0, 75, 156, 0.06);
+    // border-radius: 2px;
+    &.no-additional {
+      height: calc(13rem + 7px);
+    }
+
+    .card-body {
+      padding: 0;
+      .patent {
+        border: 0.5px solid #cacaca;
+        box-sizing: border-box;
+        box-shadow: 0px 3px 13px rgba(0, 75, 156, 0.06);
+        border-radius: 2px;
+        padding: 0.3rem;
+        font-size: $card-info-title;
+        color: $card-info-title-color;
+      }
+      .patent-used {
+        border: 1px solid #ff585d;
+        border-radius: 5px;
+        color: #ff585d;
+      }
+      .card-info-title {
+        font-size: $card-info-title;
+        color: $card-info-title-color;
+      }
+      a {
+        vertical-align: text-top;
+        color: $primary;
+      }
+      .car-img {
+        width: 4.142rem;
+        // height: 4rem;
+      }
+      .patent-box {
+        height: 1.5em;
+      }
+    }
+  }
+  .list-coverage {
+    margin-top: 2.46rem;
+
+    &.no-additional {
+      margin-top: 0 !important;
+    }
+  }
+}
+@page {
+  overflow: visible !important;
+  overflow-y: visible !important;
+}
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  #print {
+    max-height: 90vh !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 !important;
+    overflow: visible !important;
+  }
+  .print {
+    visibility: visible !important;
+    overflow: visible !important;
+    overflow-y: visible !important;
+  }
+  .noprint {
+    visibility: hidden !important;
+  }
+  .row-coverage {
+    display: none !important;
+  }
+  .legalInfo {
+    display: block !important;
+  }
+  :host ::ng-deep .tabCoverage {
+    .nav-link {
+      text-decoration: none !important;
+    }
+  }
+}

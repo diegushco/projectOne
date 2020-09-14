@@ -1,0 +1,36 @@
+<ng-container *ngIf="utilDate$ | async; else loadingAge">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2 pl-0">
+      <div [formGroup]="form">
+        <div class="row">
+          <div class="col-lg-4">
+            <label>
+              Fecha de Nacimiento
+              <sup>*</sup>
+            </label>
+            <sxf-datetimepicker formControlName="birth" navigation="select" [minDate]="minDateClient"
+              [maxDate]="maxDateClient" [helpFeedback]="" name="birthClientEmission"></sxf-datetimepicker>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-3 text-right">
+      <button [disabled]="form.invalid" class="btn btn-primary btn-lg btn-next-screen" (click)="continueQuoting()"
+        name="continuesumAssuredBtn">
+        Continuar Cotización
+      </button>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</ng-container>
+
+
+
+<ng-template #loadingAge>
+  <div class="col-lg-4 offset-lg-4 d-flex flex-wrap mt-4">
+    <ng-lottie [options]="lottieConfig" width="8.75rem" height="6.25rem"></ng-lottie>
+  </div>
+</ng-template>

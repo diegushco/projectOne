@@ -1,0 +1,51 @@
+@import '~@sura-platform/scss/variables';
+
+.press-enter {
+  color: #a3adb3;
+  font-size: 0.75rem;
+}
+
+.btn {
+  &.next {
+    color: $primary;
+    font-size: 0.9375rem;
+
+    &:not(:disabled):not(.disabled):active {
+      color: $primary;
+      border-color: $white;
+      background-color: $white;
+      box-shadow: none;
+    }
+  }
+}
+
+label {
+  color: $gray_dark;
+  margin-bottom: 0;
+  font-size: 0.75rem;
+}
+
+::ng-deep li.list-group-item.questionactive {
+  div.row.header {
+    div {
+      label {
+        font-family: $font-family-medium;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 26px;
+        line-height: 30px;
+      }
+    }
+  }
+  div {
+    div.form-input-label {
+      label {
+        font-family: $font-family-medium;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 14px;
+      }
+    }
+  }
+}

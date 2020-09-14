@@ -1,0 +1,391 @@
+<!-- <div *ngIf="inspection$ | async as inspection">
+    {{inspection | json}}
+</div> -->
+<!-- {{ inspection$ | async | json }} -->
+<!-- *ngIf="inspection.status === 'RequestedNonBlocking'" -->
+
+<div class="row">
+  <div class="col-lg-8 offset-lg-2 pl-0 mt-4">
+    <label *ngIf="currentTypeInspection === PENDING">
+      Inspección Previa a la emisión
+    </label>
+    <label *ngIf="currentTypeInspection === REQUESTNONBLOCKING">
+      Inspección Posterior a la emisión
+    </label>
+    <div *ngIf="currentTypeInspection === PENDING">
+      <span class="">
+        Necesitamos realizar la inspección
+        {{ isPlural ? 'del vehículo' : 'de los vehículos' }}
+        antes de otorgarle la cobertura solicitada.
+        <br />
+        Indicá el tipo de inspección a realizar:
+      </span>
+    </div>
+    <div *ngIf="currentTypeInspection === REQUESTNONBLOCKING">
+      <span class="">
+        Vamos a emitir una póliza para tu cliente pero necesitamos que realices
+        la inspección de {{ isPlural ? 'sus' : 'su' }}
+        <br />
+        {{ isPlural ? 'vehiculos' : 'vehiculo' }}
+        dentro de los próximos 15 días para mantener su vigencia.
+        <br />
+        Indicá el tipo de inspección a realizar:
+      </span>
+    </div>
+    <div class="mt-4">
+      <ngb-accordion
+        #inspeccionPrevia="ngbAccordion"
+        activeIds="autoinspeccionPanel"
+      >
+        <ngb-panel id="autoinspeccionPanel">
+          <ng-template ngbPanelHeader>
+            <div
+              class="d-flex"
+              [className]="allowOnlyPhone ? 'chk-inspection' : ''"
+            >
+              <div class="form-checkbox-as-radio" style="float: left;">
+                <input
+                  [formControl]="autoinspeccion"
+                  type="checkbox"
+                  name="autoinspeccion"
+                  id="autoinspeccion"
+                />
+                <label for="autoinspeccion"></label>
+              </div>
+              <span class="ml-2 color-nav-item panel-title">
+                Autoinspección online
+              </span>
+            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row">
+              <div class="col-12">
+                Enviaremos un mail a tu cliente con un link para que realice la
+                <br />
+                inspección de su vehículo cargando fotos del mismo.
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-9">
+                <div class="form-group">
+                  <sxf-textbox
+                    type="email"
+                    [formControl]="emailAutoInspection"
+                    invalidFeedback="El mail ingresado no es válido"
+                    placement="bottom"
+                    label="Mail"
+                    placeholder="Ingresá tu mail"
+                    [maxLength]="80"
+                    name="emailAutoInspection"
+                    [disabled]="true"
+                  ></sxf-textbox>
+                </div>
+              </div>
+              <div class="col-3">
+                <button
+                  (click)="linkAutoInspection()"
+                  class="continue btn btn-primary btn-lg btn-block btn-next-screen"
+                  name="continueAutoInspection"
+                  [disabled]="!emailAutoInspection.valid"
+                >
+                  <ng-lottie
+                    [hidden]="!loadingData"
+                    [options]="lottieConfig"
+                    (animationCreated)="animationCreated($event)"
+                    height="24px"
+                    width="24px"
+                  ></ng-lottie>
+                  {{ buttonLabel }}
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+
+        <ngb-panel id="photoupPanel">
+          <ng-template ngbPanelHeader>
+            <div
+              class="d-flex"
+              [className]="allowOnlyPhone ? 'chk-inspection' : ''"
+            >
+              <div class="form-checkbox-as-radio" style="float: left;">
+                <input
+                  [formControl]="photoup"
+                  type="checkbox"
+                  name="photoup"
+                  id="photoup"
+                />
+                <label for="photoup"></label>
+              </div>
+              <span class="ml-2 color-nav-item panel-title">
+                Photo up (subir fotos)
+              </span>
+            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row">
+              <div class="col-12">
+                Te enviaremos un mail con un link para que cargues las fotos del
+                <br />
+                vehículo de tu cliente.
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-9">
+                <div class="form-group">
+                  <sxf-textbox
+                    type="email"
+                    [formControl]="emailPhotoUp"
+                    invalidFeedback="El mail ingresado no es válido"
+                    placement="bottom"
+                    label="Mail"
+                    placeholder="Ingresá tu mail"
+                    [maxLength]="80"
+                    name="emailPhotoUp"
+                  ></sxf-textbox>
+                </div>
+              </div>
+              <div class="col-3">
+                <button
+                  (click)="linkAutoInspectionPhotoUp()"
+                  class="continue btn btn-primary btn-lg btn-block btn-next-screen"
+                  name="continuePhotoUp"
+                  [disabled]="!emailPhotoUp.valid"
+                >
+                  <ng-lottie
+                    [hidden]="!loadingData"
+                    [options]="lottieConfig"
+                    (animationCreated)="animationCreated($event)"
+                    height="24px"
+                    width="24px"
+                  ></ng-lottie>
+                  {{ buttonLabel }}
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+
+        <ngb-panel id="pollicyFrontPanel">
+          <ng-template ngbPanelHeader>
+            <div
+              class="d-flex"
+              [className]="allowOnlyPhone ? 'chk-inspection' : ''"
+            >
+              <div class="form-checkbox-as-radio" style="float: left;">
+                <input
+                  [formControl]="policyFront"
+                  type="checkbox"
+                  name="policyFront"
+                  id="policyFront"
+                />
+                <label for="policyFront"></label>
+              </div>
+              <span class="ml-2 color-nav-item panel-title">
+                Frente de póliza
+              </span>
+            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row">
+              <div class="col-12">
+                Cargá la foto del frente de la póliza actual de tu cliente.
+              </div>
+            </div>
+            <div class="">
+              <div [formGroup]="form" class="d-flex justify-content-start">
+                <div
+                  class="box-file"
+                  [ngClass]="[
+                    fileUpload === null ? 'line-box-dashed' : 'line-box-solid',
+                    overButton ? 'box-file-over' : ''
+                  ]"
+                >
+                  <input
+                    formControlName="file"
+                    type="file"
+                    class="inputfile"
+                    name="fileFrontPolicy"
+                    id="fileFrontPolicy"
+                    (change)="onFileChange($event)"
+                    #inputFile
+                  />
+                  <label
+                    (dragover)="onDragOver($event)"
+                    (drop)="onDropSuccess($event)"
+                    (dragleave)="onDragLeave($event)"
+                  >
+                    <ng-container>
+                      <ng-container *ngIf="fileUpload === null">
+                        Arrastrá el archivo para subirlo
+                      </ng-container>
+                      <ng-container *ngIf="fileUpload !== null">
+                        {{ fileUpload.name }}
+                      </ng-container>
+                      <sxf-icon
+                        class="icon-gray"
+                        type="image"
+                        style="cursor: none !important;"
+                        [ngClass]="overButton ? 'icon-image-over' : ''"
+                      ></sxf-icon>
+                    </ng-container>
+                  </label>
+                </div>
+                <div class="pad-front">
+                  <ng-container *ngIf="fileUpload !== null">
+                    <sxf-icon
+                      class="icon-gray"
+                      type="trash"
+                      style="cursor: pointer;"
+                      (click)="removeImage()"
+                    ></sxf-icon>
+                  </ng-container>
+                </div>
+                <div *ngIf="fileUpload == null" class="text pad-front">o</div>
+                <div class="button-file pad-front" *ngIf="fileUpload == null">
+                  <button class="btn btn-primary" (click)="inputFile.click()">
+                    Seleccioná el archivo
+                  </button>
+                </div>
+                <div class="button-file pad-front" *ngIf="fileUpload !== null">
+                  <button class="btn btn-primary" (click)="sendFrontPolicy()">
+                    <ng-lottie
+                      [hidden]="!loadingData"
+                      [options]="lottieConfig"
+                      (animationCreated)="animationCreated($event)"
+                      height="24px"
+                      width="24px"
+                    ></ng-lottie>
+                    {{ buttonLabelFrontPolicy }}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <p class="msg-file">
+                  Tipo de archivos permitidos: jpg, png, pdf, doc. Peso máximo
+                  2mb.
+                </p>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+        <!-- comentada opcion de telefono por US-6990 Cuarentena
+        <ngb-panel id="phonePanel">
+          <ng-template ngbPanelHeader>
+            <div class="d-flex ">
+              <div class="form-checkbox-as-radio" style="float:left">
+                <input
+                  [formControl]="phone"
+                  type="checkbox"
+                  name="phone"
+                  id="phone"
+                />
+                <label for="phone"></label>
+              </div>
+              <span class="ml-2 color-nav-item panel-title">
+                Coordinar por teléfono
+              </span>
+            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row">
+              <div class="col-12">
+                Nuestro proveedor de inspecciones llamará al número que indiques
+                en las próximas
+                <br />
+                horas para coordinar la inspección del vehículo.
+              </div>
+            </div>
+
+            <div [formGroup]="formPhone" class="row mt-5">
+              <div class="col-1 pl-0 pr-0 ">
+                <div class="form-group">
+                  <sxf-textbox
+                    type="text"
+                    formControlName="prefixInspection"
+                    invalidFeedback="El Cod. ingresado no es válido"
+                    placement="bottom"
+                    label="Cód. Área"
+                    placeholder=""
+                    [maxLength]="5"
+                    [minLength]="2"
+                    name="prefixInspection"
+                    placeholder="Cod."
+                  ></sxf-textbox>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="form-group">
+                  <sxf-textbox
+                    type="text"
+                    formControlName="phoneInspection"
+                    placeholder="Teléfono"
+                    [minLength]="6"
+                    [maxLength]="8"
+                    name="phoneInspection"
+                    label="Teléfono *"
+                    [helpFeedback]=""
+                    invalidFeedback="El teléfono ingresado no es válido"
+                  ></sxf-textbox>
+                </div>
+              </div>
+              <div class="col-3 offset-4">
+                <button
+                  [disabled]="!formPhone.valid"
+                  (click)="acceptPhone()"
+                  class="continue btn btn-primary btn-lg btn-block btn-next-screen"
+                  name="continuePhotoUp"
+                >
+                  <ng-lottie
+                    [hidden]="!loadingData"
+                    [options]="lottieConfig"
+                    (animationCreated)="animationCreated($event)"
+                    height="24px"
+                    width="24px"
+                  ></ng-lottie>
+                  {{ buttonLabelPhone }}
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>-->
+      </ngb-accordion>
+    </div>
+  </div>
+</div>
+
+<sxf-modal #modalError>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ labelTittleModal }}
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModal()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      La opción de {{ labelTittleModal }} no está disponible en este momento.
+      Por favor, comunicate con tu ejecutivo de cuenta CAP para que pueda
+      ayudarte a coordinar la inspección por otro medio.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <div class="offset-8 col-4">
+      <button
+        type="button"
+        class="btn btn-primary btn-lg btn-block"
+        (click)="closeModal()"
+      >
+        Aceptar
+      </button>
+    </div>
+  </div>
+</sxf-modal>

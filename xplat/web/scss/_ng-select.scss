@@ -1,0 +1,83 @@
+/* Los estilos en ng-select solo funcionan de manera global, no sirve aplicarlos en el componente select
+   https://github.com/ng-select/ng-select#custom-styles
+*/
+
+$ng-gray-color: #c4c4c4;
+$ng-arrow-color: #393b3d;
+$placeholder-color: #a3adb3;
+
+.ng-select {
+  font-size: 0.875rem; //14px en resolución de 1280 de ancho
+
+  .ng-select-container {
+    border-color: $ng-gray-color;
+
+    .ng-value-container {
+      color: $black;
+
+      .ng-placeholder {
+        color: $placeholder-color;
+      }
+    }
+  }
+
+  &.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+    border-color: $primary;
+    box-shadow: none;
+  }
+
+  &.ng-select-opened > .ng-select-container {
+    border: 1px solid $primary;
+    .ng-arrow {
+      border-color: $ng-arrow-color;
+      border-width: 0.1rem 0.1rem 0 0;
+    }
+
+    .ng-arrow-wrapper {
+      transform: rotate(180deg);
+      opacity: 1;
+    }
+  }
+
+  .ng-arrow-wrapper {
+    width: 40px;
+    // height: 26px;
+    transition: transform 0.3s;
+    .ng-arrow {
+      border-style: solid;
+      border-width: 0.1rem 0.1rem 0 0;
+      height: 8px !important;
+      width: 8px !important;
+      top: -2px;
+      transform: rotate(135deg);
+      color: rgba($ng-arrow-color, 0.25);
+      border-color: $ng-arrow-color;
+    }
+  }
+}
+
+.ng-dropdown-panel {
+  border: 1px solid $primary;
+
+  .ng-dropdown-panel-items {
+    .ng-option {
+      color: $black;
+
+      &.ng-option-selected {
+        color: $white;
+        background-color: $primary;
+
+        &.ng-option-marked {
+          color: $white;
+          background-color: $primary;
+        }
+      }
+
+      &.ng-option-marked {
+        color: $white;
+        background-color: $primary;
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+}

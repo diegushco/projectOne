@@ -1,0 +1,263 @@
+@import '~@sura-platform/scss/variables';
+$border-color: $grey_light;
+.summary-coverage {
+  background: $white;
+  // box-shadow: 0px 3px 13px rgba(66, 112, 163, 0.2);
+  margin-top: 1px;
+  border-left: 1px solid $border-color;
+  height: 100vh;
+
+  .title-coverage {
+    text-align: center;
+    padding-right: 15px !important;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 2.1vw;
+    font-weight: $font-weight-bold;
+
+    color: $blue;
+  }
+  .continue {
+    &.btn-primary {
+      border-radius: 2.5rem;
+      padding: 0.8rem 0;
+    }
+  }
+  .wrap {
+    padding: 0 1.3rem;
+    .refact {
+      font-size: 0.6875rem;
+    }
+    .tsummary {
+      // background-color: $light-blue;
+      // padding: 1rem;
+      table {
+        margin: 0;
+        font-size: 0.875rem;
+        tr {
+          border-bottom: 1px solid $border-color;
+        }
+        th,
+        td {
+          padding-left: 0;
+          padding-bottom: 0.05rem;
+        }
+      }
+    }
+  }
+}
+
+label {
+  color: $gray_dark;
+  margin-bottom: 0;
+  // font-weight: $font-weight-bold;
+  font-size: 0.75rem;
+}
+
+.list-contact {
+  table {
+    width: 90%;
+  }
+
+  thead > tr > th {
+    border: 0;
+  }
+  tbody > tr {
+    padding: 0.5rem 1rem;
+    border: 0.5px solid $grey_light;
+    color: $cyanblue_shadow;
+    font-size: 16px;
+    &.active {
+      color: $white;
+      font-weight: $font-weight-bold;
+      /* Aqua */
+      background: $cyan;
+      /* Aqua */
+      border: 0.5px solid $cyan;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+#list-contact {
+  width: 90%;
+}
+
+.btn-link {
+  color: $primary;
+  &.btn:not(:disabled):not(.disabled):active,
+  .btn:not(:disabled):not(.disabled).active {
+    color: $primary;
+    border: 0;
+    background-color: $white;
+    box-shadow: none;
+  }
+}
+
+.description {
+  padding-right: 12.1875rem;
+  padding-top: 1.25rem;
+}
+
+.button-step-2 {
+  margin-top: -3.125rem;
+}
+
+.loading {
+  background-color: white;
+  min-height: 16rem;
+  top: 12rem;
+  position: absolute;
+  z-index: 1000;
+}
+
+.loading-n {
+  visibility: hidden;
+}
+
+// Estilos para info extra de premio total
+.costs-details {
+  .main {
+    display: flex;
+    align-items: center;
+
+    div:last-child {
+      margin-left: auto;
+      font-weight: bold;
+    }
+  }
+
+  .childrens {
+    display: flex;
+    flex-direction: column;
+
+    .child {
+      margin-left: 10px;
+      border-bottom: 1px solid #c4c4c4;
+      font-weight: normal;
+      font-size: 12px;
+      padding: 5px 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.discount-and-commission {
+  padding-left: 10px;
+  padding-right: 10px;
+
+  .progress {
+    height: 4px;
+    margin-top: 5px;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    box-shadow: none;
+    border: 0.5px solid #c4c4c4;
+
+    .progress-bar {
+      border-radius: 5px;
+    }
+  }
+
+  .extra-small {
+    font-size: 11px;
+  }
+
+  > div {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  ::ng-deep .icon-xs {
+    width: 16px !important;
+  }
+}
+
+::ng-deep .discount-tooltip {
+  top: 2px !important;
+
+  .arrow {
+    left: calc(50% - 0.8rem) !important;
+  }
+
+  .tooltip-inner {
+    max-width: 200px;
+    min-width: 0px;
+  }
+}
+:host ::ng-deep .downloadTooltip {
+  left: 15rem;
+  padding-right: 90%;
+
+  .arrow {
+    left: 45% !important;
+  }
+  .tooltip-inner {
+    height: 45px !important;
+
+    p {
+      margin-top: -8px !important;
+      align-items: center;
+    }
+  }
+}
+:host ::ng-deep .saveTooltip {
+  right: 70%;
+  .arrow {
+    left: 50% !important;
+  }
+  height: fit-content;
+
+  .tooltip-inner {
+    height: 55px !important;
+
+    p {
+      margin-top: -8px !important;
+      align-items: center !important;
+    }
+  }
+}
+:host ::ng-deep .ng-select .ng-select-container .ng-value-container {
+  color: #393b3d !important;
+}
+@media print {
+  .print {
+    visibility: visible !important;
+  }
+  .noprint {
+    visibility: hidden !important;
+  }
+  .nodisplay {
+    display: none;
+  }
+}
+
+.campaign::ng-deep.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  height: 30px;
+  font-size: 13px;
+}
+
+.campaign::ng-deep.ng-dropdown-panel .ng-dropdown-panel-items {
+  max-height: 148px !important;
+}
+.condition::ng-deep.ng-dropdown-panel .ng-dropdown-panel-items {
+  max-height: 182px !important;
+}
+.crud::ng-deep.ng-dropdown-panel .ng-dropdown-panel-items {
+  max-height: 145px !important;
+}
+.dues::ng-deep.ng-dropdown-panel .ng-dropdown-panel-items {
+  max-height: 145px !important;
+}
+.arrowUp {
+  transform: rotate(180deg);
+}

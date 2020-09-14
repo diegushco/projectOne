@@ -1,0 +1,23 @@
+@import '~@sura-platform/scss/variables';
+label {
+  margin-bottom: 0;
+  font-size: 0.75rem;
+  color: $gray_dark;
+}
+
+.press-enter {
+  color: #a3adb3;
+  font-size: 0.75rem;
+}
+
+.label-checkbox {
+  font-size: 0.875rem;
+  vertical-align: top;
+  margin-left: 3px;
+}
+
+.question-class {
+  font-size: 1rem;
+  line-height: 18px;
+  color: #00aec7;
+}

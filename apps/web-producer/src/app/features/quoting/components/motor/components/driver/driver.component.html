@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-12 pl-0">
+    <span class="driver-span">
+      ¿Quién es el conductor?
+    </span>
+  </div>
+</div>
+<div [formGroup]="form" class="row">
+  <div class="col-6 pl-0">
+    <sxf-textbox
+      type="text"
+      formControlName="driverName"
+      label="Nombre"
+      placeholder="Ingresá el nombre del conductor"
+      [helpFeedback]="''"
+      placement="bottom"
+      messageTooltips="Nombre"
+    ></sxf-textbox>
+  </div>
+  <div class="col-6">
+    <sxf-textbox
+      type="text"
+      formControlName="driverLastName"
+      label="Apellido"
+      placeholder="Ingresá el apellido del conductor"
+      [helpFeedback]="''"
+      placement="bottom"
+      messageTooltips="Apellido"
+    ></sxf-textbox>
+  </div>
+</div>

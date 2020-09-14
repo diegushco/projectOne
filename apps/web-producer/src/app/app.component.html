@@ -1,0 +1,52 @@
+<router-outlet></router-outlet>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <div [ngSwitch]="errorCode">
+      <h4 *ngSwitchCase="-1" class="modal-title" id="modal-basic-title">
+        Error
+      </h4>
+      <h4 *ngSwitchCase="-2" class="modal-title" id="modal-basic-title">
+        Error
+      </h4>
+      <h4 *ngSwitchCase="102" class="modal-title" id="modal-basic-title">
+        Error de Comunicación
+      </h4>
+      <h4 *ngSwitchCase="103" class="modal-title" id="modal-basic-title">
+        Error de Sistema
+      </h4>
+      <h4 *ngSwitchCase="104" class="modal-title" id="modal-basic-title">
+        Error de Sistema
+      </h4>
+    </div>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      {{ errorMessage }}
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark float-right"
+      (click)="modal.close('Save click')"
+    >
+      Cerrar
+    </button>
+    <button
+      *ngIf="errorCode !== -2"
+      type="button"
+      class="btn btn-outline-dark float-right"
+      (click)="modal.close('Save click'); openModal()"
+    >
+      Enviar Datos
+    </button>
+  </div>
+</ng-template>
